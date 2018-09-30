@@ -1,0 +1,79 @@
+﻿@model  List<EnjoyOurTour.Models.ViewModel.Admin.EditEmailTemplateViewModel>
+
+@{
+    ViewBag.Title = "EmailTemplateList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+               Email Template List
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table id="EmailTemplateTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="EmailTemplateId" data-identifier="true" data-visible="false">Email Template Id</th>
+                        <th data-column-id="EmailTemplateTitle">Email Template Title</th>
+                        <th data-column-id="EmailTitle">Email Title</th>
+                        <th data-column-id="PhotoPath" data-formatter="pix">Email Template Image</th>
+                        <th data-column-id="UpdatedAt">Updated At</th>
+                        <th data-column-id="UpdatedBy">Updated By</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.EmailTemplateId</td>
+                        <td>@item.EmailTemplateTitle</td>
+                        <td>@item.EmailTitle</td>
+                        <td>@item.UploadPhotoPath</td>
+                        <td>@item.UpdatedAt</td>
+                        <td>@item.UpdatedBy</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditEmailTemplate", "Admin", new {id = "{Id}"}))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Edit Email Template"><span class="glyphicon glyphicon-pencil"></span></a>
+</div>
+
+<script>
+    @if (Model != null && Model.Count > 0)
+    {
+        <text>
+    $("#EmailTemplateTable").bootgrid({
+        ajax: false,
+        caseSensitive: false,
+        formatters: {
+            "ActionColumnBar": function (column, row) {
+                var el = $("div.action-column-bar").html();
+                el = el.replace("%7BId%7D", row.EmailTemplateId).replace("%7BId%7D", row.EmailTemplateId).replace("%7BId%7D", row.EmailTemplateId).replace("%7BId%7D", row.EmailTemplateId);
+                return el;
+            },
+            "pix": function (column, row) {
+                if (row.PhotoPath != '') {
+                    return ('<img style="width:200px; height:100px;" src="/Image/EmailTemplate/' + row.PhotoPath + '" />');
+                }       
+            }
+        }
+    }).on("loaded.rs.jquery.bootgrid", function () {
+        $(this).find('[data-toggle="tooltip"]').tooltip();
+
+    });
+    </text>
+    }
+</script>

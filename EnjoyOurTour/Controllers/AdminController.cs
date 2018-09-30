@@ -96,6 +96,47 @@ namespace EnjoyOurTour.Controllers
             }
         }
 
+        public ActionResult EmailTemplateList()
+        {
+            using (var db = new TourEntities())
+            {
+                var emailTemplate = (from e in db.EmailTemplate
+                                     select new EditEmailTemplateViewModel()
+                                     {
+                                         EmailTemplateId = e.EmailTemplateId,
+                                         EmailTitle = e.EmailTitle,
+                                         EmailContent = e.EmailContent,
+                                         UploadPhotoPath=e.PhotoPath,
+                                         UpdatedAt = e.UpdatedAt,
+                                         UpdatedBy = e.UpdatedBy
+                                     }).ToList();
+
+                foreach (var a in emailTemplate)
+                {
+                    if (a.EmailTemplateId == 4)
+                    {
+                        a.EmailTemplateTitle = "Sign up Suceessfully email for customer";
+                    }
+                    else if (a.EmailTemplateId == 5)
+                    {
+                        a.EmailTemplateTitle = "Customer Sign up Successfully email for agent";
+                    }
+                    else if (a.EmailTemplateId == 6)
+                    {
+                        a.EmailTemplateTitle = "Create Successfully for Agent";
+                    }
+                    else if (a.EmailTemplateId == 7)
+                    {
+                        a.EmailTemplateTitle = "Create Successfully for Customer";
+                    }
+                    else if (a.EmailTemplateId == 8)
+                    {
+                        a.EmailTemplateTitle = "Birthday Email";
+                    }
+                }
+                return View(emailTemplate);
+            }
+        }
 
         public ActionResult AddCustomer()
         {
@@ -321,6 +362,97 @@ namespace EnjoyOurTour.Controllers
             }
         }
 
+        public ActionResult EditEmailTemplate(int id)
+        {
+            using (var db = new TourEntities())
+            {
+                var emailTemplate = db.EmailTemplate.Where(e => e.EmailTemplateId == id).FirstOrDefault();
+
+                if (emailTemplate == null)
+                {
+                    return new HttpNotFoundResult("Email Template not found");
+                }
+
+                string emailTemplateTitle = "";
+
+                if (emailTemplate.EmailTemplateId == 4)
+                {
+                    emailTemplateTitle = "Sign up Suceessfully email for customer";
+                }
+                else if (emailTemplate.EmailTemplateId == 5)
+                {
+                    emailTemplateTitle = "Customer Sign up Successfully email for agent";
+                }
+                else if (emailTemplate.EmailTemplateId == 6)
+                {
+                    emailTemplateTitle = "Create Successfully for Agent";
+                }
+                else if (emailTemplate.EmailTemplateId == 7)
+                {
+                    emailTemplateTitle = "Create Successfully for Customer";
+                }
+                else if (emailTemplate.EmailTemplateId == 8)
+                {
+                    emailTemplateTitle = "Birthday Email";
+                }
+
+                return View(new EditEmailTemplateViewModel()
+                {
+                    EmailTemplateId = emailTemplate.EmailTemplateId,
+                    EmailTemplateTitle = emailTemplateTitle,
+                    EmailTitle = emailTemplate.EmailTitle,
+                    EmailContent = emailTemplate.EmailContent,
+                    UploadPhotoPath= emailTemplate.PhotoPath,
+                    UpdatedBy = emailTemplate.UpdatedBy,
+                    UpdatedAt = emailTemplate.UpdatedAt
+                });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult EditEmailTemplate(EditEmailTemplateViewModel model)
+        {
+
+            using (var db = new TourEntities())
+            {
+                var formsAuthentication = HttpContext.Request.Cookies[FormsAuthentication.FormsCookieName] != null
+              ? FormsAuthentication.Decrypt(
+                  HttpContext.Request.Cookies[FormsAuthentication.FormsCookieName].Value)
+              : null;
+
+                if (ModelState.IsValid)
+                {
+                    var emailTemplate = db.EmailTemplate.Find(model.EmailTemplateId);
+
+
+                    if (model.PhotoPath != null)
+                    {
+                        if(emailTemplate.PhotoPath != "")
+                        {
+                            FileInfo path = new FileInfo(Server.MapPath("~/Image/EmailTemplate/" + emailTemplate.PhotoPath));
+                            path.Delete();
+                        }
+
+                        string imageName = System.IO.Path.GetFileName(model.PhotoPath.FileName);
+                        imageName = MetadataServices.GetDateTimeWithoutSlash() + "-" + imageName;
+                        string physicalPath = Server.MapPath("~/Image/EmailTemplate/" + imageName);
+                        model.PhotoPath.SaveAs(physicalPath);
+
+                        emailTemplate.PhotoPath = imageName;
+                    }
+
+                    emailTemplate.EmailTitle = model.EmailTitle;
+                    emailTemplate.EmailContent = model.EmailContent;
+                    emailTemplate.UpdatedBy = MetadataServices.GetCurrentUser().Username;
+                    emailTemplate.UpdatedAt = MetadataServices.GetCurrentDate();
+
+                    db.SaveChanges();
+
+                }
+                return Json(new { }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public JsonResult EditCustomersTestimony(AddCustomersTestimonyViewModel model)
         {
@@ -474,8 +606,6 @@ namespace EnjoyOurTour.Controllers
                 return Json(new { }, JsonRequestBehavior.AllowGet);
             }
         }
-
-
 
         public ActionResult DeleteCustomersTestimony(int id)
         {
@@ -1221,7 +1351,7 @@ namespace EnjoyOurTour.Controllers
 
                     if (transactionModel.TransactionStatus == (int)EnjoyOurTour.Helpers.TransactionStatus.ApproveWithoutPay)
                     {
-                        transactionModel.TransactionStatus = (int)EnjoyOurTour.Helpers.TransactionStatus.Approve;                        
+                        transactionModel.TransactionStatus = (int)EnjoyOurTour.Helpers.TransactionStatus.Approve;
                         transactionModel.UpdatedAt = DateTime.Now;
                         transactionModel.UpdatedBy = MetadataServices.GetCurrentUser().Username;
 
@@ -1751,7 +1881,7 @@ namespace EnjoyOurTour.Controllers
                     customerTransaction.CreatedBy = user.Username;
 
                     db.IntroducerTransaction.Add(customerTransaction);
-                 
+
                     couponTransaction.TransactionStatus = (int)EnjoyOurTour.Helpers.TransactionStatus.Approve;
 
 
@@ -1768,7 +1898,7 @@ namespace EnjoyOurTour.Controllers
 
                     db.SaveChanges();
 
-                    await MetadataServices.SendEmail(user.EmailAddress, "Enjoy Our Tour Coupon Redeem Rejected", "Hi " +  ", <br/> Your redeem requst for Coupon (" + couponTransaction.CouponCode + ") had been reject. <br/> Please check your account.");
+                    await MetadataServices.SendEmail(user.EmailAddress, "Enjoy Our Tour Coupon Redeem Rejected", "Hi " + ", <br/> Your redeem requst for Coupon (" + couponTransaction.CouponCode + ") had been reject. <br/> Please check your account.");
 
                 }
 
@@ -1783,15 +1913,15 @@ namespace EnjoyOurTour.Controllers
                                                                           CustomerId = data.CustomerId,
                                                                           ImageProof = (string.IsNullOrEmpty(data.ImageProof) ? "No Image Upload" : data.ImageProof),
                                                                       }).ToList();
-                
+
                 return View("RedeemCouponTransaction", transaction);
 
             }
 
-        
-         
+
+
         }
-     
+
     }
 
     public static class ModelStateHelper

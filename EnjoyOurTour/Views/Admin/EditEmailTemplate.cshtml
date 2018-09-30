@@ -1,0 +1,107 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Admin.EditEmailTemplateViewModel
+@{
+    ViewBag.Title = "EditEmailTemplate";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Edit Email Template: @Model.EmailTemplateTitle</h1>
+    </div>
+</div>
+
+<form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="EmailTemplateId" name="EmailTemplateId" value="@Model.EmailTemplateId" />
+            <div class="form-group">
+                <label for="EmailTitle" id="EmailTitle">Email Title:</label></br>
+                <input type="text" id="inputEmailTitle" class="form-control" name="EmailTitle" value="@Model.EmailTitle"/>
+                @Html.ValidationMessageFor(e => e.EmailTitle)
+            </div>
+            <div class="form-group">
+                <label for="EmailContent" id="EmailContent">Email Content:</label>
+                <textarea id="inputEmailContent" class="form-control" name="EmailContent">@Model.EmailContent</textarea>
+                @Html.ValidationMessageFor(e => e.EmailContent)
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Email Template Image</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('emailTemplateImg').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#emailTemplateImg').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="emailTemplateImg" style="width:50%; display:none;" />
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editEmailTemplate" class="btn btn-primary pull-right">Edit Email Template</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('inputEmailContent');
+
+    $(document).ready(function () {
+        $('#editEmailTemplate').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if ($('#inputEmailTitle').val() == '') {
+                $('#EmailTitle').html('<span class="asterisk" style="color:red">*Please insert Email Title.</span>');
+            } else {
+                $("#EmailTitle .asterisk").remove();
+                $('#EmailTitle').html('Email Title:');
+            }
+
+            if (CKEDITOR.instances['inputEmailContent'].getData() == '') {
+                $('#EmailContent').html('<span class="asterisk" style="color:red">*Please insert Email Content.</span>');
+            } else {
+                $("#EmailContent .asterisk").remove();
+                $('#EmailContent').html('Email Content:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('EmailTemplateId', $('#EmailTemplateId').val());
+                formData.append('EmailTitle', $('#inputEmailTitle').val());
+                formData.append('EmailContent', CKEDITOR.instances['inputEmailContent'].getData());
+
+                if (document.getElementById('PhotoPath').files[0] != '') {
+                    formData.append('PhotoPath', document.getElementById('PhotoPath').files[0]);
+                }
+               
+                $.ajax({
+                    url: "/Admin/EditEmailTemplate",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    data: formData,
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Email Template was successfully updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Admin/EmailTemplateList';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            } else {
+                $('.loading').css('display', 'none');
+            }
+        });
+    });
+</script>

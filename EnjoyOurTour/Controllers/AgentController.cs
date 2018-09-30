@@ -54,6 +54,7 @@ namespace EnjoyOurTour.Controllers
                     return new HttpNotFoundResult("Agent not found");
                 }
                 var user = db.User.Where(e => e.UserId == agent.UserId).FirstOrDefault();
+
                 return View(new EditAgentProfileViewModel()
                 {
                     AgentId = agent.AgentId,
@@ -84,6 +85,13 @@ namespace EnjoyOurTour.Controllers
                     if (agent == null || user == null)
                     {
                         return new HttpNotFoundResult("Agent not found.");
+                    }
+
+                    bool chkIC = db.Agent.Where(x => x.NRIC == model.NRIC).Any();
+
+                    if (!chkIC)
+                    {
+                        agent.AgentCode = Convert.ToInt32(model.NRIC.Substring(model.NRIC.Length - 6));
                     }
 
                     user.EmailAddress = model.EmailAddress;

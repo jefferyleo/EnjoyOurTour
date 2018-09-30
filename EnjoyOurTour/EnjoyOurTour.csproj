@@ -220,6 +220,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AgentController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GoodNewsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
@@ -343,6 +344,7 @@
     <Compile Include="Models\ViewModel\Admin\CustomersTestimonyViewModel.cs" />
     <Compile Include="Models\ViewModel\Admin\CustomerViewModel.cs" />
     <Compile Include="Models\ViewModel\Admin\EditAdminViewModel.cs" />
+    <Compile Include="Models\ViewModel\Admin\EditEmailTemplateViewModel.cs" />
     <Compile Include="Models\ViewModel\Admin\RedeemCouponTransactionViewModel.cs" />
     <Compile Include="Models\ViewModel\Admin\TransactionViewModel.cs" />
     <Compile Include="Models\ViewModel\Admin\UserViewModel.cs" />
@@ -519,6 +521,8 @@
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="packages.config" />
     <Content Include="Files\20180927105635-4D-SIEM-REAP-PHNOM-PENH-4SRPPE.pdf" />
+    <None Include="Properties\PublishProfiles\enjoyourtour - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\enjoyourtour - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\ckeditor.js" />
     <Content Include="Scripts\config.js" />
@@ -954,14 +958,17 @@
     <Content Include="Views\Admin\RedeemCouponTransaction.cshtml" />
     <Content Include="Views\Admin\UpdateRedeemCouponTransaction.cshtml" />
     <Content Include="Views\Agent\UpdateAgentProfile.cshtml" />
+    <Content Include="Views\Admin\EditEmailTemplate.cshtml" />
+    <Content Include="Views\Admin\EmailTemplateList.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Image\BannerImage\" />
+    <Folder Include="Image\EmailTemplate\" />
     <Folder Include="Image\SignUpImage\" />
     <Folder Include="Image\TransactionImage\" />
     <Folder Include="Image\TravelPromotionImage\" />
-    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\SchedulerJob\" />
   </ItemGroup>
   <ItemGroup>

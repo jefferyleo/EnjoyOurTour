@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EnjoyOurTour.Helpers.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
@@ -23,6 +24,12 @@ namespace EnjoyOurTour
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();
+            if (exception != null)
+            {
+                Logging.WriteLog("Message: " + exception.Message);
+                Logging.WriteLog("Stack Trace: " + exception.StackTrace);
+                Logging.WriteLog("Inner Exception: " + exception.InnerException);
+            }
             if (exception is CryptographicException)
             {
                 FormsAuthentication.SignOut();

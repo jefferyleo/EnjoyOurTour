@@ -1,0 +1,92 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Merchant.AddMerchantPromotionViewModel
+@{
+    ViewBag.Title = "AddMerchantPromotion";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Add Merchant Promotion</h1>
+    </div>
+   
+</div>
+
+<form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="form-group" style="width:300px">
+                <label for="MerchantName" id="MerchantName">Merchant Name:</label><br />
+                @Html.DropDownListFor(e => e.MerchantIdList, Model.MerchantIdList, "--Please Select Merchant--", new { @class = "form-control", id = "ddlMerchantId" })
+                @Html.ValidationMessageFor(e => e.MerchantIdList)
+            </div>
+            <div class="form-group">
+                <label for="MerchantPromotionDetail" id="MerchantPromotionDetail">Merchant Promotion Detail:</label>
+                <textarea id="inputMerchantPromotionDetail" class="form-control" name="inputMerchantPromotionDetail"></textarea>
+                @Html.ValidationMessageFor(e => e.MerchantPromotionDetail)
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="addMerchantPromo" class="btn btn-primary pull-right">Add Merchant Promotion</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('inputMerchantPromotionDetail');
+
+        $(document).ready(function () {
+            $('#addMerchantPromo').click(function (e) {
+                e.preventDefault();
+                $('.loading').css('display', 'block');
+
+                if (CKEDITOR.instances['inputMerchantPromotionDetail'].getData() == '') {
+                    $('#MerchantPromotionDetail').html('<span class="asterisk" style="color:red">*Please enter Merchant Promotion Detail.</span>');
+                } else {
+                    $("#MerchantPromotionDetail .asterisk").remove();
+                    $('#MerchantPromotionDetail').html('Merchant Promotion Detail:');
+                }
+
+                if ($("#ddlMerchantId option:selected").text() == '--Please Select Merchant--') {
+                    $('#MerchantName').html('<span class="asterisk" style="color:red">*Please Select Merchant.</span>');
+                } else {
+                    $("#MerchantName .asterisk").remove();
+                    $("#MerchantName").html('Merchant Name:');
+                }
+
+                if ($('.asterisk').val() == undefined) {
+                    var formData = new FormData();
+                    formData.append('MerchantPromotionDetail', CKEDITOR.instances['inputMerchantPromotionDetail'].getData());
+                    formData.append('MerchantId', $("#ddlMerchantId option:selected").val());
+
+                    $.ajax({
+                        url: "/Merchant/AddMerchantPromotion",
+                        contentType: false,
+                        processData: false,
+                        traditional: true,
+                        data: formData,
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (data) {
+                            $('.loading').css('display', 'none');
+                            swal({
+                                title: "Done",
+                                text: "Merchant Promotion was successfully added!",
+                                type: "success"
+                            },
+                                function () {
+                                    window.location.href = '/Merchant/MerchantPromotion';
+                                });
+                        },
+                        error: function (data) {
+                            $('.loading').css('display', 'none');
+                        }
+                    });
+                }
+            });
+        });
+</script>

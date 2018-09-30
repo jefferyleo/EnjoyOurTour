@@ -1,0 +1,96 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Merchant.MerchantViewModel>
+
+@{
+    ViewBag.Title = "MerchantList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Merchant List
+        <a href="@Url.Action("AddMerchant", "Merchant")" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add Merchant
+        </a>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="MerchantTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="MerchantId" data-visible="false" data-visible-in-selection="false">Merchant ID</th>
+                        <th data-column-id="MerchantRegisterCode">Merchant Register Code</th>
+                        <th data-column-id="MerchantPhoneNumber" data-width="150px">Merchant Phone Number</th>
+                        <th data-column-id="MerchantAddress" data-width="300px">Merchant Address</th>
+                        <th data-column-id="MerchantCategoryId">Merchant Category Id</th>
+                        <th data-column-id="MerchantJoinDate">Merchant Join Date</th>
+                        <th data-column-id="MerchantLogoPath" data-formatter="pix">Merchant Logo</th>
+                        <th data-column-id="CreatedAt">Date Added</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.MerchantId</td>
+                        <td>@item.MerchantRegisterCode</td>
+                        <td>@item.MerchantPhoneNumber</td>
+                        <td>@item.MerchantAddress</td>
+                        <td>@item.MerchantCategoryId</td>
+                        <td>@item.MerchantJoinDate</td>
+                        <td>@item.MerchantLogoPath</td>
+                        <td>@item.CreatedAt</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditMerchant", "Merchant", new { id = "{Id}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Merchant"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@Url.Action("DeleteMerchant","Merchant", new{id = "{Id}"})" class="btn btn-default delete-promotionimage" data-toggle="tooltip" data-placement="left" title="Delete Merchant"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#MerchantTable").bootgrid({
+            formatters: {
+                "ActionColumnBar": function (column, row) {
+                    var el = $("div.action-column-bar").html();
+                    el = el.replace("%7BId%7D", row.MerchantId).replace("%7BId%7D", row.MerchantId).replace("%7BId%7D", row.MerchantId).replace("%7BId%7D", row.MerchantId);
+
+                    return el;
+                },
+                "pix": function (column, row) {
+                    return ('<img style="width:200px; height:100px;" src="/Image/Merchant/' + row.MerchantLogoPath + '" />');
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid",
+            function () {
+                $(this).find('[data-toggle="tooltip"]').tooltip();
+
+                $(this).find("a.delete-promotionimage").on("click", function (e) {
+                    if (confirm("Do you want to delete the merchant?")) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+
+                    return false;
+                });
+            });;
+    });
+</script>

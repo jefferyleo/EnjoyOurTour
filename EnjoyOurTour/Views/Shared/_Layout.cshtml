@@ -1,0 +1,120 @@
+﻿@using EnjoyOurTour.Models
+@using EnjoyOurTour.Models.ViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Enjoy Our Tour</title>
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bootgrid.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Amaranth" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css" />
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/ckeditor.js"></script>
+    <script src="~/Scripts/config.js"></script>
+    <script src="~/Scripts/styles.js"></script>
+    <script src="~/Scripts/jquery.bootgrid.js"></script>
+    <script src="~/Scripts/illbeback.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-fixed-top" style="background-color: #f7f7f7; border-color: #e6e6e6;">
+        <div class="container" style="margin: 10px;">
+            <div class="navbar-header">
+                <button id="menuBar" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#primeNavbar" aria-expanded="false" aria-controls="primeNavbar" style="border: 1px solid #6699ff;">
+                    <span class="icon-bar" style="background-color: #6699ff;"></span>
+                    <span class="icon-bar" style="background-color: #6699ff;"></span>
+                    <span class="icon-bar" style="background-color: #6699ff;"></span>
+                </button>
+                <a href="~/Home">
+                    @*<img src="~/img/58779_logo_0_56027.png" style="width: 60px; margin-left: 20px;" />*@
+                    @*<img src="~/img/logo.png" style="width: 250px; margin-top: 7px;"/>*@
+                    <img src="~/Image/logo.png" class="logoImage" />
+                </a>
+            </div>
+            <div id="tourNavbar" class="collapse navbar-collapse" style="font-size: 15px; width: 95vw">
+                <ul class="navbar-nav ml-auto nav  style="margin-top: 3px;">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Home/#home">
+                            HOME
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Home/#about">ABOUT US</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Home/#contact">CONTACT US</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto nav navbar-right" style="margin-top: 3px;">                 
+                    @if (HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] == null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("SignUp", "Account")">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Login", "Account")">Login</a>
+                        </li>
+                    }
+                    else
+                    {
+                        if (EnjoyOurTour.Helpers.Services.MetadataServices.GetCurrentUser() != null)
+                            {
+                                <li>
+                                    <div style="padding:10px 15px ;padding-top:15px"> <label>  Hi @EnjoyOurTour.Helpers.Services.MetadataServices.GetCurrentUser().Username, Welcome back.</label></div>
+                                </li>
+                        }
+                        var formsAuthentication = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] != null ? FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value) : null;
+                        string btnName = "";
+                        if (formsAuthentication.UserData == "Superadmin" || formsAuthentication.UserData == "Admin")
+                        {
+                            btnName = "Configuration";
+                        }
+                        else if (formsAuthentication.UserData == "Agent")
+                        {
+                            btnName = "View Agent Detail";
+                        }
+                        else if (formsAuthentication.UserData == "Customer")
+                        {
+                            btnName = "View Travel Information";
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("ViewDetail", "Account")">@btnName</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Logout", "Account")">Logout</a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="body-content" style="margin-top: 70px;">
+        @RenderBody()
+        <hr />
+        <footer class="wrapper style1 align-center">
+            <div class="inner">
+                <p>Copyright &copy; @DateTime.Now.Year. Enjoy Our Tour. All Rights Reserved.</p>
+            </div>
+        </footer>
+        <a href="" id="scroll-to-top" style="background-position: center center; position: fixed; z-index: 1000; bottom: 30px; right: 30px; width: 64px; height: 64px; background-size: 50%; background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAA8CAMAAACuCk+GAAAAVFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////8wXzyWAAAAHHRSTlMAv3FsR04ETZV7qzmMQwNjpYSBbbaedD8lCCghrxzLjAAAATlJREFUeAG10ctOwzAUhOHpBePYSdM2vbTw/u+JkIyUsmCU/5BZ+kjfv7AWLNVtn3M/1YNW2b1s2o51DX+3mW38f3+7edluZZ8XvM8L3ucF7/MC93nB+7zgfV7wPi9wnxe8zwve5wXv84L3eYH7vsB9X+A+L3DfF7jvC9z3Be7zAvd9gfu2wH1T4L4pcH//7gpBX7KFoL+ggPwFBeSDAvDlC9AHBeCDAvClN18APigAHxS8L1gAPijsqO8LoyQN3PeFKj0L933hmDSEfFu4q4v5rnDTNeibQlYJ+qZw1DXom0LWOeibQqd90DeFQc8L932hpHaK+n8yHfdd4abvpTP2TaE7qBWgbwo/vpROxDeF5rfC7B8ug/D2M397eD2V9t5/KrBHbkwZ9GupTn0+jQ8F9zGecj/VpLYvzkEQTeC4sD8AAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; transition: background-color 300ms linear; display: block; background-color: rgba(30, 30, 30, 0.4);"></a>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#scroll-to-top").illBeBack();
+
+            $("#tourNavbar ul li.nav-item").click(function () {
+                $('#menuBar').removeClass("navbar-toggle").addClass("navbar-toggle collapsed");
+                $('#tourNavbar').removeClass("navbar-collapse in").addClass("navbar-collapse collapse");
+            });
+        });
+    </script>
+</body>
+</html>

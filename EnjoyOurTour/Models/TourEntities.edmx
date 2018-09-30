@@ -1,0 +1,1744 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="EnjoyOurTourModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AboutUs">
+          <Key>
+            <PropertyRef Name="AboutUsId" />
+          </Key>
+          <Property Name="AboutUsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AboutUsTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AboutUsDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AboutUsShortDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="YoutubeLink" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="AgentId" />
+          </Key>
+          <Property Name="AgentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgentCode" Type="int" Nullable="false" />
+          <Property Name="AgentName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="NRIC" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Commission" Type="money" Nullable="false" />
+          <Property Name="Bonus" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AgentTransaction">
+          <Key>
+            <PropertyRef Name="AgentTransactionId" />
+          </Key>
+          <Property Name="AgentTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="CreditAmount" Type="money" Nullable="false" />
+          <Property Name="FinalAmount" Type="money" Nullable="false" />
+          <Property Name="CreditBonus" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="FinalBonus" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="DebitAmount" Type="money" Nullable="false" />
+          <Property Name="DebitBonus" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="BannerId" />
+          </Key>
+          <Property Name="BannerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BannerImage" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BannerName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BannerDescription" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContactUs">
+          <Key>
+            <PropertyRef Name="ContactUsId" />
+          </Key>
+          <Property Name="ContactUsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContactUsTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyPhoneNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CompanyLatitude" Type="float" Nullable="false" />
+          <Property Name="CompanyLongitude" Type="float" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="NRIC" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AvailableTVR" Type="int" Nullable="false" />
+          <Property Name="AvailableAmount" Type="money" Nullable="false" />
+          <Property Name="AvailablePoint" Type="int" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="IntroducerId" Type="int" />
+          <Property Name="JoinDate" Type="datetime" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="RenewDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpiredDate" Type="datetime" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IntroduceTimes" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomersTestimony">
+          <Key>
+            <PropertyRef Name="TestimonyId" />
+          </Key>
+          <Property Name="TestimonyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoPath" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="YoutubeLink" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="EmailTemplateId" />
+          </Key>
+          <Property Name="EmailTemplateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailTitle" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="EmailContent" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="PhotoPath" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GoodNews">
+          <Key>
+            <PropertyRef Name="GoodNewsId" />
+          </Key>
+          <Property Name="GoodNewsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoPath" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="GoodNewsTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IntroducerTransaction">
+          <Key>
+            <PropertyRef Name="IntroducerTransactionId" />
+          </Key>
+          <Property Name="IntroducerTransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IntroducerId" Type="int" Nullable="false" />
+          <Property Name="CreditAmount" Type="money" Nullable="false" />
+          <Property Name="FinalAmount" Type="money" Nullable="false" />
+          <Property Name="DebitAmount" Type="money" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreditTVR" Type="int" />
+          <Property Name="DebitTVR" Type="int" />
+          <Property Name="FinalTVR" Type="int" />
+          <Property Name="CreditPoint" Type="int" />
+          <Property Name="DebitPoint" Type="int" />
+          <Property Name="FinalPoint" Type="int" />
+        </EntityType>
+        <EntityType Name="Merchant">
+          <Key>
+            <PropertyRef Name="MerchantId" />
+          </Key>
+          <Property Name="MerchantId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MerchantName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="MerchantRegisterCode" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="MerchantPhoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="MerchantAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MerchantCategoryId" Type="int" Nullable="false" />
+          <Property Name="MerchantJoinDate" Type="datetime" Nullable="false" />
+          <Property Name="MerchantLogoPath" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MerchantCategory">
+          <Key>
+            <PropertyRef Name="MerchantCategoryId" />
+          </Key>
+          <Property Name="MerchantCategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MerchantPromotion">
+          <Key>
+            <PropertyRef Name="MerchantPromotionId" />
+          </Key>
+          <Property Name="MerchantPromotionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MechantId" Type="int" Nullable="false" />
+          <Property Name="MerchantPromotionDetail" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="PackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PhotoPath" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IteneraryDetail" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TVR" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="FilePath" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ProductRedeem">
+          <Key>
+            <PropertyRef Name="ProductRedeemId" />
+          </Key>
+          <Property Name="ProductRedeemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductRedeemName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RedeemPoint" Type="int" Nullable="false" />
+          <Property Name="Stock" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RedeemCoupon">
+          <Key>
+            <PropertyRef Name="RedeemCouponId" />
+          </Key>
+          <Property Name="RedeemCouponId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CouponCode" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TVRAmount" Type="int" Nullable="false" />
+          <Property Name="ImageProof" Type="nvarchar" MaxLength="200" />
+          <Property Name="TransactionStatus" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemSetting">
+          <Key>
+            <PropertyRef Name="SystemSettingId" />
+          </Key>
+          <Property Name="SystemSettingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MinAmount" Type="int" Nullable="false" />
+          <Property Name="SignUpFees" Type="int" Nullable="false" />
+          <Property Name="TVRMutiply" Type="int" Nullable="false" />
+          <Property Name="IntroduceIncreaseLimit" Type="int" Nullable="false" />
+          <Property Name="AgentCommision" Type="int" Nullable="false" />
+          <Property Name="IntroduceNormalCommision" Type="int" Nullable="false" />
+          <Property Name="IntroduceIncreaseCommision" Type="int" Nullable="false" />
+          <Property Name="CreatedBY" Type="nvarchar" MaxLength="128" />
+          <Property Name="CreadtedDate" Type="datetime" />
+          <Property Name="AgentCalculationBonus" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="PointCalculation" Type="int" Nullable="false" />
+          <Property Name="IntroduceMaxLimit" Type="int" Nullable="false" />
+          <Property Name="AgentTopUpCommission" Type="int" Nullable="false" />
+          <Property Name="ProcessingFeesCommision" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransactionActivity">
+          <Key>
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="ActivityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActivityName" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TravelPromotion">
+          <Key>
+            <PropertyRef Name="TravelPromotionId" />
+          </Key>
+          <Property Name="TravelPromotionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PhotoPath" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="TravelPromotionTitle" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTransaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="IntroducerId" Type="int" />
+          <Property Name="ReferenceNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ActivityId" Type="int" Nullable="false" />
+          <Property Name="PathForProof" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CurrentTVR" Type="int" Nullable="false" />
+          <Property Name="TopUpTVR" Type="int" Nullable="false" />
+          <Property Name="RedeemTVR" Type="int" Nullable="false" />
+          <Property Name="BalanceTVR" Type="int" Nullable="false" />
+          <Property Name="CurrentPoint" Type="int" Nullable="false" />
+          <Property Name="PointAdd" Type="int" Nullable="false" />
+          <Property Name="PointRedeem" Type="int" Nullable="false" />
+          <Property Name="PointBalance" Type="int" Nullable="false" />
+          <Property Name="ActionDate" Type="datetime" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="TransactionStatus" Type="int" Nullable="false" />
+          <Property Name="PackageId" Type="int" />
+          <Property Name="TravelHeadCount" Type="int" />
+          <Property Name="ProductId" Type="int" />
+        </EntityType>
+        <EntityType Name="UserTransactionStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EnjoyOurTour.dbo.RedeemCouponTransactionView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RedeemCouponTransactionView">
+          <Key>
+            <PropertyRef Name="RedeemCouponId" />
+            <PropertyRef Name="CouponCode" />
+            <PropertyRef Name="TVRAmount" />
+            <PropertyRef Name="TransactionStatus" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="CreatedAt" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="UpdatedAt" />
+            <PropertyRef Name="UpdatedBy" />
+          </Key>
+          <Property Name="RedeemCouponId" Type="int" Nullable="false" />
+          <Property Name="CouponCode" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TVRAmount" Type="int" Nullable="false" />
+          <Property Name="ImageProof" Type="nvarchar" MaxLength="200" />
+          <Property Name="TransactionStatus" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UpdatedAt" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EnjoyOurTour.dbo.TransactionView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="TransactionView">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+            <PropertyRef Name="CustomerCodeName" />
+            <PropertyRef Name="ReferenceNo" />
+            <PropertyRef Name="ActivityName" />
+            <PropertyRef Name="ActivityId" />
+            <PropertyRef Name="PathForProof" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="CurrentTVR" />
+            <PropertyRef Name="TopUpTVR" />
+            <PropertyRef Name="RedeemTVR" />
+            <PropertyRef Name="BalanceTVR" />
+            <PropertyRef Name="CurrentPoint" />
+            <PropertyRef Name="PointAdd" />
+            <PropertyRef Name="PointRedeem" />
+            <PropertyRef Name="PointBalance" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="CreatedAt" />
+          </Key>
+          <Property Name="TransactionId" Type="int" Nullable="false" />
+          <Property Name="AgentCodeName" Type="nvarchar" MaxLength="149" />
+          <Property Name="CustomerCodeName" Type="nvarchar" MaxLength="257" Nullable="false" />
+          <Property Name="IntroducerCodeName" Type="nvarchar" MaxLength="257" />
+          <Property Name="ReferenceNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ActivityName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ActivityId" Type="int" Nullable="false" />
+          <Property Name="PathForProof" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CurrentTVR" Type="int" Nullable="false" />
+          <Property Name="TopUpTVR" Type="int" Nullable="false" />
+          <Property Name="RedeemTVR" Type="int" Nullable="false" />
+          <Property Name="BalanceTVR" Type="int" Nullable="false" />
+          <Property Name="CurrentPoint" Type="int" Nullable="false" />
+          <Property Name="PointAdd" Type="int" Nullable="false" />
+          <Property Name="PointRedeem" Type="int" Nullable="false" />
+          <Property Name="PointBalance" Type="int" Nullable="false" />
+          <Property Name="PackageName" Type="nvarchar" MaxLength="500" />
+          <Property Name="TravelHeadCount" Type="int" />
+          <Property Name="ProductRedeemName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ActionDate" Type="datetime" />
+          <Property Name="StatusId" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar(max)" />
+          <Property Name="CreatedAt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EnjoyOurTour.dbo.User_Adgent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="User_Adgent">
+          <Key>
+            <PropertyRef Name="AgentId" />
+            <PropertyRef Name="AgentCode" />
+            <PropertyRef Name="AgentName" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="EmailAddress" />
+            <PropertyRef Name="NRIC" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="BankName" />
+            <PropertyRef Name="BankAccountNumber" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="Commission" />
+            <PropertyRef Name="Bonus" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="AgentId" Type="int" Nullable="false" />
+          <Property Name="AgentCode" Type="int" Nullable="false" />
+          <Property Name="AgentName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NRIC" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Commission" Type="money" Nullable="false" />
+          <Property Name="Bonus" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EnjoyOurTour.dbo.User_Customer_Adgent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="User_Customer_Adgent">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="CustomerCode" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="AgentCode" />
+            <PropertyRef Name="AgentName" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="EmailAddress" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="NRIC" />
+            <PropertyRef Name="BankName" />
+            <PropertyRef Name="BankAccountNumber" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="AvailableTVR" />
+            <PropertyRef Name="AvailableAmount" />
+            <PropertyRef Name="AvailablePoint" />
+            <PropertyRef Name="JoinDate" />
+            <PropertyRef Name="RenewDate" />
+            <PropertyRef Name="ExpiredDate" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="CustomerCode" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AgentCode" Type="int" Nullable="false" />
+          <Property Name="AgentName" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="NRIC" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BankAccountNumber" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="AvailableTVR" Type="int" Nullable="false" />
+          <Property Name="AvailableAmount" Type="money" Nullable="false" />
+          <Property Name="AvailablePoint" Type="int" Nullable="false" />
+          <Property Name="IntroduceCode" Type="nvarchar" MaxLength="128" />
+          <Property Name="IntroduceName" Type="nvarchar" MaxLength="128" />
+          <Property Name="JoinDate" Type="datetime" Nullable="false" />
+          <Property Name="RenewDate" Type="datetime" Nullable="false" />
+          <Property Name="ExpiredDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EnjoyOurTour.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="create_date" Type="datetime" Nullable="false" />
+          <Property Name="modify_date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="EnjoyOurTourModelStoreContainer">
+          <EntitySet Name="AboutUs" EntityType="Self.AboutUs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Agent" EntityType="Self.Agent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AgentTransaction" EntityType="Self.AgentTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContactUs" EntityType="Self.ContactUs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CustomersTestimony" EntityType="Self.CustomersTestimony" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoodNews" EntityType="Self.GoodNews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IntroducerTransaction" EntityType="Self.IntroducerTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Merchant" EntityType="Self.Merchant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MerchantCategory" EntityType="Self.MerchantCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MerchantPromotion" EntityType="Self.MerchantPromotion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Package" EntityType="Self.Package" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductRedeem" EntityType="Self.ProductRedeem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RedeemCoupon" EntityType="Self.RedeemCoupon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemSetting" EntityType="Self.SystemSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TransactionActivity" EntityType="Self.TransactionActivity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TravelPromotion" EntityType="Self.TravelPromotion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTransaction" EntityType="Self.UserTransaction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTransactionStatus" EntityType="Self.UserTransactionStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RedeemCouponTransactionView" EntityType="Self.RedeemCouponTransactionView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RedeemCouponTransactionView].[RedeemCouponId] AS [RedeemCouponId], 
+    [RedeemCouponTransactionView].[CouponCode] AS [CouponCode], 
+    [RedeemCouponTransactionView].[TVRAmount] AS [TVRAmount], 
+    [RedeemCouponTransactionView].[ImageProof] AS [ImageProof], 
+    [RedeemCouponTransactionView].[TransactionStatus] AS [TransactionStatus], 
+    [RedeemCouponTransactionView].[StatusName] AS [StatusName], 
+    [RedeemCouponTransactionView].[CustomerId] AS [CustomerId], 
+    [RedeemCouponTransactionView].[CustomerName] AS [CustomerName], 
+    [RedeemCouponTransactionView].[CreatedAt] AS [CreatedAt], 
+    [RedeemCouponTransactionView].[CreatedBy] AS [CreatedBy], 
+    [RedeemCouponTransactionView].[UpdatedAt] AS [UpdatedAt], 
+    [RedeemCouponTransactionView].[UpdatedBy] AS [UpdatedBy]
+    FROM [dbo].[RedeemCouponTransactionView] AS [RedeemCouponTransactionView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="TransactionView" EntityType="Self.TransactionView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [TransactionView].[TransactionId] AS [TransactionId], 
+    [TransactionView].[AgentCodeName] AS [AgentCodeName], 
+    [TransactionView].[CustomerCodeName] AS [CustomerCodeName], 
+    [TransactionView].[IntroducerCodeName] AS [IntroducerCodeName], 
+    [TransactionView].[ReferenceNo] AS [ReferenceNo], 
+    [TransactionView].[ActivityName] AS [ActivityName], 
+    [TransactionView].[ActivityId] AS [ActivityId], 
+    [TransactionView].[PathForProof] AS [PathForProof], 
+    [TransactionView].[Amount] AS [Amount], 
+    [TransactionView].[CurrentTVR] AS [CurrentTVR], 
+    [TransactionView].[TopUpTVR] AS [TopUpTVR], 
+    [TransactionView].[RedeemTVR] AS [RedeemTVR], 
+    [TransactionView].[BalanceTVR] AS [BalanceTVR], 
+    [TransactionView].[CurrentPoint] AS [CurrentPoint], 
+    [TransactionView].[PointAdd] AS [PointAdd], 
+    [TransactionView].[PointRedeem] AS [PointRedeem], 
+    [TransactionView].[PointBalance] AS [PointBalance], 
+    [TransactionView].[PackageName] AS [PackageName], 
+    [TransactionView].[TravelHeadCount] AS [TravelHeadCount], 
+    [TransactionView].[ProductRedeemName] AS [ProductRedeemName], 
+    [TransactionView].[ActionDate] AS [ActionDate], 
+    [TransactionView].[StatusId] AS [StatusId], 
+    [TransactionView].[StatusName] AS [StatusName], 
+    [TransactionView].[Remarks] AS [Remarks], 
+    [TransactionView].[CreatedAt] AS [CreatedAt]
+    FROM [dbo].[TransactionView] AS [TransactionView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="User_Adgent" EntityType="Self.User_Adgent" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [User_Adgent].[AgentId] AS [AgentId], 
+    [User_Adgent].[AgentCode] AS [AgentCode], 
+    [User_Adgent].[AgentName] AS [AgentName], 
+    [User_Adgent].[Username] AS [Username], 
+    [User_Adgent].[EmailAddress] AS [EmailAddress], 
+    [User_Adgent].[NRIC] AS [NRIC], 
+    [User_Adgent].[DOB] AS [DOB], 
+    [User_Adgent].[BankName] AS [BankName], 
+    [User_Adgent].[BankAccountNumber] AS [BankAccountNumber], 
+    [User_Adgent].[PhoneNumber] AS [PhoneNumber], 
+    [User_Adgent].[Address] AS [Address], 
+    [User_Adgent].[Commission] AS [Commission], 
+    [User_Adgent].[Bonus] AS [Bonus], 
+    [User_Adgent].[UserId] AS [UserId]
+    FROM [dbo].[User_Adgent] AS [User_Adgent]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="User_Customer_Adgent" EntityType="Self.User_Customer_Adgent" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [User_Customer_Adgent].[UserId] AS [UserId], 
+    [User_Customer_Adgent].[CustomerId] AS [CustomerId], 
+    [User_Customer_Adgent].[CustomerCode] AS [CustomerCode], 
+    [User_Customer_Adgent].[CustomerName] AS [CustomerName], 
+    [User_Customer_Adgent].[AgentCode] AS [AgentCode], 
+    [User_Customer_Adgent].[AgentName] AS [AgentName], 
+    [User_Customer_Adgent].[Username] AS [Username], 
+    [User_Customer_Adgent].[EmailAddress] AS [EmailAddress], 
+    [User_Customer_Adgent].[DateOfBirth] AS [DateOfBirth], 
+    [User_Customer_Adgent].[NRIC] AS [NRIC], 
+    [User_Customer_Adgent].[BankName] AS [BankName], 
+    [User_Customer_Adgent].[BankAccountNumber] AS [BankAccountNumber], 
+    [User_Customer_Adgent].[PhoneNumber] AS [PhoneNumber], 
+    [User_Customer_Adgent].[Address] AS [Address], 
+    [User_Customer_Adgent].[AvailableTVR] AS [AvailableTVR], 
+    [User_Customer_Adgent].[AvailableAmount] AS [AvailableAmount], 
+    [User_Customer_Adgent].[AvailablePoint] AS [AvailablePoint], 
+    [User_Customer_Adgent].[IntroduceCode] AS [IntroduceCode], 
+    [User_Customer_Adgent].[IntroduceName] AS [IntroduceName], 
+    [User_Customer_Adgent].[JoinDate] AS [JoinDate], 
+    [User_Customer_Adgent].[RenewDate] AS [RenewDate], 
+    [User_Customer_Adgent].[ExpiredDate] AS [ExpiredDate]
+    FROM [dbo].[User_Customer_Adgent] AS [User_Customer_Adgent]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+            <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EnjoyOurTourModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TourEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AboutUs" EntityType="EnjoyOurTourModel.AboutUs" />
+          <EntitySet Name="Agent" EntityType="EnjoyOurTourModel.Agent" />
+          <EntitySet Name="AgentTransaction" EntityType="EnjoyOurTourModel.AgentTransaction" />
+          <EntitySet Name="Banner" EntityType="EnjoyOurTourModel.Banner" />
+          <EntitySet Name="ContactUs" EntityType="EnjoyOurTourModel.ContactUs" />
+          <EntitySet Name="Customer" EntityType="EnjoyOurTourModel.Customer" />
+          <EntitySet Name="CustomersTestimony" EntityType="EnjoyOurTourModel.CustomersTestimony" />
+          <EntitySet Name="GoodNews" EntityType="EnjoyOurTourModel.GoodNews" />
+          <EntitySet Name="IntroducerTransaction" EntityType="EnjoyOurTourModel.IntroducerTransaction" />
+          <EntitySet Name="Merchant" EntityType="EnjoyOurTourModel.Merchant" />
+          <EntitySet Name="MerchantCategory" EntityType="EnjoyOurTourModel.MerchantCategory" />
+          <EntitySet Name="MerchantPromotion" EntityType="EnjoyOurTourModel.MerchantPromotion" />
+          <EntitySet Name="Package" EntityType="EnjoyOurTourModel.Package" />
+          <EntitySet Name="ProductRedeem" EntityType="EnjoyOurTourModel.ProductRedeem" />
+          <EntitySet Name="RedeemCoupon" EntityType="EnjoyOurTourModel.RedeemCoupon" />
+          <EntitySet Name="Role" EntityType="EnjoyOurTourModel.Role" />
+          <EntitySet Name="SystemSetting" EntityType="EnjoyOurTourModel.SystemSetting" />
+          <EntitySet Name="TransactionActivity" EntityType="EnjoyOurTourModel.TransactionActivity" />
+          <EntitySet Name="TravelPromotion" EntityType="EnjoyOurTourModel.TravelPromotion" />
+          <EntitySet Name="User" EntityType="EnjoyOurTourModel.User" />
+          <EntitySet Name="UserTransaction" EntityType="EnjoyOurTourModel.UserTransaction" />
+          <EntitySet Name="UserTransactionStatus" EntityType="EnjoyOurTourModel.UserTransactionStatus" />
+          <EntitySet Name="TransactionView" EntityType="EnjoyOurTourModel.TransactionView" />
+          <EntitySet Name="User_Adgent" EntityType="EnjoyOurTourModel.User_Adgent" />
+          <EntitySet Name="User_Customer_Adgent" EntityType="EnjoyOurTourModel.User_Customer_Adgent" />
+          <EntitySet Name="database_firewall_rules" EntityType="EnjoyOurTourModel.database_firewall_rules" />
+          <EntitySet Name="RedeemCouponTransactionView" EntityType="EnjoyOurTourModel.RedeemCouponTransactionView" />
+          <EntitySet Name="EmailTemplate" EntityType="EnjoyOurTourModel.EmailTemplate" />
+        </EntityContainer>
+        <EntityType Name="AboutUs">
+          <Key>
+            <PropertyRef Name="AboutUsId" />
+          </Key>
+          <Property Name="AboutUsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AboutUsTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AboutUsDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AboutUsShortDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="YoutubeLink" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Agent">
+          <Key>
+            <PropertyRef Name="AgentId" />
+          </Key>
+          <Property Name="AgentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgentCode" Type="Int32" Nullable="false" />
+          <Property Name="AgentName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="NRIC" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Commission" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Bonus" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AgentTransaction">
+          <Key>
+            <PropertyRef Name="AgentTransactionId" />
+          </Key>
+          <Property Name="AgentTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="CreditAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FinalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreditBonus" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="FinalBonus" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="DebitAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DebitBonus" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="BannerId" />
+          </Key>
+          <Property Name="BannerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BannerImage" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BannerName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BannerDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContactUs">
+          <Key>
+            <PropertyRef Name="ContactUsId" />
+          </Key>
+          <Property Name="ContactUsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContactUsTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyPhoneNumber" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyLatitude" Type="Double" Nullable="false" />
+          <Property Name="CompanyLongitude" Type="Double" Nullable="false" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerCode" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="NRIC" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AvailableTVR" Type="Int32" Nullable="false" />
+          <Property Name="AvailableAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="AvailablePoint" Type="Int32" Nullable="false" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="IntroducerId" Type="Int32" />
+          <Property Name="JoinDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RenewDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpiredDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IntroduceTimes" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CustomersTestimony">
+          <Key>
+            <PropertyRef Name="TestimonyId" />
+          </Key>
+          <Property Name="TestimonyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoPath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="YoutubeLink" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GoodNews">
+          <Key>
+            <PropertyRef Name="GoodNewsId" />
+          </Key>
+          <Property Name="GoodNewsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoPath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="GoodNewsTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IntroducerTransaction">
+          <Key>
+            <PropertyRef Name="IntroducerTransactionId" />
+          </Key>
+          <Property Name="IntroducerTransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IntroducerId" Type="Int32" Nullable="false" />
+          <Property Name="CreditAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FinalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="DebitAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreditTVR" Type="Int32" />
+          <Property Name="DebitTVR" Type="Int32" />
+          <Property Name="FinalTVR" Type="Int32" />
+          <Property Name="CreditPoint" Type="Int32" />
+          <Property Name="DebitPoint" Type="Int32" />
+          <Property Name="FinalPoint" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Merchant">
+          <Key>
+            <PropertyRef Name="MerchantId" />
+          </Key>
+          <Property Name="MerchantId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MerchantName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="MerchantRegisterCode" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MerchantPhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="MerchantAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MerchantCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="MerchantJoinDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MerchantLogoPath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="MerchantCategory">
+          <Key>
+            <PropertyRef Name="MerchantCategoryId" />
+          </Key>
+          <Property Name="MerchantCategoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="MerchantPromotion">
+          <Key>
+            <PropertyRef Name="MerchantPromotionId" />
+          </Key>
+          <Property Name="MerchantPromotionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MechantId" Type="Int32" Nullable="false" />
+          <Property Name="MerchantPromotionDetail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Package">
+          <Key>
+            <PropertyRef Name="PackageId" />
+          </Key>
+          <Property Name="PackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageName" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PhotoPath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IteneraryDetail" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TVR" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="FilePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProductRedeem">
+          <Key>
+            <PropertyRef Name="ProductRedeemId" />
+          </Key>
+          <Property Name="ProductRedeemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductRedeemName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RedeemPoint" Type="Int32" Nullable="false" />
+          <Property Name="Stock" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RedeemCoupon">
+          <Key>
+            <PropertyRef Name="RedeemCouponId" />
+          </Key>
+          <Property Name="RedeemCouponId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CouponCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TVRAmount" Type="Int32" Nullable="false" />
+          <Property Name="ImageProof" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionStatus" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemSetting">
+          <Key>
+            <PropertyRef Name="SystemSettingId" />
+          </Key>
+          <Property Name="SystemSettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MinAmount" Type="Int32" Nullable="false" />
+          <Property Name="SignUpFees" Type="Int32" Nullable="false" />
+          <Property Name="TVRMutiply" Type="Int32" Nullable="false" />
+          <Property Name="IntroduceIncreaseLimit" Type="Int32" Nullable="false" />
+          <Property Name="AgentCommision" Type="Int32" Nullable="false" />
+          <Property Name="IntroduceNormalCommision" Type="Int32" Nullable="false" />
+          <Property Name="IntroduceIncreaseCommision" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBY" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreadtedDate" Type="DateTime" Precision="3" />
+          <Property Name="AgentCalculationBonus" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="PointCalculation" Type="Int32" Nullable="false" />
+          <Property Name="IntroduceMaxLimit" Type="Int32" Nullable="false" />
+          <Property Name="AgentTopUpCommission" Type="Int32" Nullable="false" />
+          <Property Name="ProcessingFeesCommision" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TransactionActivity">
+          <Key>
+            <PropertyRef Name="ActivityId" />
+          </Key>
+          <Property Name="ActivityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActivityName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TravelPromotion">
+          <Key>
+            <PropertyRef Name="TravelPromotionId" />
+          </Key>
+          <Property Name="TravelPromotionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PhotoPath" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TravelPromotionTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserTransaction">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="IntroducerId" Type="Int32" />
+          <Property Name="ReferenceNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityId" Type="Int32" Nullable="false" />
+          <Property Name="PathForProof" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CurrentTVR" Type="Int32" Nullable="false" />
+          <Property Name="TopUpTVR" Type="Int32" Nullable="false" />
+          <Property Name="RedeemTVR" Type="Int32" Nullable="false" />
+          <Property Name="BalanceTVR" Type="Int32" Nullable="false" />
+          <Property Name="CurrentPoint" Type="Int32" Nullable="false" />
+          <Property Name="PointAdd" Type="Int32" Nullable="false" />
+          <Property Name="PointRedeem" Type="Int32" Nullable="false" />
+          <Property Name="PointBalance" Type="Int32" Nullable="false" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="TransactionStatus" Type="Int32" Nullable="false" />
+          <Property Name="PackageId" Type="Int32" />
+          <Property Name="TravelHeadCount" Type="Int32" />
+          <Property Name="ProductId" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UserTransactionStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TransactionView">
+          <Key>
+            <PropertyRef Name="TransactionId" />
+            <PropertyRef Name="CustomerCodeName" />
+            <PropertyRef Name="ReferenceNo" />
+            <PropertyRef Name="ActivityName" />
+            <PropertyRef Name="ActivityId" />
+            <PropertyRef Name="PathForProof" />
+            <PropertyRef Name="Amount" />
+            <PropertyRef Name="CurrentTVR" />
+            <PropertyRef Name="TopUpTVR" />
+            <PropertyRef Name="RedeemTVR" />
+            <PropertyRef Name="BalanceTVR" />
+            <PropertyRef Name="CurrentPoint" />
+            <PropertyRef Name="PointAdd" />
+            <PropertyRef Name="PointRedeem" />
+            <PropertyRef Name="PointBalance" />
+            <PropertyRef Name="StatusId" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="CreatedAt" />
+          </Key>
+          <Property Name="TransactionId" Type="Int32" Nullable="false" />
+          <Property Name="AgentCodeName" Type="String" MaxLength="149" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerCodeName" Type="String" Nullable="false" MaxLength="257" FixedLength="false" Unicode="true" />
+          <Property Name="IntroducerCodeName" Type="String" MaxLength="257" FixedLength="false" Unicode="true" />
+          <Property Name="ReferenceNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ActivityName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ActivityId" Type="Int32" Nullable="false" />
+          <Property Name="PathForProof" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CurrentTVR" Type="Int32" Nullable="false" />
+          <Property Name="TopUpTVR" Type="Int32" Nullable="false" />
+          <Property Name="RedeemTVR" Type="Int32" Nullable="false" />
+          <Property Name="BalanceTVR" Type="Int32" Nullable="false" />
+          <Property Name="CurrentPoint" Type="Int32" Nullable="false" />
+          <Property Name="PointAdd" Type="Int32" Nullable="false" />
+          <Property Name="PointRedeem" Type="Int32" Nullable="false" />
+          <Property Name="PointBalance" Type="Int32" Nullable="false" />
+          <Property Name="PackageName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="TravelHeadCount" Type="Int32" />
+          <Property Name="ProductRedeemName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" Precision="3" />
+          <Property Name="StatusId" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Remarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="User_Adgent">
+          <Key>
+            <PropertyRef Name="AgentId" />
+            <PropertyRef Name="AgentCode" />
+            <PropertyRef Name="AgentName" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="EmailAddress" />
+            <PropertyRef Name="NRIC" />
+            <PropertyRef Name="DOB" />
+            <PropertyRef Name="BankName" />
+            <PropertyRef Name="BankAccountNumber" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="Commission" />
+            <PropertyRef Name="Bonus" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="AgentId" Type="Int32" Nullable="false" />
+          <Property Name="AgentCode" Type="Int32" Nullable="false" />
+          <Property Name="AgentName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NRIC" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Commission" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Bonus" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Customer_Adgent">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="CustomerCode" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="AgentCode" />
+            <PropertyRef Name="AgentName" />
+            <PropertyRef Name="Username" />
+            <PropertyRef Name="EmailAddress" />
+            <PropertyRef Name="DateOfBirth" />
+            <PropertyRef Name="NRIC" />
+            <PropertyRef Name="BankName" />
+            <PropertyRef Name="BankAccountNumber" />
+            <PropertyRef Name="PhoneNumber" />
+            <PropertyRef Name="Address" />
+            <PropertyRef Name="AvailableTVR" />
+            <PropertyRef Name="AvailableAmount" />
+            <PropertyRef Name="AvailablePoint" />
+            <PropertyRef Name="JoinDate" />
+            <PropertyRef Name="RenewDate" />
+            <PropertyRef Name="ExpiredDate" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerCode" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="AgentCode" Type="Int32" Nullable="false" />
+          <Property Name="AgentName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NRIC" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="BankName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BankAccountNumber" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AvailableTVR" Type="Int32" Nullable="false" />
+          <Property Name="AvailableAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="AvailablePoint" Type="Int32" Nullable="false" />
+          <Property Name="IntroduceCode" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IntroduceName" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="JoinDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RenewDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ExpiredDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="database_firewall_rules">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="name" />
+            <PropertyRef Name="start_ip_address" />
+            <PropertyRef Name="end_ip_address" />
+            <PropertyRef Name="create_date" />
+            <PropertyRef Name="modify_date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="start_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="end_ip_address" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="RedeemCouponTransactionView">
+          <Key>
+            <PropertyRef Name="RedeemCouponId" />
+            <PropertyRef Name="CouponCode" />
+            <PropertyRef Name="TVRAmount" />
+            <PropertyRef Name="TransactionStatus" />
+            <PropertyRef Name="StatusName" />
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="CustomerName" />
+            <PropertyRef Name="CreatedAt" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="UpdatedAt" />
+            <PropertyRef Name="UpdatedBy" />
+          </Key>
+          <Property Name="RedeemCouponId" Type="Int32" Nullable="false" />
+          <Property Name="CouponCode" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TVRAmount" Type="Int32" Nullable="false" />
+          <Property Name="ImageProof" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionStatus" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="EmailTemplate">
+          <Key>
+            <PropertyRef Name="EmailTemplateId" />
+          </Key>
+          <Property Name="EmailTemplateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailTitle" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmailContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PhotoPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EnjoyOurTourModelStoreContainer" CdmEntityContainer="TourEntities">
+          <EntitySetMapping Name="AboutUs">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.AboutUs">
+              <MappingFragment StoreEntitySet="AboutUs">
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="YoutubeLink" ColumnName="YoutubeLink" />
+                <ScalarProperty Name="AboutUsShortDescription" ColumnName="AboutUsShortDescription" />
+                <ScalarProperty Name="AboutUsDescription" ColumnName="AboutUsDescription" />
+                <ScalarProperty Name="AboutUsTitle" ColumnName="AboutUsTitle" />
+                <ScalarProperty Name="AboutUsId" ColumnName="AboutUsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Agent">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.Agent">
+              <MappingFragment StoreEntitySet="Agent">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="NRIC" ColumnName="NRIC" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="AgentCode" ColumnName="AgentCode" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AgentTransaction">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.AgentTransaction">
+              <MappingFragment StoreEntitySet="AgentTransaction">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DebitBonus" ColumnName="DebitBonus" />
+                <ScalarProperty Name="DebitAmount" ColumnName="DebitAmount" />
+                <ScalarProperty Name="FinalBonus" ColumnName="FinalBonus" />
+                <ScalarProperty Name="CreditBonus" ColumnName="CreditBonus" />
+                <ScalarProperty Name="FinalAmount" ColumnName="FinalAmount" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="AgentTransactionId" ColumnName="AgentTransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banner">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.Banner">
+              <MappingFragment StoreEntitySet="Banner">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BannerDescription" ColumnName="BannerDescription" />
+                <ScalarProperty Name="BannerName" ColumnName="BannerName" />
+                <ScalarProperty Name="BannerImage" ColumnName="BannerImage" />
+                <ScalarProperty Name="BannerId" ColumnName="BannerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContactUs">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.ContactUs">
+              <MappingFragment StoreEntitySet="ContactUs">
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CompanyLongitude" ColumnName="CompanyLongitude" />
+                <ScalarProperty Name="CompanyLatitude" ColumnName="CompanyLatitude" />
+                <ScalarProperty Name="CompanyPhoneNumber" ColumnName="CompanyPhoneNumber" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ContactUsTitle" ColumnName="ContactUsTitle" />
+                <ScalarProperty Name="ContactUsId" ColumnName="ContactUsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="IntroduceTimes" ColumnName="IntroduceTimes" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="RenewDate" ColumnName="RenewDate" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="IntroducerId" ColumnName="IntroducerId" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="AvailablePoint" ColumnName="AvailablePoint" />
+                <ScalarProperty Name="AvailableAmount" ColumnName="AvailableAmount" />
+                <ScalarProperty Name="AvailableTVR" ColumnName="AvailableTVR" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="NRIC" ColumnName="NRIC" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomersTestimony">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.CustomersTestimony">
+              <MappingFragment StoreEntitySet="CustomersTestimony">
+                <ScalarProperty Name="YoutubeLink" ColumnName="YoutubeLink" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="TestimonyId" ColumnName="TestimonyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoodNews">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.GoodNews">
+              <MappingFragment StoreEntitySet="GoodNews">
+                <ScalarProperty Name="GoodNewsTitle" ColumnName="GoodNewsTitle" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="GoodNewsId" ColumnName="GoodNewsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IntroducerTransaction">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.IntroducerTransaction">
+              <MappingFragment StoreEntitySet="IntroducerTransaction">
+                <ScalarProperty Name="FinalPoint" ColumnName="FinalPoint" />
+                <ScalarProperty Name="DebitPoint" ColumnName="DebitPoint" />
+                <ScalarProperty Name="CreditPoint" ColumnName="CreditPoint" />
+                <ScalarProperty Name="FinalTVR" ColumnName="FinalTVR" />
+                <ScalarProperty Name="DebitTVR" ColumnName="DebitTVR" />
+                <ScalarProperty Name="CreditTVR" ColumnName="CreditTVR" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DebitAmount" ColumnName="DebitAmount" />
+                <ScalarProperty Name="FinalAmount" ColumnName="FinalAmount" />
+                <ScalarProperty Name="CreditAmount" ColumnName="CreditAmount" />
+                <ScalarProperty Name="IntroducerId" ColumnName="IntroducerId" />
+                <ScalarProperty Name="IntroducerTransactionId" ColumnName="IntroducerTransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Merchant">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.Merchant">
+              <MappingFragment StoreEntitySet="Merchant">
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="MerchantLogoPath" ColumnName="MerchantLogoPath" />
+                <ScalarProperty Name="MerchantJoinDate" ColumnName="MerchantJoinDate" />
+                <ScalarProperty Name="MerchantCategoryId" ColumnName="MerchantCategoryId" />
+                <ScalarProperty Name="MerchantAddress" ColumnName="MerchantAddress" />
+                <ScalarProperty Name="MerchantPhoneNumber" ColumnName="MerchantPhoneNumber" />
+                <ScalarProperty Name="MerchantRegisterCode" ColumnName="MerchantRegisterCode" />
+                <ScalarProperty Name="MerchantName" ColumnName="MerchantName" />
+                <ScalarProperty Name="MerchantId" ColumnName="MerchantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MerchantCategory">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.MerchantCategory">
+              <MappingFragment StoreEntitySet="MerchantCategory">
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="MerchantCategoryId" ColumnName="MerchantCategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MerchantPromotion">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.MerchantPromotion">
+              <MappingFragment StoreEntitySet="MerchantPromotion">
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="MerchantPromotionDetail" ColumnName="MerchantPromotionDetail" />
+                <ScalarProperty Name="MechantId" ColumnName="MechantId" />
+                <ScalarProperty Name="MerchantPromotionId" ColumnName="MerchantPromotionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Package">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.Package">
+              <MappingFragment StoreEntitySet="Package">
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TVR" ColumnName="TVR" />
+                <ScalarProperty Name="IteneraryDetail" ColumnName="IteneraryDetail" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductRedeem">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.ProductRedeem">
+              <MappingFragment StoreEntitySet="ProductRedeem">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Stock" ColumnName="Stock" />
+                <ScalarProperty Name="RedeemPoint" ColumnName="RedeemPoint" />
+                <ScalarProperty Name="ProductRedeemName" ColumnName="ProductRedeemName" />
+                <ScalarProperty Name="ProductRedeemId" ColumnName="ProductRedeemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RedeemCoupon">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.RedeemCoupon">
+              <MappingFragment StoreEntitySet="RedeemCoupon">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="TransactionStatus" ColumnName="TransactionStatus" />
+                <ScalarProperty Name="ImageProof" ColumnName="ImageProof" />
+                <ScalarProperty Name="TVRAmount" ColumnName="TVRAmount" />
+                <ScalarProperty Name="CouponCode" ColumnName="CouponCode" />
+                <ScalarProperty Name="RedeemCouponId" ColumnName="RedeemCouponId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemSetting">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.SystemSetting">
+              <MappingFragment StoreEntitySet="SystemSetting">
+                <ScalarProperty Name="ProcessingFeesCommision" ColumnName="ProcessingFeesCommision" />
+                <ScalarProperty Name="AgentTopUpCommission" ColumnName="AgentTopUpCommission" />
+                <ScalarProperty Name="IntroduceMaxLimit" ColumnName="IntroduceMaxLimit" />
+                <ScalarProperty Name="PointCalculation" ColumnName="PointCalculation" />
+                <ScalarProperty Name="AgentCalculationBonus" ColumnName="AgentCalculationBonus" />
+                <ScalarProperty Name="CreadtedDate" ColumnName="CreadtedDate" />
+                <ScalarProperty Name="CreatedBY" ColumnName="CreatedBY" />
+                <ScalarProperty Name="IntroduceIncreaseCommision" ColumnName="IntroduceIncreaseCommision" />
+                <ScalarProperty Name="IntroduceNormalCommision" ColumnName="IntroduceNormalCommision" />
+                <ScalarProperty Name="AgentCommision" ColumnName="AgentCommision" />
+                <ScalarProperty Name="IntroduceIncreaseLimit" ColumnName="IntroduceIncreaseLimit" />
+                <ScalarProperty Name="TVRMutiply" ColumnName="TVRMutiply" />
+                <ScalarProperty Name="SignUpFees" ColumnName="SignUpFees" />
+                <ScalarProperty Name="MinAmount" ColumnName="MinAmount" />
+                <ScalarProperty Name="SystemSettingId" ColumnName="SystemSettingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionActivity">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.TransactionActivity">
+              <MappingFragment StoreEntitySet="TransactionActivity">
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TravelPromotion">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.TravelPromotion">
+              <MappingFragment StoreEntitySet="TravelPromotion">
+                <ScalarProperty Name="TravelPromotionTitle" ColumnName="TravelPromotionTitle" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="TravelPromotionId" ColumnName="TravelPromotionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTransaction">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.UserTransaction">
+              <MappingFragment StoreEntitySet="UserTransaction">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="TravelHeadCount" ColumnName="TravelHeadCount" />
+                <ScalarProperty Name="PackageId" ColumnName="PackageId" />
+                <ScalarProperty Name="TransactionStatus" ColumnName="TransactionStatus" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="PointBalance" ColumnName="PointBalance" />
+                <ScalarProperty Name="PointRedeem" ColumnName="PointRedeem" />
+                <ScalarProperty Name="PointAdd" ColumnName="PointAdd" />
+                <ScalarProperty Name="CurrentPoint" ColumnName="CurrentPoint" />
+                <ScalarProperty Name="BalanceTVR" ColumnName="BalanceTVR" />
+                <ScalarProperty Name="RedeemTVR" ColumnName="RedeemTVR" />
+                <ScalarProperty Name="TopUpTVR" ColumnName="TopUpTVR" />
+                <ScalarProperty Name="CurrentTVR" ColumnName="CurrentTVR" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PathForProof" ColumnName="PathForProof" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="ReferenceNo" ColumnName="ReferenceNo" />
+                <ScalarProperty Name="IntroducerId" ColumnName="IntroducerId" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTransactionStatus">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.UserTransactionStatus">
+              <MappingFragment StoreEntitySet="UserTransactionStatus">
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransactionView">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.TransactionView">
+              <MappingFragment StoreEntitySet="TransactionView">
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="ProductRedeemName" ColumnName="ProductRedeemName" />
+                <ScalarProperty Name="TravelHeadCount" ColumnName="TravelHeadCount" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="PointBalance" ColumnName="PointBalance" />
+                <ScalarProperty Name="PointRedeem" ColumnName="PointRedeem" />
+                <ScalarProperty Name="PointAdd" ColumnName="PointAdd" />
+                <ScalarProperty Name="CurrentPoint" ColumnName="CurrentPoint" />
+                <ScalarProperty Name="BalanceTVR" ColumnName="BalanceTVR" />
+                <ScalarProperty Name="RedeemTVR" ColumnName="RedeemTVR" />
+                <ScalarProperty Name="TopUpTVR" ColumnName="TopUpTVR" />
+                <ScalarProperty Name="CurrentTVR" ColumnName="CurrentTVR" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PathForProof" ColumnName="PathForProof" />
+                <ScalarProperty Name="ActivityId" ColumnName="ActivityId" />
+                <ScalarProperty Name="ActivityName" ColumnName="ActivityName" />
+                <ScalarProperty Name="ReferenceNo" ColumnName="ReferenceNo" />
+                <ScalarProperty Name="IntroducerCodeName" ColumnName="IntroducerCodeName" />
+                <ScalarProperty Name="CustomerCodeName" ColumnName="CustomerCodeName" />
+                <ScalarProperty Name="AgentCodeName" ColumnName="AgentCodeName" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Adgent">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.User_Adgent">
+              <MappingFragment StoreEntitySet="User_Adgent">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Bonus" ColumnName="Bonus" />
+                <ScalarProperty Name="Commission" ColumnName="Commission" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="NRIC" ColumnName="NRIC" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="AgentCode" ColumnName="AgentCode" />
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Customer_Adgent">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.User_Customer_Adgent">
+              <MappingFragment StoreEntitySet="User_Customer_Adgent">
+                <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+                <ScalarProperty Name="RenewDate" ColumnName="RenewDate" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="IntroduceName" ColumnName="IntroduceName" />
+                <ScalarProperty Name="IntroduceCode" ColumnName="IntroduceCode" />
+                <ScalarProperty Name="AvailablePoint" ColumnName="AvailablePoint" />
+                <ScalarProperty Name="AvailableAmount" ColumnName="AvailableAmount" />
+                <ScalarProperty Name="AvailableTVR" ColumnName="AvailableTVR" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="BankAccountNumber" ColumnName="BankAccountNumber" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="NRIC" ColumnName="NRIC" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+                <ScalarProperty Name="AgentCode" ColumnName="AgentCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="database_firewall_rules">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.database_firewall_rules">
+              <MappingFragment StoreEntitySet="database_firewall_rules">
+                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+                <ScalarProperty Name="create_date" ColumnName="create_date" />
+                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RedeemCouponTransactionView">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.RedeemCouponTransactionView">
+              <MappingFragment StoreEntitySet="RedeemCouponTransactionView">
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="TransactionStatus" ColumnName="TransactionStatus" />
+                <ScalarProperty Name="ImageProof" ColumnName="ImageProof" />
+                <ScalarProperty Name="TVRAmount" ColumnName="TVRAmount" />
+                <ScalarProperty Name="CouponCode" ColumnName="CouponCode" />
+                <ScalarProperty Name="RedeemCouponId" ColumnName="RedeemCouponId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmailTemplate">
+            <EntityTypeMapping TypeName="EnjoyOurTourModel.EmailTemplate">
+              <MappingFragment StoreEntitySet="EmailTemplate">
+                <ScalarProperty Name="PhotoPath" ColumnName="PhotoPath" />
+                <ScalarProperty Name="UpdatedAt" ColumnName="UpdatedAt" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="EmailContent" ColumnName="EmailContent" />
+                <ScalarProperty Name="EmailTitle" ColumnName="EmailTitle" />
+                <ScalarProperty Name="EmailTemplateId" ColumnName="EmailTemplateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

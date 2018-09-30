@@ -1,0 +1,170 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Merchant.AddMerchantViewModel
+
+@{
+    ViewBag.Title = "AddMerchant";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Add New Merchant</h1>
+    </div>
+</div>
+
+<form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3" id="errormsg">
+
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="form-group">
+                <label for="MerchantName" id="MerchantName">Merchant Name:</label></br>
+                <input type="text" id="inputMerchantName"  class="form-control" name="MerchantName" />
+                @Html.ValidationMessageFor(e => e.MerchantName)
+            </div>
+            <div class="form-group">
+                <label for="MerchantRegisterCode" id="MerchantRegisterCode">Merchant Register Code:</label></br>
+                <input type="text" id="inputMerchantRegisterCode"  class="form-control" name="MerchantRegisterCode" />
+                @Html.ValidationMessageFor(e => e.MerchantRegisterCode)
+            </div>
+            <div class="form-group">
+                <label for="MerchantPhoneNumber" id="MerchantPhoneNumber">Merchant Phone Number:</label></br>
+                <input type="number" id="inputMerchantPhoneNumber"  class="form-control" name="MerchantPhoneNumber" />
+                @Html.ValidationMessageFor(e => e.MerchantPhoneNumber)
+            </div>
+            <div class="form-group">
+                <label for="MerchantAddress" id="MerchantAddress">Merchant Address:</label><br />
+                <textarea id="inputMerchantAddress" name="MerchantAddress"  class="form-control"></textarea>
+                @Html.ValidationMessageFor(e => e.MerchantAddress)
+            </div>
+            <div class="form-group">
+                <label for="MerchantCategoryId" id="lblMerchantCategoryId">Merchant Category ID:</label></br>
+                    @Html.DropDownListFor(e => e.MerchantCategoryId, Model.MerchantCategoryId, "--Please Select Merchant--", new { @class = "form-control", id = "ddlMerchantCategoryId" })
+                    @Html.ValidationMessageFor(e => e.MerchantCategoryId)
+            </div>
+            <div class="form-group">
+                <label for="MerchantJoinDate" id="MerchantJoinDate">Merchant Join Date:</label></br>
+                <input type="text" id="inputMerchantJoinDate"  class="form-control" name="MerchantJoinDate"/>
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Merchant Logo</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showMerchant').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showMerchant').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showMerchant" style="width:50%; display:none;" />
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="addMerchant" class="btn btn-primary pull-right">Add Merchant</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    $('#inputMerchantJoinDate').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm',
+    });
+
+    $(document).ready(function () {
+     
+
+        $('#addMerchant').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+            var image = document.getElementById('PhotoPath').files[0];
+            var form = $('form')[0];
+
+            if ($('#inputMerchantName').val() == '') {
+                $('#MerchantName').html('<span class="asterisk" style="color:red">*Please insert Merchant Name.</span>');
+            } else {
+                $("#MerchantName .asterisk").remove();
+                $('#MerchantName').html('Merchant Name:');
+            }
+
+            if ($('#inputMerchantRegisterCode').val() == '') {
+                $('#MerchantRegisterCode').html('<span class="asterisk" style="color:red">*Please insert Merchant Register Code.</span>');
+            } else {
+                $("#MerchantRegisterCode .asterisk").remove();
+                $('#MerchantRegisterCode').html('Merchant Register Code:');
+            }
+
+            if ($('#inputMerchantPhoneNumber').val() == '') {
+                $('#MerchantPhoneNumber').html('<span class="asterisk" style="color:red">*Please insert Merchant Phone Number.</span>');
+            } else {
+                $("#MerchantPhoneNumber .asterisk").remove();
+                $('#MerchantPhoneNumber').html('Merchant Phone Number:');
+            }
+
+            if ($('#inputMerchantAddress').val() == '') {
+                $('#MerchantAddress').html('<span class="asterisk" style="color:red">*Please insert Merchant Address.</span>');
+            } else {
+                $("#MerchantAddress .asterisk").remove();
+                $('#MerchantAddress').html('Merchant Address:');
+            }
+
+            if ($('#inputMerchantJoinDate').val() == '') {
+                $('#MerchantJoinDate').html('<span class="asterisk" style="color:red">*Please insert Merchant Join Date.</span>');
+            } else {
+                $("#MerchantJoinDate .asterisk").remove();
+                $('#MerchantJoinDate').html('Merchant Join Date:');
+            }
+
+            if (image == undefined) {
+                $('#lblPhotoPath').html('<span class="asterisk" style="color:red">*Please Select one Merchant Logo</span>');
+            } else {
+                $("#lblPhotoPath .asterisk").remove();
+                $('#lblPhotoPath').html('Merchant Logo');
+            }
+
+            if ($("#ddlMerchantCategoryId option:selected").text() == '--Please Select Category Id--') {
+                $('#lblMerchantCategoryId').html('<span class="asterisk" style="color:red">*Please Select Merchant Category Id</span>');
+            } else {
+                $("#lblMerchantCategoryId .asterisk").remove();
+                $("#lblMerchantCategoryId").html('Merchant Category Id:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('MerchantName', $('#inputMerchantName').val());
+                formData.append('MerchantRegisterCode', $('#inputMerchantRegisterCode').val());
+                formData.append('MerchantPhoneNumber', $('#inputMerchantPhoneNumber').val());
+                formData.append('MerchantAddress', $('#inputMerchantAddress').val());
+                formData.append('GetMerchantCategoryId', $("#ddlMerchantCategoryId option:selected").val());
+                formData.append('MerchantJoinDate', $('#inputMerchantJoinDate').val());
+                formData.append('MerchantLogoPath', document.getElementById('PhotoPath').files[0]);
+
+                $.ajax({
+                    url: "/Merchant/AddMerchant",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    data: formData,
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Merchant was successfully added!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Merchant/Merchant';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            } else {
+                $('.loading').css('display', 'none');
+            }
+        });
+    });
+</script>

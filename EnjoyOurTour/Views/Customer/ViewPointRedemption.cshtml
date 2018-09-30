@@ -1,0 +1,91 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Customer.ViewPointRedemption
+@{
+
+    ViewBag.Title = "Redemption Product Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="ViewPointRedemptionForm" name="ViewPointRedemptionForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3" id="errormsg">
+
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Point Redemption</h1>
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="ProductRedeemId" name="ProductRedeemId" value="@Model.ProductRedeemId" />
+            <div class="form-group">                
+                <img style="width:500px; height:500px;" src="/Image/Product/@Model.ImagePath" />
+            </div>
+            <div class="form-group">
+                <label for="ProductRedeemName">Product Redeem Name</label>
+                <p> @Html.Raw(Model.ProductRedeemName) </p>                              
+            </div>
+            <div class="form-group">
+                <label for="RedeemPoint">Point</label>
+                <p> @Html.Raw(Model.RedeemPoint) </p>                
+            </div>       
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" id="btnSubmit" class="btn btn-block pull-right" style="background-color:cornflowerblue ; color:white">Redeem</button>
+        </div>        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+    $(document).ready(function () {
+        $('#btnSubmit').click(function (e) {           
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+            var form = $('form')[0];
+            var formData = new FormData();
+            formData.append('ProductRedeemId', $('#ProductRedeemId').val());
+
+            $.ajax({
+                url: "/Customer/RedeemPoint",
+                contentType: false,
+                processData: false,
+                traditional: true,
+                dataType: 'json',
+                data: formData,
+                type: "POST",
+                success: function (data) {     
+                    if (data.success == true) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Successfully Submit this redeemtion.",
+                            type: "success"
+                        },
+                        function () {
+                            window.location.href = '/Customer/PointRedemption';
+                        });
+                    } else {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        $("#errormsg").html("");
+                        var errormsg = "";
+                        for (var i = 0; i < data.errors.length; i++) {
+                            errormsg = errormsg  + "<li>" + data.errors[i] + "</li>"
+                        }
+                        var wholediv = "<p><strong>An error occured whilst trying to save this issue.</strong></p> " + "<ul data-bind='foreach: saveErrors()'>" + errormsg + "</ul>";
+                        $("#errormsg").append(wholediv);
+                    }                  
+                },
+                error: function (data) {
+                    $('.loading').css('display', 'none');
+                    //swal("Oops", "We couldn't connect to the server!", "error")
+                }                
+            });
+        });
+    });
+</script>

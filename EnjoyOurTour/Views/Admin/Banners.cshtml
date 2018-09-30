@@ -1,0 +1,90 @@
+﻿@model List <EnjoyOurTour.Models.ViewModel.Home.BannerViewModel>
+
+@{
+    ViewBag.Title = "BannerList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Banner List
+        <a href="@Url.Action("AddBanner", "Admin")" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add New Banner
+        </a>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="BannerTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No</th>
+                        <th data-column-id="BannerId" data-visible="false" data-visible-in-selection="false">Banner ID</th>
+                        <th data-column-id="BannerImage" data-formatter="pix">Banner Image</th>
+                        <th data-column-id="BannerDescription" data-width="300px">Description</th>
+                        <th data-column-id="Status">Status</th>
+                        <th data-column-id="DateAdded">Date Added</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.BannerId</td>
+                            <td>@item.BannerImage</td>
+                            <td>@item.BannerDescription</td>
+                            <td>@item.Status</td>
+                            <td>@item.DateAdded</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditBanner", "Admin", new { id = "{Id}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Banner"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@Url.Action("DeleteBanner","Admin", new{id = "{Id}"})" class="btn btn-default delete-bannerimage" data-toggle="tooltip" data-placement="left" title="Delete Banner"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#BannerTable").bootgrid({
+            formatters: {
+                "ActionColumnBar": function (column, row) {
+                    var el = $("div.action-column-bar").html();
+                    el = el.replace("%7BId%7D", row.BannerId).replace("%7BId%7D", row.BannerId).replace("%7BId%7D", row.BannerId).replace("%7BId%7D", row.BannerId);
+
+                    return el;
+                },
+                "pix": function (column, row) {
+                    return ('<img style="width:200px; height:100px;" src="/Image/BannerImage/' + row.BannerImage + '" />');
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid",
+            function () {
+                $(this).find('[data-toggle="tooltip"]').tooltip();
+
+                $(this).find("a.delete-bannerimage").on("click", function (e) {
+                    if (confirm("Do you want to delete the banner?")) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+
+                    return false;
+                });
+            });;
+    });
+</script>

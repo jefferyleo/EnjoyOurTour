@@ -1,0 +1,102 @@
+﻿
+@model EnjoyOurTour.Models.ViewModel.Admin.AddCustomersTestimonyViewModel
+@{
+    ViewBag.Title = "EditCustomersTestimony";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Update Customers Testimony</h1>
+    </div>
+</div>
+
+<form id="EditNewBannerForm" style="color:#001a33;" name="EditNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="TestimonyId" name="TestimonyId" value="@Model.TestimonyId" />
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Testimony Image</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showCustomersTestimony').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showCustomersTestimony').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showCustomersTestimony" style="width:50%; display:none;" />
+            </div>
+            <div class="form-group">
+                <label for="Description" id="Description">Description:</label>
+                <textarea id="inputDescription" class="form-control" name="Description">@Model.Description</textarea>
+                @Html.ValidationMessageFor(e => e.Description)
+            </div>
+            <div class="form-group">
+                <label for="YoutubeLink">YouTube Video Id</label>
+                <input type="text" id="YoutubeLink" name="YoutubeLink" class="form-control" placeholder="Enter YouTube Video Id eg: PmGpXGdZXWU" value="@Model.YoutubeLink">
+                <i style="color:crimson;">**Example https://www.youtube.com/watch?v=PmGpXGdZXWU just fill in PmGpXGdZXWU</i>
+            </div>
+            <div class="form-group">
+                <label for="UpdatedBy" id="UpdatedBy">Updated By:</label>
+                <input type="text" id="inputUpdatedBy" name="UpdatedBy" class="form-control" value="@Model.UpdatedBy" readonly />
+            </div>
+            <div class="form-group">
+                <label for="UpdatedAt" id="UpdatedAt">Updated At:</label>
+                <input type="text" id="inputUpdatedAt" name="UpdatedAt" class="form-control" value="@Model.UpdatedAt" readonly />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editCustomersTestimony" class="btn btn-primary pull-right">Update Customers Testimony</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    CKEDITOR.replace('inputDescription');
+
+
+    $(document).ready(function () {
+        $('#editCustomersTestimony').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if (CKEDITOR.instances['inputDescription'].getData() == '') {
+                $('#Description').html('<span class="asterisk" style="color:red">*Please enter Description.</span>');
+            } else {
+                $("#Description .asterisk").remove();
+                $('#Description').html('Description:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('TestimonyId', $('#TestimonyId').val());
+                formData.append('Description', CKEDITOR.instances['inputDescription'].getData());
+                formData.append('PhotoPath', document.getElementById('PhotoPath').files[0]);
+                formData.append("YoutubeLink", $('#YoutubeLink').val());
+
+                $.ajax({
+                    url: "/Admin/EditCustomersTestimony",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Testimony updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Admin/CustomersTestimony';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            }
+
+        });
+    });
+</script>

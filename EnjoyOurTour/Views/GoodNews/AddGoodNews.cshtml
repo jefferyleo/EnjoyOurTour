@@ -1,0 +1,104 @@
+﻿@model EnjoyOurTour.Models.ViewModel.GoodNews.AddGoodNewsViewModel
+@{
+    ViewBag.Title = "AddGoodNews";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Add Good News</h1>
+    </div>
+</div>
+
+<form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="form-group">
+                <label for="GoodNewsTitle" id="GoodNewsTitle">Good News Title:</label></br>
+                <input type="text" id="inputGoodNewsTitle" class="form-control" name="GoodNewsTitle" />
+                @Html.ValidationMessageFor(e => e.GoodNewsTitle)
+            </div>
+            <div class="form-group">
+                <label for="Description" id="Description">Description</label>
+                <textarea id="inputDescription" class="form-control" name="Description"></textarea>
+                @Html.ValidationMessageFor(e => e.Description)
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">News Image</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showGoodNews').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showGoodNews').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showGoodNews" style="width:50%; display:none;" />
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="addGoodNews" class="btn btn-primary pull-right">Add Good News</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('inputDescription');
+
+    $(document).ready(function () {
+        $('#addGoodNews').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+            var image = document.getElementById('PhotoPath').files[0];
+            var form = $('form')[0];
+
+            if ($('#inputGoodNewsTitle').val() == '') {
+                $('#GoodNewsTitle').html('<span class="asterisk" style="color:red">*Please insert Good News Title.</span>');
+            } else {
+                $("#GoodNewsTitle .asterisk").remove();
+                $('#GoodNewsTitle').html('Good News Title:');
+            }
+
+            if (image == undefined) {
+                $('#lblPhotoPath').html('<span class="asterisk" style="color:red">*Please Select one News Image</span>');
+            } else {
+                $("#lblPhotoPath .asterisk").remove();
+                $('#lblPhotoPath').html('News Image:');
+            }
+
+           
+                var formData = new FormData();
+                formData.append('GoodNewsTitle', $('#inputGoodNewsTitle').val());
+                formData.append('Description', CKEDITOR.instances['inputDescription'].getData());
+                formData.append('PhotoPath', document.getElementById('PhotoPath').files[0]);
+
+                $.ajax({
+                    url: "/GoodNews/AddGoodNews",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    data: formData,
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "News was successfully added!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/GoodNews/GoodNews';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            } else {
+                $('.loading').css('display', 'none');
+            }
+        });
+    });
+</script>

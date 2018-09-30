@@ -1,0 +1,113 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Admin.CustomerViewModel>
+
+@{
+    ViewBag.Title = "Customers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+                All Customers
+                <a href="@Url.Action("AddCustomer", "Admin")" class="btn btn-primary pull-right">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add New Customer
+                </a>
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table id="CustomersTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="CustomerId" data-identifier="true" data-visible="false">Id</th>
+                        <th data-column-id="Username">Username</th>
+                        <th data-column-id="EmailAddress">Email Address</th>
+                        <th data-column-id="CustomerCode">Customer Code</th>
+                        <th data-column-id="CustomerName">Customer Name</th>
+                        <th data-column-id="NRIC">NRIC</th>
+                        <th data-column-id="BankAccountNumber">Bank Account Number</th>
+                        <th data-column-id="PhoneNumber">Phone Number</th>
+                        <th data-column-id="Address">Address</th>
+                        <th data-column-id="AvailableTVR">Available TVR</th>
+                        <th data-column-id="AvailableAmount">Available Amount</th>
+                        <th data-column-id="AvailablePoint">Available Reward Point</th>
+                        <th data-column-id="AgentName">Agent Name</th>
+                        <th data-column-id="IntroducerId">Introducer Id</th>
+                        <th data-column-id="JoinDate">Join Date</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>@item.CustomerId</td>
+                        <td>@item.Username</td>
+                        <td>@item.EmailAddress</td>
+                        <td>@item.CustomerCode</td>
+                        <td>@item.CustomerName</td>
+                        <td>@item.NRIC</td>
+                        <td>@item.BankAccountNumber</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Address</td>
+                        <td>@item.AvailableTVR</td>
+                        <td>@string.Format("{0:f2}", item.AvailableAmount)</td>
+                        <td>@item.AvailablePoint</td>
+                        <td>@item.AgentName</td>
+                        <td>@item.IntroducerId</td>
+                        <td>@item.JoinDate</td>
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">
+                                No user yet.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditCustomer", "Admin", new {customerId = "{CustomerId}"}))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Edit Customer"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@(Url.Action("DeleteCustomer", "Admin", new {id = "{CustomerId}"}))" class="btn btn-default delete-button" data-toggle="tooltip" data-placement="left" title="Delete Customer"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<script>
+    @if (Model != null && Model.Count > 0)
+    {
+        <text>
+    $("#CustomersTable").bootgrid({
+        ajax: false,
+        caseSensitive: false,
+        formatters: {
+            "ActionColumnBar": function (column, row) {
+                var el = $("div.action-column-bar").html();
+                el = el.replace("%7BCustomerId%7D", row.CustomerId).replace("%7BCustomerId%7D", row.CustomerId);
+                return el;
+            }
+        }
+    }).on("loaded.rs.jquery.bootgrid", function () {
+        $(this).find('[data-toggle="tooltip"]').tooltip();
+
+        $(this).find("a.delete-button").on("click", function (e) {
+            if (confirm("Do you want to delete the customer?")) {
+                return true;
+            }
+
+            e.preventDefault();
+
+            return false;
+        });
+    });
+    </text>
+    }
+</script>

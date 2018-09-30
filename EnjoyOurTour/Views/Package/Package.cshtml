@@ -1,0 +1,94 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Package.PackageViewModel>
+
+@{
+    ViewBag.Title = "PackageList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Package List
+        <a href="@Url.Action("AddPackage", "Package")" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add New Package
+        </a>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="PackageTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="PackageId" data-visible="false" data-visible-in-selection="false">Package ID</th>
+                        <th data-column-id="PackageName" data-width="300px">Package Name</th>
+                        <th data-column-id="PhotoPath" data-formatter="pix">Package Image</th>
+                        <th data-column-id="Description" data-width="300px">Description</th>                        
+                        <th data-column-id="Amount" data-width="100px">Amount</th>
+                        <th data-column-id="TVR" data-width="100px">TVR</th>
+                        <th data-column-id="CreatedAt">Date Added</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.PackageId</td>
+                        <td>@item.PackageName</td>
+                        <td>@item.PhotoPath</td>
+                        <td>@item.Description</td>                        
+                        <td>@item.Amount.ToString()</td>
+                        <td>@item.TVR.ToString()</td>
+                        <td>@item.CreatedAt</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditPackage", "Package", new { id = "{Id}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Package"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@Url.Action("DeletePackage","Package", new{id = "{Id}"})" class="btn btn-default delete-promotionimage" data-toggle="tooltip" data-placement="left" title="Delete Package"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#PackageTable").bootgrid({
+            formatters: {
+                "ActionColumnBar": function (column, row) {
+                    var el = $("div.action-column-bar").html();
+                    el = el.replace("%7BId%7D", row.PackageId).replace("%7BId%7D", row.PackageId).replace("%7BId%7D", row.PackageId).replace("%7BId%7D", row.PackageId);
+
+                    return el;
+                },
+                "pix": function (column, row) {
+                    return ('<img style="width:200px; height:100px;" src="/Image/Package/' + row.PhotoPath + '" />');
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid",
+            function () {
+                $(this).find('[data-toggle="tooltip"]').tooltip();
+
+                $(this).find("a.delete-promotionimage").on("click", function (e) {
+                    if (confirm("Do you want to delete the Package?")) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+
+                    return false;
+                });
+            });;
+    });
+</script>

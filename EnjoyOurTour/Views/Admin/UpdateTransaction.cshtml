@@ -1,0 +1,166 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Admin.TransactionViewModel
+@{
+    ViewBag.Title = "Update Transaction";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="UpdateTransactionViewModel" name="SystemSettingForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Transaction</h1>
+        </div>
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">
+            <input hidden id="TransactionId" name="TransactionId" value="@Model.TransactionId" />
+            <input hidden id="ActivityId" name="ActivityId" value="@Model.ActivityId" />
+            <div class="form-group">
+                <label for="ReferenceNo">Reference No</label>
+                <label id="ReferenceNo" name="ReferenceNo" class="form-control" >@Model.ReferenceNo </label>
+            </div>
+            <div class="form-group">
+                <label for="CustomerCodeName">Customer (Code - Name)</label>
+                <label id="CustomerCodeName" name="CustomerCodeName" class="form-control" >@Model.CustomerCodeName </label>
+            </div>
+            <div class="form-group">
+                <label for="AgentCodeName">Agent (Code - Name)</label>
+                <label id="AgentCodeName" name="AgentCodeName" class="form-control" >@Model.AgentCodeName </label>
+            </div>
+            <div class="form-group">
+                <label for="IntroducerCodeName">Introducer (Code - Name)</label>
+                <label id="IntroducerCodeName" name="IntroducerCodeName" class="form-control" >@Model.IntroducerCodeName </label>
+            </div>
+            <div class="form-group">
+                <label for="ActivityName">Activity Name</label>
+                <label id="ActivityName" name="ActivityName" class="form-control" >@Model.ActivityName </label>
+            </div>
+            <div class="form-group">
+                <label for="Amount">Amount</label>
+                <label id="Amount" name="Amount" class="form-control">@Model.Amount </label>
+            </div>   
+            <div class="form-group">
+                <label for="CurrentTVR">Current TVR</label>
+                <label id="CurrentTVR" name="CurrentTVR" class="form-control">@Model.CurrentTVR </label>
+            </div>
+            <div class="form-group">
+                <label for="TopUpTVR">Top Up TVR</label>
+                <label id="TopUpTVR" name="TopUpTVR" class="form-control" >@Model.TopUpTVR </label>
+            </div>
+            <div class="form-group">
+                <label for="RedeemTVR">Redeem TVR</label>
+                <label id="RedeemTVR" name="RedeemTVR" class="form-control">@Model.RedeemTVR </label>
+            </div>
+            @{
+                if (Model.ActivityId == (int)EnjoyOurTour.Helpers.TransactionActivity.RedeemPackage)
+                {
+                    <div class="form-group">
+                        <label for="HeadCount">HeadCount</label>
+                        <input type="number" min="1" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" id="HeadCount" name="HeadCount" class="form-control"  placeholder="Please fill in amount of headcount." value="@Model.HeadCount" />
+                    </div>
+                }
+
+            }
+            </div>    
+            <div class="col-md-6 col-lg-3">          
+            <div class="form-group">
+                <label for="BalanceTVR">Balance TVR</label>
+                <label id="BalanceTVR" name="BalanceTVR" class="form-control" >@Model.BalanceTVR </label>
+            </div>
+                <div class="form-group">
+                    <label for="CurrentPoint">Current Point</label>
+                    <label id="CurrentPoint" name="CurrentPoint" class="form-control">@Model.CurrentPoint </label>
+                </div>
+                <div class="form-group">
+                    <label for="PointAdd">Point Add</label>
+                    <label id="PointAdd" name="PointAdd" class="form-control">@Model.PointAdd </label>
+                </div>
+                <div class="form-group">
+                    <label for="PointRedeem">Point Redeem</label>
+                    <label id="PointRedeem" name="PointRedeem" class="form-control" >@Model.PointRedeem </label>
+                </div>
+                <div class="form-group">
+                    <label for="PointBalance">Point Balance</label>
+                    <label id="PointBalance" name="PointBalance" class="form-control" >@Model.PointBalance </label>
+                </div>
+                <div class="form-group">
+                    <label for="ActionDate">Action Date</label>
+                    <label id="ActionDate" name="ActionDate" class="form-control"  >@Model.ActionDate </label>
+                </div>
+                <div class="form-group">
+                    <label for="Remarks">Remarks</label>
+                    <input type="text" id="Remarks" name="Remarks" class="form-control" placeholder="Enter Remarks" value="@Model.Remarks" />
+                </div>
+                <div class="form-group">
+                    <label for="TransactionStatusName">Transaction Status Name</label>
+                    <label id="TransactionStatusName" name="TransactionStatusName" class="form-control"  >@Model.TransactionStatusName </label>
+                </div>
+                @{
+                    if (Model.ActivityId == (int)EnjoyOurTour.Helpers.TransactionActivity.RedeemPackage)
+                    {
+                        <div class="form-group">
+                            <label for="PackageName">Package Name</label>
+                            <label id="PackageName" name="PackageName" class="form-control">@Model.PackageName </label>
+                        </div>
+                    }
+
+                }
+                @{
+                    if (Model.ActivityId != (int)EnjoyOurTour.Helpers.TransactionActivity.RedeemPoint)
+                    {
+                        <div class="form-group">
+                            <label for="PathForProof">Photo Proof</label>
+                            @{
+                                if (Model.PathForProof == "No Image Upload")
+                                {
+                                    <label id="PathForProof" name="PathForProof" class="form-control">@Model.PathForProof </label>
+                                }
+                                else
+                                {
+                                    <img style="width:500px; height:500px;" src="/Image/TransactionImage/@Model.PathForProof" />
+                                }
+
+                            }
+
+                        </div>
+                     }
+
+                }
+            </div>
+          </div>
+    <div class="row">
+    </div>
+
+    @{ if (Model.TransactionStatus != (int)EnjoyOurTour.Helpers.TransactionStatus.Approve && Model.TransactionStatus != (int)EnjoyOurTour.Helpers.TransactionStatus.Reject)
+        {
+            <div class="row">
+                <div class="col-md-12 col-lg-6 col-lg-offset-3">                                      
+                    <div>
+                        <button type="submit" class="btn btn-primary pull-right" name="action" value="@((int)EnjoyOurTour.Helpers.TransactionStatus.Approve)">Approve</button>
+                    </div>
+                    @{
+                        <div class="col-md-5">
+                            <button type="submit" class="btn btn-primary pull-right" name="action" value="@((int)EnjoyOurTour.Helpers.TransactionStatus.Reject)">Reject</button>
+                        </div>
+                        if ((Model.ActivityId == (int)EnjoyOurTour.Helpers.TransactionActivity.TopUp || Model.ActivityId == (int)EnjoyOurTour.Helpers.TransactionActivity.SignUp || Model.ActivityId == (int)EnjoyOurTour.Helpers.TransactionActivity.RedeemPackage) && (Model.TransactionStatus != (int)EnjoyOurTour.Helpers.TransactionStatus.ApproveWithoutPay))
+                        {
+
+                        <div class="col-md-5">
+                            <button type="submit" class="btn btn-primary pull-right" name="action" value="@((int)EnjoyOurTour.Helpers.TransactionStatus.ApproveWithoutPay)">Approve Without Pay</button> 
+                        </div>
+                        }
+
+
+                    }
+
+
+                </div>
+            </div>
+    }
+
+    }
+    <br/>
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+

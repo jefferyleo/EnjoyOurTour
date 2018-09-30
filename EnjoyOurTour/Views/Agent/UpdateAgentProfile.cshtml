@@ -1,0 +1,78 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Agent.EditAgentProfileViewModel
+
+@{
+    ViewBag.Title = "UpdateAgentProfile";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="AddAgentForm" name="AddAgentForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Update Agent Profile</h1>
+        </div>
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">
+            <input hidden id="AgentId" name="AgentId" value="@Model.AgentId" />
+            <div class="form-group">
+                <label for="EmailAddress">EmailAddress</label>
+                <input type="text" id="EmailAddress" name="EmailAddress" class="form-control" placeholder="Enter Email Address" value="@Model.EmailAddress" />
+                @Html.ValidationMessageFor(e => e.EmailAddress)
+            </div>
+            <div class="form-group">
+                <label for="AgentName">AgentName</label>
+                <input type="text" id="AgentName" name="AgentName" class="form-control" placeholder="Enter Agent Name" value="@Model.AgentName" />
+                @Html.ValidationMessageFor(e => e.AgentName)
+            </div>
+            <div class="form-group">
+                <label for="NRIC">NRIC</label>
+                <input type="text" id="NRIC" name="NRIC" class="form-control" placeholder="Enter NRIC" value="@Model.NRIC" />
+                @Html.ValidationMessageFor(e => e.NRIC)
+            </div>
+            <div class="form-group">
+                <label for="DOB">Date Of Birth</label>
+                <input type="text" id="DOB" name="DOB" class="form-control" placeholder="Enter DOB" value="@Model.DOBString" />
+                @Html.ValidationMessageFor(e => e.DOB)
+            </div>
+            <div class="form-group">
+                <label for="BankName">Bank Name</label>
+                <input type="text" id="BankName" name="BankName" class="form-control" placeholder="Enter Bank Name" value="@Model.BankName" />
+                @Html.ValidationMessageFor(e => e.BankName)
+            </div>
+            <div class="form-group">
+                <label for="BankAccountNumber">Bank Account Number</label>
+                <input type="text" id="BankAccountNumber" name="BankAccountNumber" class="form-control" placeholder="Enter Bank Account Number" value="@Model.BankAccountNumber" />
+                @Html.ValidationMessageFor(e => e.BankAccountNumber)
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber">Phone Number</label>
+                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" placeholder="Enter Phone Number" value="@Model.PhoneNumber" />
+                @Html.ValidationMessageFor(e => e.PhoneNumber)
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <input type="text" id="Address" name="Address" class="form-control" placeholder="Enter Address" value="@Model.Address" />
+                @Html.ValidationMessageFor(e => e.Address)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    $('#DOB').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm',
+    })
+
+    $(document).ready(function () {
+        $("#NRIC").keyup(function () {
+            var value = $("#NRIC").val();
+            var lastFive = value.substr(value.length - 6);
+            $('#AgentCode').val(lastFive);
+        });
+    });
+
+
+</script>

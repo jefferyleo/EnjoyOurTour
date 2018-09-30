@@ -1,0 +1,156 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Customer.RedeemCouponViewModel
+@{
+    ViewBag.Title = "Redeem Coupon";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="RedeemCouponForm" name="RedeemCouponForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3" id="errormsg">
+
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Redeem Coupon</h1>
+        </div>
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">            
+            <div class="form-group">
+                <label for="CouponCode">Coupon Code</label>
+                <input type="text" id="CouponCode" name="CouponCode" class="form-control" value="@Model.CouponCode" />                
+                @Html.ValidationMessageFor(e => e.CouponCode)
+            </div>  
+            <div class="form-group">
+                <label for="Amount">TVR Point</label>
+                <input type="number" id="Amount" name="Amount" class="form-control" value="@Model.Amount" />                                
+            </div>  
+            <div class="form-group">
+                <label for="Image" id="lblCouponImage">Coupon Picture</label>
+                <input type="file" id="Image" name="Image" accept="image/*" />
+                <img id="showImage" style="width: 50%; display: none;margin-top: 5px" />
+                @Html.ValidationMessageFor(e => e.Image)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="button" id="btnSubmit" class="btn btn-primary pull-right">Submit</button>
+        </div>        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    $('#Image').on('change', function () {
+        readURL(this);
+        $('#showImage').show();
+    });
+
+
+    $('#Image').change(function (e) {
+        var fileSize;
+        var fileType;
+        fileSize = $('#Image')[0].files[0].size;
+        fileType = $('#Image')[0].files[0].type;
+        if (fileSize < 25000000) {
+            overSize = false;
+            switch (fileType) {
+                case 'image/png':
+                    break;
+                case 'image/jpg':
+                    break;
+                case 'image/jpeg':
+                    break;
+                default:
+                    alert('Unsupport format! Please insert image files only.');
+                    $('#Image').val("").change();
+            }
+        } else {
+            alert('This file is too large! Please select a new file.');
+            $('#Image').val("").change();
+        }
+    });
+
+    $(document).ready(function () {
+        $('#btnSubmit').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+            var image = document.getElementById('Image').files[0];
+            var form = $('form')[0];
+            var formData = new FormData();
+            formData.append('CouponCode', $('#CouponCode').val());
+            formData.append('Amount', $('#Amount').val());
+            formData.append('Image', document.getElementById('Image').files[0]);
+                   
+            if (image == undefined) {
+                $('#lblCouponImage').html('<span class="asterisk">*Please upload the Coupon Image for proving.</span>');
+            } else {
+                $("#lblCouponImage .asterisk").remove();
+                $('#lblCouponImage').html('Coupon Image');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+            $.ajax({
+                url: "/Customer/RedeemCoupon",
+                contentType: false,
+                processData: false,
+                traditional: true,
+                dataType: 'json',
+                data: formData,
+                type: "POST",
+                success: function (data) {     
+                    if (data.success == true) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Successfully submit to officer.",
+                            type: "success"
+                        },
+                        function () {
+                            window.location.href = '/Customer/TravelPromotion';
+
+                        });
+                    } else {
+                        $("#errormsg").html("");
+                        var errormsg = "";
+                        console.log(data.errors);
+                        for (var i = 0; i < data.errors.length; i++) {
+                            errormsg = errormsg  + "<li>" + data.errors[i] + "</li>"
+                        }
+                        var wholediv = "<p><strong>An error occured whilst trying to save this issue.</strong></p> " + "<ul data-bind='foreach: saveErrors()'>" + errormsg + "</ul>";
+                        $("#errormsg").append(wholediv);
+                    }                  
+                },
+                error: function (data) {
+                    $('.loading').css('display', 'none');
+                    //swal("Oops", "We couldn't connect to the server!", "error")
+                }                
+            });
+            } else {
+                $('.loading').css('display', 'none');
+            }
+        });
+    });
+</script>

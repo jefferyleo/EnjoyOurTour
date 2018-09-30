@@ -1,0 +1,179 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Home.AboutUsViewModel
+@{
+    ViewBag.Title = "AboutUs";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="~/Scripts/custom.js"></script>
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">About Us</h1>
+    </div>
+</div>
+<form id="AboutUsForm" name="AboutUsForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>About Us Title</strong>
+                </div>
+                <div class="panel-body">
+                    <div id="divAboutUsTitle" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblAboutUsTitle" for="AboutUsTitle"></label>
+                    </div>
+                    <input id="AboutUsTitleInput" hidden value="@Model.AboutUsTitle" />
+                    <textarea id="AboutUsTitle" name="AboutUsTitle"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>About Us Description</strong>
+                </div>
+                <div class="panel-body">
+                    <div id="divAboutUsDescription" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblAboutUsDescription" for="AboutUsDescription"></label>
+                    </div>
+                    <input id="AboutUsDescriptionInput" hidden value="@Model.AboutUsDescription" />
+                    <textarea id="AboutUsDescription" name="AboutUsDescription"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>About Us Short Description</strong>
+                </div>
+                <div class="panel-body">
+                    <div id="divAboutUsShortDescription" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblAboutUsShortDescription" for="AboutUsShortDescription"></label>
+                    </div>
+                    <input id="AboutUsShortDescriptionInput" hidden value="@Model.AboutUsShortDescription" />
+                    <textarea id="AboutUsShortDescription" name="AboutUsShortDescription"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="form-group">
+                <label for="YoutubeUrl">YouTube Video Id</label>
+                <input type="text" id="YoutubeUrl" name="YoutubeUrl" class="form-control" placeholder="Enter YouTube Video Id eg: PmGpXGdZXWU" value="@Model.YoutubeUrl">
+                <i style="color:crimson;">**Example https://www.youtube.com/watch?v=PmGpXGdZXWU just fill in PmGpXGdZXWU</i>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="btnSave" class="btn btn-primary pull-right">Save</button>
+        </div>
+    </div>
+
+</form>
+
+<script>
+    CKEDITOR.replace('AboutUsTitle',
+        {
+            startupFocus: false
+        });
+    CKEDITOR.replace('AboutUsDescription',
+        {
+            startupFocus: false
+        });
+    CKEDITOR.replace('AboutUsShortDescription',
+        {
+            startupFocus: false
+        });
+
+
+    @if (Model != null)
+    {
+        <text>
+            var aboutUsTitle = $('#AboutUsTitleInput').val();
+            var aboutUsTopDescription = $('#AboutUsDescriptionInput').val();
+            var aboutUsBottomDescription = $('#AboutUsShortDescriptionInput').val();
+
+            CKEDITOR.on('instanceReady', function (evt) {
+                if (evt.editor.name === "AboutUsTitle") {
+                    CKEDITOR.instances['AboutUsTitle'].insertHtml(unescapeHtml(aboutUsTitle));
+                }
+                else if (evt.editor.name === "AboutUsDescription") {
+                    CKEDITOR.instances['AboutUsDescription'].insertHtml(unescapeHtml(aboutUsTopDescription));
+                }
+                else if (evt.editor.name === "AboutUsShortDescription") {
+                    CKEDITOR.instances['AboutUsShortDescription'].insertHtml(unescapeHtml(aboutUsBottomDescription));
+                }
+                CKEDITOR.instances['AboutUsTitle'].focus();
+                $(window).scrollTop(0);
+            });
+        </text>
+    }
+
+    $('#btnSave').click(function(e) {
+        e.preventDefault();
+
+        $('#divAboutUsTitle').hide();
+        $('#divAboutUsDescription').hide();
+        $('#divAboutUsShortDescription').hide();
+
+        var formData = new FormData();
+        @if (Model == null)
+    {
+        <text>
+            formData.append("AboutUsId", 0);
+        </text>
+    }
+    else
+    {
+        <text>
+            formData.append("AboutUsId", @Model.AboutUsId);
+        </text>
+    }
+
+
+        formData.append("AboutUsTitle", CKEDITOR.instances['AboutUsTitle'].getData());
+        formData.append("AboutUsDescription", CKEDITOR.instances['AboutUsDescription'].getData());
+        formData.append("AboutUsShortDescription", CKEDITOR.instances['AboutUsShortDescription'].getData());
+        formData.append("YoutubeUrl", $('#YoutubeUrl').val());
+
+        $.ajax({
+            type: "POST",
+            url: '/Admin/AboutUs',
+            data: formData,
+            dataType: 'json',
+            traditional: true,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.result == "success") {
+                    window.location.reload();
+                } else {
+                    DisplayErrors(response.Errors);
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    });
+
+    function DisplayErrors(errors) {
+        for (var i = 0; i < errors.length; i++) {
+            $('#div' + errors[i].Key + '').show();
+            $('#lbl'+ errors[i].Key +'')
+                .html(errors[i].Value[0]).appendTo($("input#" + errors[i].Key).parent());
+        }
+    }
+
+</script>

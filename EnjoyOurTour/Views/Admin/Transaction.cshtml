@@ -1,0 +1,103 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Admin.TransactionViewModel>
+
+@{
+    ViewBag.Title = "Transation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+                All Transaction
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table id="TransactionTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="TransactionId" data-identifier="true" data-visible="false">Id</th>
+                        <th data-column-id="AgentCodeName">Agent Code - Name</th>
+                        <th data-column-id="CustomerCodeName">Customer Code - Name</th>
+                        <th data-column-id="IntroducerCodeName">Introducer Code - Name</th>
+                        <th data-column-id="ReferenceNo">Reference No</th>
+                        <th data-column-id="RequestDate">Request Date</th>
+                        <th data-column-id="ActivityName">Activity</th>
+                        <th data-column-id="ActionDate">ActionDate</th>
+                        <th data-column-id="ActionName">ActionName</th>
+                        <th data-column-id="CurrentTVR">Current TVR</th>
+                        <th data-column-id="SigUpTopUpTVR">Sign Up Or Top Up TVR</th>
+                        <th data-column-id="RedeemTVR">Redeem TVR</th>
+                        <th data-column-id="TVRBalance">TVR Balance</th>
+                        <th data-column-id="CurrentPoint">Current Point</th>
+                        <th data-column-id="PointAdded">Point Added</th>
+                        <th data-column-id="RedeemPoint">Redeem Point</th>
+                        <th data-column-id="PointBalance">Point Balance</th>                        
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>@item.TransactionId</td>
+                        <td>@item.AgentCodeName</td>
+                        <td>@item.CustomerCodeName</td>
+                        <td>@item.IntroducerCodeName</td>
+                        <td>@item.ReferenceNo</td>
+                        <td>@item.CreatedAt</td>
+                        <td>@item.ActivityName</td>
+                        <td>@item.ActionDate</td>
+                        <td>@item.TransactionStatusName</td>
+                        <td>@item.CurrentTVR</td>
+                        <td>@item.TopUpTVR</td>
+                        <td>@item.RedeemTVR</td>
+                        <td>@item.BalanceTVR</td>
+                        <td>@item.CurrentPoint</td>
+                        <td>@item.PointAdd</td>
+                        <td>@item.PointRedeem</td>
+                        <td>@item.PointBalance</td>                                        
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">
+                                No Transaction yet.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("UpdateTransaction", "Admin", new {transactionId = "{TransactionId}"}))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Transaction"><span class="glyphicon glyphicon-pencil"></span></a>
+</div>
+
+<script>
+    @if (Model != null && Model.Count > 0)
+    {
+        <text>
+    $("#TransactionTable").bootgrid({
+        ajax: false,
+        caseSensitive: false,
+        formatters: {
+            "ActionColumnBar": function (column, row) {
+                var el = $("div.action-column-bar").html();
+                el = el.replace("%7BTransactionIdf%7D", row.AgentId).replace("%7BTransactionId%7D", row.TransactionId);
+                return el;
+            }
+        }
+    }).on("loaded.rs.jquery.bootgrid", function () {
+        $(this).find('[data-toggle="tooltip"]').tooltip();
+
+    });
+    </text>
+    }
+</script>

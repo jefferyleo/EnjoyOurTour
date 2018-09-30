@@ -1,0 +1,79 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Admin.RedeemCouponTransactionViewModel>
+
+@{
+    ViewBag.Title = "Coupon Transation";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+                All Coupon Transaction
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table id="TransactionTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="RedeemCouponId" data-identifier="true" data-visible="false">Id</th>
+                        <th data-column-id="CouponCode">Coupon Code</th>
+                        <th data-column-id="TVRAmount">TVR Amount</th>
+                        <th data-column-id="StatusName">Status Name</th>
+                        <th data-column-id="CustomerName">Customer Name</th>                
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>@item.RedeemCouponId</td>
+                        <td>@item.CouponCode</td>
+                        <td>@item.TVRAmount</td>
+                        <td>@item.StatusName</td>      
+                        <td>@item.CustomerName</td>                                      
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">
+                                No Transaction yet.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("UpdateRedeemCouponTransaction", "Admin", new {RedeemCouponId = "{RedeemCouponId}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Transaction"><span class="glyphicon glyphicon-pencil"></span></a>
+</div>
+
+<script>
+    @if (Model != null && Model.Count > 0)
+    {
+        <text>
+    $("#TransactionTable").bootgrid({
+        ajax: false,
+        caseSensitive: false,
+        formatters: {
+            "ActionColumnBar": function (column, row) {
+                var el = $("div.action-column-bar").html();
+                el = el.replace("%7BRedeemCouponIdf%7D", row.RedeemCouponId).replace("%7BRedeemCouponId%7D", row.RedeemCouponId);
+                return el;
+            }
+        }
+    }).on("loaded.rs.jquery.bootgrid", function () {
+        $(this).find('[data-toggle="tooltip"]').tooltip();
+
+    });
+    </text>
+    }
+</script>

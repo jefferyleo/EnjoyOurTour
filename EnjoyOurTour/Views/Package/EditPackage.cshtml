@@ -1,0 +1,138 @@
+﻿
+@model EnjoyOurTour.Models.ViewModel.Package.PackageViewModel
+@{
+    ViewBag.Title = "EditPackage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Update Package</h1>
+    </div>
+</div>
+
+<form id="EditNewBannerForm" style="color:#001a33;" name="EditNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="PackageId" name="PackageId" value="@Model.PackageId" />
+            <div class="form-group">
+                <label for="PackageName" id="PackageName">Package Name:</label></br>
+                <input type="text" id="inputPackageName" name="PackageName" class="form-control" value="@Model.PackageName" />
+                @Html.ValidationMessageFor(e => e.PackageName)
+            </div>
+            <div class="form-group">
+                <label for="Description" id="Description">Description:</label>
+                <textarea id="inputDescription" class="form-control" name="Description">@Model.Description</textarea>
+                @Html.ValidationMessageFor(e => e.Description)
+            </div>
+            <div class="form-group">
+                <label for="IteneraryDetail" id="IteneraryDetail">Itenerary Detail:</label><br />
+                <textarea id="inputIteneraryDetail" class="form-control" name="IteneraryDetail">@Model.IteneraryDetail</textarea>
+                @Html.ValidationMessageFor(e => e.IteneraryDetail)
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Package Image</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showPackage').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showPackage').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showPackage" style="width:50%; display:none;" />
+            </div>
+            <div class="form-group">
+                <label for="ItineraryFile">Itinerary File</label>
+                <input type="file" class="btn" id="ItineraryFile" name="ItineraryFile" accept="application/pdf" />
+            </div>
+            <div class="form-group">
+                <div class="col-md-4 col-lg-4 form-group" style="padding:0px">
+                    <label for="Amount" id="Amount">Amount:</label><br />
+                    <input type="number" id="inputAmount" class="form-control" name="Amount" value="@Model.Amount">
+                    @Html.ValidationMessageFor(e => e.Amount)
+                </div>
+                <div class="col-md-4 col-lg-4 form-group" style="padding:0px"></div>
+                <div class="col-md-4 col-lg-4">
+                    <label for="TVR" id="TVR">TVR:</label><br />
+                    <input type="number" id="inputTVR" class="form-control" name="TVR" value="@Model.TVR" />
+                    @Html.ValidationMessageFor(e => e.TVR)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editPackage" class="btn btn-primary pull-right">Update Package</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('inputDescription');
+    CKEDITOR.replace('inputIteneraryDetail');
+
+    $(document).ready(function () {
+        $('#editPackage').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if ($('#inputPackageName').val() == '') {
+                $('#PackageName').html('<span class="asterisk" style="color:red">*Please insert Package Name.</span>');
+            } else {
+                $("#PackageName .asterisk").remove();
+                $('#PackageName').html('Package Name:');
+            }
+
+            if ($('#inputAmount').val() == '') {
+                $('#Amount').html('<span class="asterisk" style="color:red">*Please insert Amount.</span>');
+            } else {
+                $("#Amount .asterisk").remove();
+                $('#Amount').html('Amount:');
+            }
+
+            if ($('#inputTVR').val() == '') {
+                $('#TVR').html('<span class="asterisk" style="color:red">*Please insert TVR.</span>');
+            } else {
+                $("#TVR .asterisk").remove();
+                $('#TVR').html('TVR:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('PackageId', $('#PackageId').val());
+                formData.append('PackageName', $('#inputPackageName').val());
+                formData.append('Description', CKEDITOR.instances['inputDescription'].getData());
+                formData.append('PhotoPath', document.getElementById('PhotoPath').files[0]);
+                formData.append('IteneraryDetail', CKEDITOR.instances['inputIteneraryDetail'].getData());
+                formData.append('Amount', $('#inputAmount').val());
+                formData.append('TVR', $('#inputTVR').val());
+                formData.append("ItineraryFile", document.getElementById('ItineraryFile').files[0])
+
+                $.ajax({
+                    url: "/Package/EditPackage",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Package updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Package/Package';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            }
+
+        });
+    });
+</script>

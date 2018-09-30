@@ -1,0 +1,85 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Merchant.AddMerchantPromotionViewModel>
+
+@{
+    ViewBag.Title = "MerchantPromotionList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Merchant Promotion List
+        <a href="@Url.Action("AddMerchantPromotion", "Merchant")" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add Merchant Promotion
+        </a>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="MerchantPromoTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="MerchantPromotionId" data-visible="false" data-visible-in-selection="false">Merchant Promotion Id</th>
+                        <th data-column-id="MerchantName">Merchant Name</th>
+                        <th data-column-id="MerchantPromotionDetail">Merchant Promotion Detail</th>
+                        <th data-column-id="CreatedAt">Date Added</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.MerchantPromotionId</td>
+                        <td>@item.MerchantName</td>
+                        <td>@item.MerchantPromotionDetail</td>
+                        <td>@item.CreatedAt</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditMerchantPromotion", "Merchant", new { id = "{Id}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Merchant Promotion"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@Url.Action("DeleteMerchantPromotion","Merchant", new{id = "{Id}"})" class="btn btn-default delete-promotionimage" data-toggle="tooltip" data-placement="left" title="Delete Merchant Promotion"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#MerchantPromoTable").bootgrid({
+            formatters: {
+                "ActionColumnBar": function (column, row) {
+                    var el = $("div.action-column-bar").html();
+                    el = el.replace("%7BId%7D", row.MerchantPromotionId).replace("%7BId%7D", row.MerchantPromotionId).replace("%7BId%7D", row.MerchantPromotionId).replace("%7BId%7D", row.MerchantPromotionId);
+
+                    return el;
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid",
+            function () {
+                $(this).find('[data-toggle="tooltip"]').tooltip();
+
+                $(this).find("a.delete-promotionimage").on("click", function (e) {
+                    if (confirm("Do you want to delete the Merchant Promotion?")) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+
+                    return false;
+                });
+            });
+    });
+</script>

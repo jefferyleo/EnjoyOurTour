@@ -1,0 +1,83 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Merchant.MerchantCategoryViewModel>
+
+@{
+    ViewBag.Title = "MerchantCategoryList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Merchant Category List
+        <a href="@Url.Action("AddMerchantCategory", "Merchant")" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add Merchant Category
+        </a>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="MerchantCategoryTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="MerchantCategoryId" data-visible="false" data-visible-in-selection="false">Merchant CategoryId ID</th>
+                        <th data-column-id="CategoryName">Category Name</th>
+                        <th data-column-id="CreatedAt">Date Added</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.MerchantCategoryId</td>
+                            <td>@item.CategoryName</td>
+                            <td>@item.CreatedAt</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditMerchantCategory", "Merchant", new { id = "{Id}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Merchant Category"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@Url.Action("DeleteMerchantCategory","Merchant", new{id = "{Id}"})" class="btn btn-default delete-promotionimage" data-toggle="tooltip" data-placement="left" title="Delete Merchant Category"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#MerchantCategoryTable").bootgrid({
+            formatters: {
+                "ActionColumnBar": function (column, row) {
+                    var el = $("div.action-column-bar").html();
+                    el = el.replace("%7BId%7D", row.MerchantCategoryId).replace("%7BId%7D", row.MerchantCategoryId).replace("%7BId%7D", row.MerchantCategoryId).replace("%7BId%7D", row.MerchantCategoryId);
+
+                    return el;
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid",
+            function () {
+                $(this).find('[data-toggle="tooltip"]').tooltip();
+
+                $(this).find("a.delete-promotionimage").on("click", function (e) {
+                    if (confirm("Do you want to delete the Merchant Category?")) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+
+                    return false;
+                });
+            });
+    });
+</script>

@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnjoyOurTour", "EnjoyOurTour\EnjoyOurTour.csproj", "{AC7078ED-AFDC-4279-A850-C2D8681FE2CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC7078ED-AFDC-4279-A850-C2D8681FE2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC7078ED-AFDC-4279-A850-C2D8681FE2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC7078ED-AFDC-4279-A850-C2D8681FE2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC7078ED-AFDC-4279-A850-C2D8681FE2CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BBD07F13-8482-4760-88D5-513A7C824C0E}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 2
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://thrivetechnologies.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = EnjoyOurTour\\EnjoyOurTour.csproj
+		SccProjectName1 = EnjoyOurTour
+		SccLocalPath1 = EnjoyOurTour
+	EndGlobalSection
+EndGlobal

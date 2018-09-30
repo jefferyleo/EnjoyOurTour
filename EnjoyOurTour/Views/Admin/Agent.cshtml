@@ -1,0 +1,109 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Admin.AgentViewModel>
+
+@{
+    ViewBag.Title = "Agent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+                All Agent
+                <a href="@Url.Action("AddAgent", "Admin")" class="btn btn-primary pull-right">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add New Agent
+                </a>
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table id="AgentTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="AgentId" data-identifier="true" data-visible="false">Id</th>
+                        <th data-column-id="Username">Username</th>
+                        <th data-column-id="EmailAddress">Email Address</th>
+                        <th data-column-id="AgentCode">Agent Code</th>
+                        <th data-column-id="AgentName">Agent Name</th>
+                        <th data-column-id="NRIC">NRIC</th>
+                        <th data-column-id="BankName">Bank Name</th>
+                        <th data-column-id="BankAccountNumber">Bank Account Number</th>
+                        <th data-column-id="DOB">DOB</th>
+                        <th data-column-id="PhoneNumber">Phone Number</th>
+                        <th data-column-id="Address">Address</th>
+                        <th data-column-id="Commission">Commission</th>
+                        <th data-column-id="Bonus">Bonus</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr>
+                        <td>@item.AgentId</td>
+                        <td>@item.Username</td>
+                        <td>@item.EmailAddress</td>
+                        <td>@item.AgentCode</td>
+                        <td>@item.AgentName</td>
+                        <td>@item.NRIC</td>
+                        <td>@item.BankName</td>
+                        <td>@item.BankAccountNumber</td>
+                        <td>@item.DOB</td>
+                        <td>@item.PhoneNumber</td>
+                        <td>@item.Address</td>
+                        <td>@item.Commission</td>
+                        <td>@item.Bonus</td>                        
+                    </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">
+                                No user yet.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditAgent", "Admin", new {agentId = "{AgentId}"}))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Edit Agent"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@(Url.Action("DeleteAgent", "Admin", new {agentId = "{AgentId}"}))" class="btn btn-default delete-button" data-toggle="tooltip" data-placement="left" title="Delete Agent"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<script>
+    @if (Model != null && Model.Count > 0)
+    {
+        <text>
+    $("#AgentTable").bootgrid({
+        ajax: false,
+        caseSensitive: false,
+        formatters: {
+            "ActionColumnBar": function (column, row) {
+                var el = $("div.action-column-bar").html();
+                el = el.replace("%7BAgentId%7D", row.AgentId).replace("%7BAgentId%7D", row.AgentId);
+                return el;
+            }
+        }
+    }).on("loaded.rs.jquery.bootgrid", function () {
+        $(this).find('[data-toggle="tooltip"]').tooltip();
+
+        $(this).find("a.delete-button").on("click", function (e) {
+            if (confirm("Do you want to delete the Agent?")) {
+                return true;
+            }
+
+            e.preventDefault();
+
+            return false;
+        });
+    });
+    </text>
+    }
+</script>

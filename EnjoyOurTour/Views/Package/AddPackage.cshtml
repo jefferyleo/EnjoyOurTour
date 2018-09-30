@@ -1,0 +1,145 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Package.AddPackageViewModel
+@{
+    ViewBag.Title = "AddPackage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Add New Package</h1>
+    </div>
+</div>
+
+<form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <div class="form-group">
+                <label for="PackageName" id="PackageName">Package Name:</label></br>
+                <input type="text" id="inputPackageName" class="form-control" name="PackageName" />
+                @Html.ValidationMessageFor(e => e.PackageName)
+            </div>
+            <div class="form-group">
+                <label for="Description" id="Description">Description</label>
+                <textarea id="inputDescription" class="form-control" name="Description"></textarea>
+                @Html.ValidationMessageFor(e => e.Description)
+            </div>
+            <div class="form-group">
+                <label for="IteneraryDetail" id="IteneraryDetail">Itenerary Detail:</label><br />
+                <textarea id="inputIteneraryDetail" class="form-control" name="IteneraryDetail"></textarea>
+                @Html.ValidationMessageFor(e => e.IteneraryDetail)
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Package Image</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showPackage').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showPackage').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showPackage" style="width:50%; display:none;" />
+            </div>
+            <div class="form-group">
+                <label for="ItineraryFile">Itinerary File</label>
+                <input type="file" class="btn" id="ItineraryFile" name="ItineraryFile" accept="application/pdf"/>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4 col-lg-4 form-group" style="padding:0px">
+                    <label for="Amount" id="Amount">Amount:</label><br />
+                    <input type="number" id="inputAmount" class="form-control" name="Amount" />
+                    @Html.ValidationMessageFor(e => e.Amount)
+                </div>
+                <div class="col-md-4 col-lg-4 form-group" style="padding:0px"></div>
+                <div class="col-md-4 col-lg-4">
+                    <label for="TVR" id="TVR">TVR:</label><br />
+                    <input type="number" id="inputTVR" class="form-control" name="TVR" />
+                    @Html.ValidationMessageFor(e => e.TVR)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="addNewPackage" class="btn btn-primary pull-right">Add New Package</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('inputDescription');
+    CKEDITOR.replace('inputIteneraryDetail');
+
+    $(document).ready(function () {
+        $('#addNewPackage').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+            var image = document.getElementById('PhotoPath').files[0];
+            var form = $('form')[0];
+
+            if ($('#inputPackageName').val() == '') {
+                $('#PackageName').html('<span class="asterisk" style="color:red">*Please insert Package Name.</span>');
+            } else {
+                $("#PackageName .asterisk").remove();
+                $('#PackageName').html('Package Name:');
+            }
+
+            if ($('#inputAmount').val() == '') {
+                $('#Amount').html('<span class="asterisk" style="color:red">*Please insert Amount.</span>');
+            } else {
+                $("#Amount .asterisk").remove();
+                $('#Amount').html('Amount:');
+            }
+
+            if ($('#inputTVR').val() == '') {
+                $('#TVR').html('<span class="asterisk" style="color:red">*Please insert TVR.</span>');
+            } else {
+                $("#TVR .asterisk").remove();
+                $('#TVR').html('TVR:');
+            }
+
+            if (image == undefined) {
+                $('#lblPhotoPath').html('<span class="asterisk" style="color:red">*Please Select one Package Image</span>');
+            } else {
+                $("#lblPhotoPath .asterisk").remove();
+                $('#lblPhotoPath').html('Package Image');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('PackageName', $('#inputPackageName').val());
+                formData.append('Description', CKEDITOR.instances['inputDescription'].getData());
+                formData.append('PhotoPath', document.getElementById('PhotoPath').files[0]);
+                formData.append('IteneraryDetail', CKEDITOR.instances['inputIteneraryDetail'].getData());
+                formData.append('Amount', $('#inputAmount').val());
+                formData.append('TVR', $('#inputTVR').val());
+                formData.append("ItineraryFile", document.getElementById('ItineraryFile').files[0])
+
+                $.ajax({
+                    url: "/Package/AddPackage",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    data: formData,
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "New Package was successfully added!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Package/Package';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            } else {
+                $('.loading').css('display', 'none');
+            }
+        });
+    });
+</script>

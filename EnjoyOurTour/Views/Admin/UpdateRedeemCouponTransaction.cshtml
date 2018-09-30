@@ -1,0 +1,74 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Admin.RedeemCouponTransactionViewModel
+@{
+    ViewBag.Title = "Update Redeem Coupon Transaction";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="UpdateTransactionViewModel" name="SystemSettingForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">System Setting</h1>
+        </div>
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">
+            <input hidden id="RedeemCouponId" name="RedeemCouponId" value="@Model.RedeemCouponId" />         
+            <input hidden id="CustomerId" name="CustomerId" value="@Model.CustomerId" />            
+            <div class="form-group">
+                <label for="CouponCode">Coupon Code</label>
+                <label id="CouponCode" name="CouponCode" class="form-control" >@Model.CouponCode </label>
+            </div>
+            <div class="form-group">
+                <label for="CustomerName">Customer Name</label>
+                <label id="CustomerName" name="CustomerName" class="form-control" >@Model.CustomerName </label>
+            </div>
+            <div class="form-group">
+                <label for="TVRAmount">TVR Amount</label>
+                <label id="TVRAmount" name="TVRAmount" class="form-control" >@Model.TVRAmount </label>
+            </div>
+            <div class="form-group">
+                <label for="StatusName">Status Name</label>
+                <label id="StatusName" name="StatusName" class="form-control"  >@Model.StatusName </label>
+            </div>
+            <div class="form-group">
+                <label for="PathForProof">Photo Proof</label>
+                @{
+                    if (Model.ImageProof == "No Image Upload")
+                    {
+                        <label id="ImageProof" name="ImageProof" class="form-control">@Model.ImageProof </label>
+                    }
+                    else
+                    {
+                        <img style="width:500px; height:500px;" src="/Image/RedeemCoupon/@Model.ImageProof" />
+                    }
+
+                }
+
+            </div>
+          </div>
+    <div class="row">
+    </div>
+
+    @{ if (Model.TransactionStatusId != (int)EnjoyOurTour.Helpers.TransactionStatus.Approve && Model.TransactionStatusId != (int)EnjoyOurTour.Helpers.TransactionStatus.Reject)
+        {
+            <div class="row">
+                <div class="col-md-12 col-lg-6 col-lg-offset-3">                                      
+                    <div>
+                        <button type="submit" class="btn btn-primary pull-right" name="action" value="@((int)EnjoyOurTour.Helpers.TransactionStatus.Approve)">Approve</button>
+                    </div>
+                    <div class="col-md-5">
+                        <button type="submit" class="btn btn-primary pull-right" name="action" value="@((int)EnjoyOurTour.Helpers.TransactionStatus.Reject)">Reject</button>
+                    </div>               
+
+
+                </div>
+            </div>
+    }
+
+    }
+    <br/>
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+

@@ -1,0 +1,80 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Admin.SystemSettingViewModel
+@{
+    ViewBag.Title = "SystemSetting";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="SystemSettingForm" name="SystemSettingForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">System Setting</h1>
+        </div>
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">                        
+            <div class="form-group">
+                <label for="MinAmount">Minimun Amount for Top Up</label>
+                <input type="text" id="MinAmount" name="MinAmount" class="form-control" placeholder="Enter Minimun Amount For Top Up" value="@Model.MinAmount" />
+                @Html.ValidationMessageFor(e => e.MinAmount)
+            </div>
+            <div class="form-group">
+                <label for="SignUpFees">Register Processing Fees</label>
+                <input type="text" id="SignUpFees" name="SignUpFees" class="form-control" placeholder="Enter Sign Up Fees" value="@Model.SignUpFees" />
+                @Html.ValidationMessageFor(e => e.SignUpFees)
+            </div>
+            <div class="form-group">
+                <label for="TVRMutiply">TVR Calculate Formula</label>
+                <input type="text" id="TVRMutiply" name="TVRMutiply" class="form-control" placeholder="Enter TVR Calculate Formula" value="@Model.TVRMutiply" />
+                @Html.ValidationMessageFor(e => e.TVRMutiply)
+            </div>
+            <div class="form-group">
+                <label for="IntroduceIncreaseLimit">Introduce Increase Limit Commission Formula</label>
+                <input type="text" id="IntroduceIncreaseLimit" name="IntroduceIncreaseLimit" class="form-control" placeholder="Enter Introduce Increase Limit Commission Formula" value="@Model.IntroduceIncreaseLimit" />
+                @Html.ValidationMessageFor(e => e.IntroduceIncreaseLimit)
+            </div>
+            <div class="form-group">
+                <label for="IntroduceMaxLimits">Introduce Max Limit Commission Formula</label>
+                <input type="text" id="IntroduceMaxLimits" name="IntroduceMaxLimits" class="form-control" placeholder="Enter Introduce Max Limit Commission Formula" value="@Model.IntroduceMaxLimits" />
+                @Html.ValidationMessageFor(e => e.IntroduceMaxLimits)
+            </div>
+            <div class="form-group">
+                <label for="AgentCommision">Agent Commission</label>
+                <input type="text" id="AgentCommision" name="AgentCommision" class="form-control" placeholder="Enter Agent Commission" value="@Model.AgentCommision" />
+                @Html.ValidationMessageFor(e => e.AgentCommision)
+            </div>
+            <div class="form-group">
+                <label for="ProcessingFeesCommision">Agent Processing Fees Commission</label>
+                <input type="text" id="ProcessingFeesCommision" name="ProcessingFeesCommision" class="form-control" placeholder="Enter Agent Processing Fees Commission" value="@Model.ProcessingFeesCommision" />
+                @Html.ValidationMessageFor(e => e.ProcessingFeesCommision)
+            </div>
+            <div class="form-group">
+                <label for="AgentTopUpCommision">Agent Top Up Commission</label>
+                <input type="text" id="AgentTopUpCommision" name="AgentTopUpCommision" class="form-control" placeholder="Enter Agent Top Up Commission" value="@Model.AgentTopUpCommision" />
+                @Html.ValidationMessageFor(e => e.AgentTopUpCommision)
+            </div>
+            <div class="form-group">
+                <label for="IntroduceNormalCommision">Introduce Normal Commission Formula</label>
+                <input type="number" id="IntroduceNormalCommision" name="IntroduceNormalCommision" class="form-control" placeholder="Enter Introduce Normal Commission Formula" value="@Model.IntroduceNormalCommision" />
+                @Html.ValidationMessageFor(e => e.IntroduceNormalCommision)
+            </div>
+            <div class="form-group">
+                <label for="IntroduceIncreaseCommision">Introduce Increase Commission Formula</label>
+                <input type="text" id="IntroduceIncreaseCommision" name="IntroduceIncreaseCommision" class="form-control" placeholder="Enter Introduce Increase Commission Formula" value="@Model.IntroduceIncreaseCommision" />
+                @Html.ValidationMessageFor(e => e.IntroduceIncreaseCommision)
+            </div>       
+            <div class="form-group">
+                <label for="AgentBonusCalculateFormula">Agent Unit Calculation Formula</label>
+                <input type="text" id="AgentBonusCalculateFormula" name="AgentBonusCalculateFormula" class="form-control" placeholder="Enter Agent Unit Calculation Formula" value="@Model.AgentBonusCalculateFormula" />
+                @Html.ValidationMessageFor(e => e.AgentBonusCalculateFormula)
+            </div>   
+            <div class="form-group">
+                <label for="MemberPointCalculateFormul">Member Point Calculate Formula</label>
+                <input type="text" id="MemberPointCalculateFormula" name="MemberPointCalculateFormula" class="form-control" placeholder="Enter Member Point Calculate Formula" value="@Model.MemberPointCalculateFormula" />
+                @Html.ValidationMessageFor(e => e.MemberPointCalculateFormula)
+            </div>   
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" class="btn btn-primary pull-right">Update System Setting</button>
+        </div>
+    </div>
+</form>

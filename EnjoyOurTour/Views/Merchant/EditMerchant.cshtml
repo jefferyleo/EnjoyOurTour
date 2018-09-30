@@ -1,0 +1,161 @@
+﻿
+@model EnjoyOurTour.Models.ViewModel.Merchant.AddMerchantViewModel
+@{
+    ViewBag.Title = "EditMerchant";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Update Merchant</h1>
+    </div>
+</div>
+
+<form id="EditNewBannerForm" style="color:#001a33;" name="EditNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="MerchantId" name="MerchantId" value="@Model.MerchantId" />
+            <div class="form-group">
+                <label for="MerchantName">Merchant Name:</label></br>
+                <input type="text" id="inputMerchantName" name="MerchantName" class="form-control" value="@Model.MerchantName" />
+                @Html.ValidationMessageFor(e => e.MerchantName)
+            </div>
+            <div class="form-group">
+                <label for="MerchantRegisterCode">Merchant Register Code:</label></br>
+                <input type="text" id="inputMerchantRegisterCode" class="form-control" name="MerchantRegisterCode" value="@Model.MerchantRegisterCode" />
+                @Html.ValidationMessageFor(e => e.MerchantRegisterCode)
+            </div>
+            <div class="form-group">
+                <label for="MerchantPhoneNumber">Merchant Phone Number:</label></br>
+                <input type="number" id="inputMerchantPhoneNumber"  class="form-control" name="MerchantPhoneNumber" value="@Model.MerchantPhoneNumber" />
+                @Html.ValidationMessageFor(e => e.MerchantPhoneNumber)
+            </div>
+            <div class="form-group">
+                <label for="MerchantAddress">Merchant Address:</label><br />
+                <textarea id="inputMerchantAddress" class="form-control" name="MerchantAddress">@Model.MerchantAddress</textarea>
+                @Html.ValidationMessageFor(e => e.MerchantAddress)
+            </div>
+            <div class="form-group">
+                <label for="MerchantCategoryId" id="lblMerchantCategoryId">Merchant Category ID:</label></br>
+                    @Html.DropDownListFor(e => e.MerchantCategoryId, Model.MerchantCategoryId, new { @class = "form-control", id = "ddlMerchantCategoryId" })
+                    @Html.ValidationMessageFor(e => e.MerchantCategoryId)
+            </div>
+            <div class="form-group">
+                <label for="MerchantJoinDate">Merchant Join Date:</label></br>
+                <input type="text" id="inputMerchantJoinDate" class="form-control" name="MerchantJoinDate" value="@Model.displayMerchantJoinDate"/>
+                @Html.ValidationMessageFor(e => e.MerchantJoinDate)
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Merchant Logo</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showMerchant').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showMerchant').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showMerchant" style="width:50%; display:none;" />
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editMerchant" class="btn btn-primary pull-right">Update Merchant</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    $('#inputMerchantJoinDate').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm'
+    });
+
+    $(document).ready(function () {
+        $("#ddlMerchantCategoryId").val('@Model.GetMerchantCategoryId');
+
+        $('#editMerchant').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if ($('#inputMerchantName').val() == '') {
+                $('#MerchantName').html('<span class="asterisk" style="color:red">*Please insert Merchant Name.</span>');
+            } else {
+                $("#MerchantName .asterisk").remove();
+                $('#MerchantName').html('Merchant Name:');
+            }
+
+            if ($('#inputMerchantRegisterCode').val() == '') {
+                $('#MerchantRegisterCode').html('<span class="asterisk" style="color:red">*Please insert Merchant Register Code.</span>');
+            } else {
+                $("#MerchantRegisterCode .asterisk").remove();
+                $('#MerchantRegisterCode').html('Merchant Register Code:');
+            }
+
+            if ($('#inputMerchantPhoneNumber').val() == '') {
+                $('#MerchantPhoneNumber').html('<span class="asterisk" style="color:red">*Please insert Merchant Phone Number.</span>');
+            } else {
+                $("#MerchantPhoneNumber .asterisk").remove();
+                $('#MerchantPhoneNumber').html('Merchant Phone Number:');
+            }
+
+            if ($('#inputMerchantAddress').val() == '') {
+                $('#MerchantAddress').html('<span class="asterisk" style="color:red">*Please insert Merchant Address.</span>');
+            } else {
+                $("#MerchantAddress .asterisk").remove();
+                $('#MerchantAddress').html('Merchant Address:');
+            }
+
+            if ($('#inputMerchantJoinDate').val() == '') {
+                $('#MerchantJoinDate').html('<span class="asterisk" style="color:red">*Please insert Merchant Join Date.</span>');
+            } else {
+                $("#MerchantJoinDate .asterisk").remove();
+                $('#MerchantJoinDate').html('Merchant Join Date:');
+            }
+
+            if ($("#ddlMerchantCategoryId option:selected").text() == '--Please Select Category Id--') {
+                $('#lblMerchantCategoryId').html('<span class="asterisk" style="color:red">*Please Select Merchant Category Id</span>');
+            } else {
+                $("#lblMerchantCategoryId .asterisk").remove();
+                $("#lblMerchantCategoryId").html('Merchant Category Id:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('MerchantId', $('#MerchantId').val());
+                formData.append('MerchantName', $('#inputMerchantName').val());
+                formData.append('MerchantRegisterCode', $('#inputMerchantRegisterCode').val());
+                formData.append('MerchantPhoneNumber', $('#inputMerchantPhoneNumber').val());
+                formData.append('MerchantAddress', $('#inputMerchantAddress').val());
+                formData.append('GetMerchantCategoryId', $("#ddlMerchantCategoryId option:selected").val());
+                formData.append('MerchantJoinDate', $('#inputMerchantJoinDate').val());
+                formData.append('MerchantLogoPath', document.getElementById('PhotoPath').files[0]);
+
+                $.ajax({
+                    url: "/Merchant/EditMerchant",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Merchant updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Merchant/Merchant';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            }
+
+        });
+    });
+</script>

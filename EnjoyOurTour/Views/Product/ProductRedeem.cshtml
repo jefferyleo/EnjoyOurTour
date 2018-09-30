@@ -1,0 +1,94 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Product.ProductRedeemViewModel>
+
+@{
+    ViewBag.Title = "ProductRedeemList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Product Redeem List
+        <a href="@Url.Action("AddProductRedeem", "Product")" class="btn btn-primary pull-right">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add Product Redeem
+        </a>
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="ProductRedeemTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="ProductRedeemId" data-visible="false" data-visible-in-selection="false">Product Redeem Id</th>
+                        <th data-column-id="ProductRedeemName">Product Redeem Name</th>
+                        <th data-column-id="ImagePath" data-formatter="pix">Product Image</th>
+                        <th data-column-id="RedeemPoint">Redeem Point</th>
+                        <th data-column-id="Stock">Stock</th>
+                        <th data-column-id="CreatedAt">Date Added</th>
+                        <th data-column-id="UpdatedAt">Updated At</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.ProductRedeemId</td>
+                        <td>@item.ProductRedeemName</td>
+                        <td>@item.ImagePath</td>
+                        <td>@item.RedeemPoint</td>
+                        <td>@item.Stock</td>
+                        <td>@item.CreatedAt</td>
+                        <td>@item.UpdatedAt</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditProductRedeem", "Product", new { id = "{Id}" }))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Update Product Redeem"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@Url.Action("DeleteProductRedeem","Product", new{id = "{Id}"})" class="btn btn-default delete-promotionimage" data-toggle="tooltip" data-placement="left" title="Delete Product Redeem"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#ProductRedeemTable").bootgrid({
+            formatters: {
+                "ActionColumnBar": function (column, row) {
+                    var el = $("div.action-column-bar").html();
+                    el = el.replace("%7BId%7D", row.ProductRedeemId).replace("%7BId%7D", row.ProductRedeemId).replace("%7BId%7D", row.ProductRedeemId).replace("%7BId%7D", row.ProductRedeemId);
+
+                    return el;
+                },
+                "pix": function (column, row) {
+                    return ('<img style="width:200px; height:100px;" src="/Image/Product/' + row.ImagePath + '" />');
+                }
+            }
+        }).on("loaded.rs.jquery.bootgrid",
+            function () {
+                $(this).find('[data-toggle="tooltip"]').tooltip();
+
+                $(this).find("a.delete-promotionimage").on("click", function (e) {
+                    if (confirm("Do you want to delete the Product Redeem?")) {
+                        return true;
+                    }
+
+                    e.preventDefault();
+
+                    return false;
+                });
+            });
+    });
+</script>

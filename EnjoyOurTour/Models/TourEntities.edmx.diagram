@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="47b0da22bd99404c88b91015c0c4b5ea" Name="Diagram1">
+        <EntityTypeShape EntityType="EnjoyOurTourModel.AboutUs" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.Agent" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.AgentTransaction" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.Banner" Width="1.5" PointX="4.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.ContactUs" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.Customer" Width="1.5" PointX="0.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.CustomersTestimony" Width="1.5" PointX="6.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.GoodNews" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.IntroducerTransaction" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.Merchant" Width="1.5" PointX="8.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.MerchantCategory" Width="1.5" PointX="4.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.MerchantPromotion" Width="1.5" PointX="6.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.Package" Width="1.5" PointX="8.75" PointY="9.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.ProductRedeem" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.RedeemCoupon" Width="1.5" PointX="10.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.Role" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.SystemSetting" Width="1.5" PointX="12.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.TransactionActivity" Width="1.5" PointX="12.75" PointY="5.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.TravelPromotion" Width="1.5" PointX="12.75" PointY="8.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.User" Width="1.5" PointX="10.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.UserTransaction" Width="1.5" PointX="12.75" PointY="12.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.UserTransactionStatus" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.TransactionView" Width="1.5" PointX="2.75" PointY="13.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.User_Adgent" Width="1.5" PointX="4.75" PointY="13.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.User_Customer_Adgent" Width="1.5" PointX="14.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.database_firewall_rules" Width="1.5" PointX="14.75" PointY="6.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.RedeemCouponTransactionView" Width="1.5" PointX="7.375" PointY="14.75" />
+        <EntityTypeShape EntityType="EnjoyOurTourModel.EmailTemplate" Width="1.5" PointX="15.375" PointY="9.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

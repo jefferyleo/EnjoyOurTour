@@ -1,0 +1,90 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Admin.UserViewModel>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="page-header">
+            <h1>
+                All Users
+                <a href="@Url.Action("AddUser", "Admin")" class="btn btn-primary pull-right">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Add New User
+                </a>
+            </h1>
+        </div>
+        <div class="table-responsive">
+            <table id="UsersTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="UserId" data-identifier="true" data-visible="false">Id</th>
+                        <th data-column-id="Username">Username</th>
+                        <th data-column-id="EmailAddress">Email Address</th>
+                        <th data-column-id="RoleName">Role Name</th>
+                        <th data-column-id="ActionColumnBar" data-formatter="ActionColumnBar">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.UserId</td>
+                                <td>@item.Username</td>
+                                <td>@item.EmailAddress</td>
+                                <td>@item.RoleName</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">
+                                No user yet.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="action-column-bar hide">
+    <a href="@(Url.Action("EditUser", "Admin", new {id = "{UserId}"}))" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Edit User"><span class="glyphicon glyphicon-pencil"></span></a>
+    <a href="@(Url.Action("DeleteUser", "Admin", new {id = "{UserId}"}))" class="btn btn-default delete-button" data-toggle="tooltip" data-placement="left" title="Delete User"><span class="glyphicon glyphicon-trash"></span></a>
+</div>
+
+<script>
+    @if (Model != null && Model.Count > 0)
+    {
+        <text>
+    $("#UsersTable").bootgrid({
+        ajax: false,
+        caseSensitive: false,
+        formatters: {
+            "ActionColumnBar": function (column, row) {
+                var el = $("div.action-column-bar").html();
+                el = el.replace("%7BUserId%7D", row.UserId).replace("%7BUserId%7D", row.UserId);
+                return el;
+            }
+        }
+    }).on("loaded.rs.jquery.bootgrid", function () {
+        $(this).find('[data-toggle="tooltip"]').tooltip();
+
+        $(this).find("a.delete-button").on("click", function (e) {
+            if (confirm("Do you want to delete the User?")) {
+                return true;
+            }
+
+            e.preventDefault();
+
+            return false;
+        });
+    });
+    </text>
+    }
+</script>

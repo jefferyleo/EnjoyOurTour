@@ -1,0 +1,88 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Home.BannerViewModel
+@{
+    ViewBag.Title = "EditBanner";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <h1 class="page-header">Edit Banner</h1>
+</div>
+
+<form id="EditBannerForm" style="color:#001a33;" name="EditBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="BannerId" name="BannerId" value="@Model.BannerId" />
+            <div class="form-group">
+                <label for="BannerDescription">Banner Description</label>
+                <textarea id="BannerDescription" name="BannerDescription">@Model.BannerDescription</textarea>
+            </div>
+            <div class="form-group">
+                <label for="BannerImage" id="lblBannerImage">Banner Image</label>
+                <input type="file" id="BannerImage" name="BannerImage" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showPromo').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showPromo').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showPromo" style="width:50%; display:none;" />
+            </div>
+            <div class="form-group">
+                <label>Active on Banner Slide now?</label>
+                <label class="checkbox-inline">
+                    <input id="IsActive" type="checkbox" checked="@Model.IsActive"> Yes
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editBanner" class="btn btn-primary pull-right">Edit Banner</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('BannerDescription');
+    //CKEDITOR.on('instanceReady', function (evt) {
+    //    CKEDITOR.instances['editor1'].insertHtml('<span style="color:red;">123</span>');
+    //});
+
+    $(document).ready(function () {
+        $('#editBanner').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+            var image = document.getElementById('BannerImage').files[0];
+            var form = $('form')[0];
+            var formData = new FormData();
+            formData.append('BannerId', $('#BannerId').val());
+            formData.append('BannerDescription', CKEDITOR.instances['BannerDescription'].getData());
+            formData.append('Image', document.getElementById('BannerImage').files[0]);
+            formData.append('IsActive', $('#IsActive').prop('checked'));
+
+                $.ajax({
+                    url: "/Admin/EditBanner",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "New Banner was successfully added!",
+                            type: "success"
+                        },
+                        function () {
+                            window.location.href = '/Admin/Banners';
+                        });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                        //swal("Oops", "We couldn't connect to the server!", "error")
+                    }
+                });
+        });
+    });
+</script>

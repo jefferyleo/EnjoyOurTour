@@ -1,0 +1,98 @@
+﻿
+@model EnjoyOurTour.Models.ViewModel.GoodNews.GoodNewsViewModel
+@{
+    ViewBag.Title = "EditNews";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Update Good News</h1>
+    </div>
+    
+</div>
+
+<form id="EditNewBannerForm" style="color:#001a33;" name="EditNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="GoodNewsId" name="GoodNewsId" value="@Model.GoodNewsId" />
+            <div class="form-group">
+                <label for="GoodNewsTitle" id="GoodNewsTitle">Good News Title:</label></br>
+                <input type="text" id="inputGoodNewsTitle" class="form-control" name="GoodNewsTitle" value="@Model.GoodNewsTitle" />
+                @Html.ValidationMessageFor(e => e.GoodNewsTitle)
+            </div>
+            <div class="form-group">
+                <label for="Description" id="Description">Description</label>
+                <textarea id="inputDescription" class="form-control" name="Description">@Model.Description</textarea>
+                @Html.ValidationMessageFor(e => e.Description)
+            </div>
+
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">News Image</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showGoodNews').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showGoodNews').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showGoodNews" style="width:50%; display:none;" />
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editNews" class="btn btn-primary pull-right">Update News</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    CKEDITOR.replace('inputDescription');
+
+    $(document).ready(function () {
+        $('#editNews').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if ($('#GoodNewsTitle').val() == '') {
+                $('#lblTitle').html('<span class="asterisk" style="color:red">*Please enter Good News Title.</span>');
+            } else {
+                $("#lblTitle .asterisk").remove();
+                $('#lblTitle').html('Good News Title:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('GoodNewsId', $('#GoodNewsId').val());
+                formData.append('GoodNewsTitle', $('#inputGoodNewsTitle').val());
+                formData.append('Description', CKEDITOR.instances['inputDescription'].getData());
+                formData.append('PhotoPath', document.getElementById('PhotoPath').files[0]);
+
+                $.ajax({
+                    url: "/GoodNews/EditGoodNews",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "News updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/GoodNews/GoodNews';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            }
+        });
+    });
+</script>

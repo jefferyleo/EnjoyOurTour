@@ -1,0 +1,77 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Merchant.AddMerchantCategoryViewModel
+    @{
+        ViewBag.Title = "AddMerchantCategory";
+        Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Add Merchant Category</h1>
+    </div>
+   
+</div>
+
+    <form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-12 col-lg-6 col-lg-offset-3">
+                <div class="form-group">
+                    <label for="CategoryName" id="CategoryName">Category Name:</label><br />
+                    <input type="text" id="inputCategoryName" class="form-control" name="CategoryName" />
+                    @Html.ValidationMessageFor(e => e.CategoryName)
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:20px">
+            <div class="col-md-12 col-lg-9">
+                <button type="submit" id="addMerchantCategory" class="btn btn-primary pull-right">Add Merchant Category</button>
+            </div>
+        </div>
+    </form>
+    <div class="loading" style="display:none;z-index:100000">
+        <div id="loader"></div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#addMerchantCategory').click(function (e) {
+                e.preventDefault();
+                $('.loading').css('display', 'block');
+
+                if ($('#inputCategoryName').val() == '') {
+                    $('#CategoryName').html('<span class="asterisk" style="color:red">*Please enter Merchant Category Name.</span>');
+                } else {
+                    $("#CategoryName .asterisk").remove();
+                    $('#CategoryName').html('Merchant Category Name');
+                }
+
+                if ($('.asterisk').val() == undefined) {
+                    var formData = new FormData();
+                    formData.append('CategoryName', $('#inputCategoryName').val());
+
+                    $.ajax({
+                        url: "/Merchant/AddMerchantCategory",
+                        contentType: false,
+                        processData: false,
+                        traditional: true,
+                        data: formData,
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (data) {
+                            $('.loading').css('display', 'none');
+                            swal({
+                                title: "Done",
+                                text: "Merchant Category was successfully added!",
+                                type: "success"
+                            },
+                                function () {
+                                    window.location.href = '/Merchant/MerchantCategory';
+                                });
+                        },
+                        error: function (data) {
+                            $('.loading').css('display', 'none');
+                        }
+                    });
+                }
+            });
+        });
+    </script>

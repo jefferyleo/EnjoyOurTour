@@ -1,0 +1,299 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Home.SignUpViewModel
+
+@{
+    ViewBag.Title = "Sign Up";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="SignUpForm" name="SignUpForm" method="post" enctype="multipart/form-data">  
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3" id="errormsg">
+
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Sign Up</h1>
+        </div>
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">
+            <div class="form-group">
+                <label for="CustomerName">Name</label>
+                <input type="text" id="CustomerName" name="CustomerName" class="form-control" placeholder="Enter Name" value="@Model.CustomerName" />
+                @Html.ValidationMessageFor(e => e.CustomerName)
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber">Phone Number</label>
+                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" placeholder="Enter Phone Number" value="@Model.PhoneNumber" />
+                @Html.ValidationMessageFor(e => e.PhoneNumber)
+            </div>
+            <div class="form-group">
+                <label for="Username">Username</label>
+                <input type="text" id="Username" name="Username" class="form-control" placeholder="Enter Username" value="@Model.Username" />
+                @Html.ValidationMessageFor(e => e.Username)
+            </div>
+            <div class="form-group">
+                <label for="Password">Password</label>
+                <input type="password" id="Password" name="Password" class="form-control" placeholder="Enter Password" value="@Model.Password" />
+                @Html.ValidationMessageFor(e => e.Password)
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <input type="text" id="Address" name="Address" class="form-control" placeholder="Enter Address" value="@Model.Address" />
+                @Html.ValidationMessageFor(e => e.Address)
+            </div>
+            <div class="form-group">
+                <label for="BankName">Bank Name</label>
+                <input type="text" id="BankName" name="BankName" class="form-control" placeholder="Enter Bank Name" value="@Model.BankName" />
+                @Html.ValidationMessageFor(e => e.BankName)
+            </div>
+            <div class="form-group">
+                <label for="IntroducerCode">Introducer Code</label>
+                <input type="text" id="IntroducerCode" name="IntroducerCode" class="form-control" placeholder="Enter Introducer Code" value="@Model.IntroducerCode" />
+                @Html.ValidationMessageFor(e => e.IntroducerCode)
+            </div>
+            <div class="form-group">
+                <label for="IntroducerName">Introducer Name</label>
+                <input type="text" id="IntroducerName" name="IntroducerName" class="form-control" readonly />
+                @Html.ValidationMessageFor(e => e.IntroducerName)
+            </div>
+            <div class="form-group">
+                <label for="AgentCode">Agent Code</label>
+                <input type="text" id="AgentCode" name="AgentCode" class="form-control" placeholder="Enter Agent Code" value="@Model.CustomerName" />
+                @Html.ValidationMessageFor(e => e.AgentCode)
+            </div>
+            <div class="form-group">
+                <label for="AgentName">Agent Name</label>
+                <input type="text" id="AgentName" name="AgentName" class="form-control" value="" readonly />
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="form-group">
+                <label for="NRIC">NRIC</label>
+                <input type="text" id="NRIC" name="NRIC" class="form-control" placeholder="Enter NRIC" value="@Model.NRIC" />
+                @Html.ValidationMessageFor(e => e.NRIC)
+            </div>
+            <div class="form-group">
+                <label for="DateOfBirth">Date Of Birth</label>
+                <input type="text" id="DateOfBirth" name="DateOfBirth" class="form-control" placeholder="Enter Date Of Birth" value="@Model.DateOfBirth" />
+                @Html.ValidationMessageFor(e => e.DateOfBirth)
+            </div>
+            <div class="form-group">
+                <label for="EmailAddress">Email Address</label>
+                <input type="text" id="EmailAddress" name="EmailAddress" class="form-control" placeholder="Enter Email Address" value="@Model.EmailAddress" />
+                @Html.ValidationMessageFor(e => e.EmailAddress)
+            </div>
+            <div class="form-group">
+                <label for="ConfirmPassword">Confirm Password</label>
+                <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" placeholder="Enter Confirm Password" value="@Model.ConfirmPassword" />
+                @Html.ValidationMessageFor(e => e.ConfirmPassword)
+            </div>
+            <div class="form-group">
+                <label for="BankAccountNumber">Bank Account Number</label>
+                <input type="text" id="BankAccountNumber" name="BankAccountNumber" class="form-control" placeholder="Enter Bank Account Number" value="@Model.BankAccountNumber" />
+                @Html.ValidationMessageFor(e => e.BankAccountNumber)
+            </div>
+            <div class="form-group">
+                <label for="SignUpAmount">Sign Up Amount</label>
+                <input type="text" id="SignUpAmount" name="SignUpAmount" class="form-control" value="RM 100.00" disabled/>
+            </div>
+            <div class="form-group">
+                <label for="SignUpAmount">Top Up Amount</label>
+                @Html.DropDownListFor(e => e.TopUpAmountValue, Model.TopUpAmount, "--Please Select amount to top up--", new { @class = "form-control", id = "dllTopUpAmount" })
+                @Html.ValidationMessageFor(e => e.TopUpAmount)
+                <input type="number" id="OtherAmount" name="OtherAmount" class="form-control" style="visibility:hidden" placeholder="Please key in multiply of 400" value="@Model.OtherAmount" />
+            </div>
+            <div class="form-group">
+                <label for="BankAccountNumber">Bank in Slip</label>
+                <input type="file" id="Image" name="Image" accept="image/*" />
+                <img id="showImage" style="width: 50%; display: none;margin-top: 5px" />
+                @Html.ValidationMessageFor(e => e.Image)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-6 col-lg-offset-3" style="text-align:center;">
+                <span>After Sign Up, if you failed to login website after 5 working days, please contact our</span><br />
+                <span> customer careline 03 - 5887 6880 or 012-2211795 during working hour for more details.</span><br />
+                <span>Working Hour: </span><br />
+                <span>Monday - Friday (10am - 6pm)</span><br />
+                <span>Public Holiday / Weekend OFF</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-9">
+                <button type="button" id="signUpButton" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal">Continue</button>
+            </div>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Terms & Conditions:</h4>
+                </div>
+                <div class="modal-body">
+                    <p>test</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Decline</button>
+                    <button type="button" id="btnAgree" class="btn btn-default" data-dismiss="modal">Agree</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+
+
+<script>
+    $('#DateOfBirth').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm',        
+    });
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#AgentCode").keyup(function () {
+        var agentcode = $('#AgentCode').val();        
+        $.ajax({
+            url: "/Account/GetAgentName",     
+            data: { agentCode: agentcode },
+            type: "POST",
+            success: function (data) {
+                $('#AgentName').val(data.returnCode);
+            },
+            error: function (data) {                
+                //swal("Oops", "We couldn't connect to the server!", "error")
+            }
+        });
+    });
+
+    $("#dllTopUpAmount").change(function () {
+        var topUpAmount = this.value;
+        if (topUpAmount == "Other") {
+            $("#OtherAmount").css('visibility', 'visible');
+        } else {
+            $("#OtherAmount").css('visibility', 'hidden');
+        }
+    });
+
+    $("#IntroducerCode").keyup(function () {
+        var introducerCode = $('#IntroducerCode').val();
+        $.ajax({
+            url: "/Account/GetIntroducerName",
+            data: { introducerCode: introducerCode },
+            type: "POST",
+            success: function (data) {
+                $('#IntroducerName').val(data.returnCode);
+            },
+            error: function (data) {                
+                //swal("Oops", "We couldn't connect to the server!", "error")
+            }
+        });
+    });
+
+    $('#Image').on('change', function () {
+        readURL(this);
+        $('#showImage').show();
+    });
+
+
+    $('#Image').change(function (e) {
+        var fileSize;
+        var fileType;
+        fileSize = $('#Image')[0].files[0].size;
+        fileType = $('#Image')[0].files[0].type;
+        if (fileSize < 25000000) {
+            overSize = false;
+            switch (fileType) {
+                case 'image/png':
+                    break;
+                case 'image/jpg':
+                    break;
+                case 'image/jpeg':
+                    break;
+                default:
+                    alert('Unsupport format! Please insert image files only.');
+                    $('#Image').val("").change();
+            }
+        } else {
+            alert('This file is too large! Please select a new file.');
+            $('#Image').val("").change();
+        }
+    });
+
+
+    $(document).ready(function () {
+        $('#btnAgree').click(function (e) {
+            $('.loading').css('display', 'block');
+            var image = document.getElementById('Image').files[0];            
+            var form = $('form')[0];
+            var formData = new FormData();
+            formData.append('CustomerName', $('#CustomerName').val());
+            formData.append('PhoneNumber', $('#PhoneNumber').val());
+            formData.append('AgentCode', $('#AgentCode').val());
+            formData.append('EmailAddress', $('#EmailAddress').val());
+            formData.append('Password', $('#Password').val());
+            formData.append('ConfirmPassword', $('#ConfirmPassword').val());
+            formData.append('Username', $('#Username').val());
+            formData.append('NRIC', $('#NRIC').val());
+            formData.append('BankName', $('#BankName').val());
+            formData.append('BankAccountNumber', $('#BankAccountNumber').val());
+            formData.append('Address', $('#Address').val());
+            formData.append('IntroducerCode', $('#IntroducerCode').val());
+            formData.append('DateOfBirth', $('#DateOfBirth').val());
+            formData.append('OtherAmount', $('#OtherAmount').val());
+            formData.append('TopUpAmountValue', $("#dllTopUpAmount option:selected").text());
+            formData.append('Image', document.getElementById('Image').files[0]);
+
+            $.ajax({
+                url: "/Account/SignUp",
+                contentType: false,
+                processData: false,
+                traditional: true,
+                dataType: 'json',
+                data: formData,
+                type: "POST",
+                success: function (data) {     
+                    if (data.success == true) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Your Registration had done successfully. Please wait for our officer to confirm it. If after 2 day. You still not yet receive any email. Please call our Customer Service.",
+                            type: "success"
+                        },
+                        function () {
+                            window.location.href = '/Home/Index';
+                        });
+                    } else {
+                        $("#errormsg").html("");
+                        var errormsg = "";
+                        for (var i = 0; i < data.errors.length; i++) {
+                            errormsg = errormsg  + "<li>" + data.errors[i] + "</li>"
+                        }
+                        var wholediv = "<p><strong>An error occured whilst trying to save this issue.</strong></p> " + "<ul data-bind='foreach: saveErrors()'>" + errormsg + "</ul>";
+                        $("#errormsg").append(wholediv);
+                    }                  
+                },
+                error: function (data) {
+                    $('.loading').css('display', 'none');
+                    //swal("Oops", "We couldn't connect to the server!", "error")
+                }                
+            });
+    });
+    });
+</script>

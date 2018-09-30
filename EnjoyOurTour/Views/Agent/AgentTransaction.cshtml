@@ -1,0 +1,53 @@
+﻿@model List<EnjoyOurTour.Models.ViewModel.Agent.AgentTransactionViewModel>
+
+@{
+    ViewBag.Title = "AgentTransactionList";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="row">
+    <h1 class="page-header">
+        Agent Transaction List
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table id="AgentTransactionTable" class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th data-column-id="No" data-identifier="true">No.</th>
+                        <th data-column-id="CreditAmount">Credit Amount</th>
+                        <th data-column-id="FinalAmount">Current Total Amount</th>
+                        <th data-column-id="DebitAmount">Debit Amount</th>
+                        <th data-column-id="CreditBonus">Credit Unit</th>
+                        <th data-column-id="FinalBonus">Current Total Unit</th>                        
+                        <th data-column-id="DebitBonus">Debit Unit</th>
+                        <th data-column-id="CreatedAt">Date Added</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int count = 0; }
+                    @foreach (var item in Model)
+                    {
+                        count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.CreditAmount</td>
+                        <td>@item.FinalAmount</td>
+                        <td>@item.DebitAmount</td>
+                        <td>@item.CreditBonus</td>
+                        <td>@item.FinalBonus</td>                        
+                        <td>@item.DebitBonus</td>
+                        <td>@item.CreatedAt</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>

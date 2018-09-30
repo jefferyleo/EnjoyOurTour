@@ -1,0 +1,44 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Customer.ViewCustomerTestimonyViewModel
+@{
+
+    ViewBag.Title = "Customer Testimony Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="ViewCustomerTestimonyForm" name="ViewCustomerTestimonyForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3" id="errormsg">
+
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Package Detail</h1>
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="TestimonyId" name="TestimonyId" value="@Model.TestimonyId" />
+            <div class="form-group">                
+                <img style="width:500px; height:500px;" src="/Image/Package/@Model.PhotoPath" />
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <p> @Html.Raw(Model.Description) </p>                
+            </div>
+            @{
+                if (!string.IsNullOrEmpty(Model.YouTubeLink))
+                {
+                    <div class="form-group">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/@Model.YouTubeLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                }
+
+            }
+         </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+
+

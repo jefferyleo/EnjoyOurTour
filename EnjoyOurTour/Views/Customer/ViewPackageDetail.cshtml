@@ -1,0 +1,233 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Customer.ViewPackageViewModel
+@{
+
+    ViewBag.Title = "Package Detail";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<form id="UpdateCustomerProfileForm" name="UpdateCustomerProfileForm" method="post">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3" id="errormsg">
+
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <h1 class="page-header">Package Detail</h1>
+        </div>
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="PackageId" name="PackageId" value="@Model.PackageId" />
+            <div class="form-group">                
+                <img style="width:500px; height:500px;" src="/Image/Package/@Model.PhotoPath" />
+            </div>
+            <div class="form-group">
+                <label for="PackageName">Package Name</label>
+                <p> @Html.Raw(Model.PackageName) </p>                              
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <p> @Html.Raw(Model.Description) </p>                
+            </div>
+            <div class="form-group">
+                <label for="IteneraryDetail">Itenerary Detail</label>
+                <p> @Html.Raw(Model.IteneraryDetail) </p>                          
+            </div> 
+            <div class="form-group">
+                <div class="col-md-6" style="margin-left:-15px">
+                    <label for="Amount">Price Amount</label>
+                    <div id="amount" value="@string.Format("{0:f2}", Model.Amount)"> @string.Format("{0:f2}", Model.Amount) </div>                             
+                </div>
+                <div class="col-md-6">
+                    <label for="TVR">TVR Point</label>
+                    <div id="tvr" value="@Model.TVR"> @Model.TVR </div>                             
+                </div>                
+            </div>            
+            <div class="form-group">
+                <label for="PersonAmount">Total Headcount</label>
+                @Html.DropDownListFor(e => e.PersonAmountValue, Model.PersonAmount, "--Please Select headcount--", new { @class = "form-control", id = "dllPersonAmount" })
+                @Html.ValidationMessageFor(e => e.PersonAmount)
+                <input type="number" min="1" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57" id="OtherPersonAmountValue"  name="OtherPersonAmountValue" class="form-control" style="visibility:hidden"  placeholder="Please fill in other amount of headcount." value="@Model.OtherPersonAmountValue" />
+            </div>
+            <div class="form-group">
+                <label for="BankAccountNumber">Bank in Slip</label>
+                <input type="file" id="Image" name="Image" accept="image/*" />
+                <img id="showImage" style="width: 50%; display: none;margin-top: 5px" />
+                @Html.ValidationMessageFor(e => e.Image)
+            </div>
+        </div>
+    </div>
+
+    @{
+        if (!string.IsNullOrEmpty(Model.FilePath))
+        {
+            <div class="row">
+                <div class="col-md-12 col-lg-6 col-lg-offset-3">
+                    <a href="@Url.Action("DownloadPDF", "Customer", new { file = Model.FilePath })" class="btn btn-primary pull-right" data-toggle="tooltip" title="Download PDF" role="button" aria-haspopup="true" aria-expanded="true">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                        下载配套 PDF Download Package PDF
+                    </a>
+                </div>
+            </div>
+            <br />
+        }
+
+    }
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" id="btnSubmit" class="btn btn-block pull-right" style="background-color:cornflowerblue ; color:white">Redeem</button>
+        </div>        
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+
+    $('#Image').on('change', function () {
+        readURL(this);
+        $('#showImage').show();
+    });
+
+
+    $('#Image').change(function (e) {
+        var fileSize;
+        var fileType;
+        fileSize = $('#Image')[0].files[0].size;
+        fileType = $('#Image')[0].files[0].type;
+        if (fileSize < 25000000) {
+            overSize = false;
+            switch (fileType) {
+                case 'image/png':
+                    break;
+                case 'image/jpg':
+                    break;
+                case 'image/jpeg':
+                    break;
+                default:
+                    alert('Unsupport format! Please insert image files only.');
+                    $('#Image').val("").change();
+            }
+        } else {
+            alert('This file is too large! Please select a new file.');
+            $('#Image').val("").change();
+        }
+    });
+
+
+    $("#dllPersonAmount").change(function () {
+        var personAmount = this.value;
+        if (personAmount == "Other") {
+            var tvr = document.getElementById('tvr').getAttribute('value');
+            tvr = (tvr * 1);
+
+            document.getElementById("tvr").innerHTML = tvr;
+
+            var amount = document.getElementById('amount').getAttribute('value');
+            amount = (amount * 1).toFixed(2);
+
+            document.getElementById("amount").innerHTML = amount;
+
+            $("#OtherPersonAmountValue").css('visibility', 'visible');
+        } else {
+            var otherAmount = $('#OtherPersonAmountValue').val("");
+            var tvr = document.getElementById('tvr').getAttribute('value');
+            tvr = (tvr * this.value);
+
+            document.getElementById("tvr").innerHTML = tvr;
+
+            var amount = document.getElementById('amount').getAttribute('value');
+            amount = (amount * this.value).toFixed(2);
+
+            document.getElementById("amount").innerHTML = amount;
+
+            $("#OtherPersonAmountValue").css('visibility', 'hidden');
+        }
+    });
+
+    $("#OtherPersonAmountValue").keyup(function () {
+        var otherAmount = $('#OtherPersonAmountValue').val();
+        if (otherAmount == 0) {
+            alert("Not allowed to key in 0.");
+            $('#OtherPersonAmountValue').val("1");
+        } else {
+            var tvr = document.getElementById('tvr').getAttribute('value');
+            tvr = (tvr * otherAmount);
+
+            document.getElementById("tvr").innerHTML = tvr;
+
+            var amount = document.getElementById('amount').getAttribute('value');
+            amount = (amount * otherAmount).toFixed(2);
+
+            document.getElementById("amount").innerHTML = amount;
+        }
+
+    });
+
+
+    $(document).ready(function () {
+        $('#btnSubmit').click(function (e) {           
+            e.preventDefault();
+            var image = document.getElementById('Image').files[0];
+            $('.loading').css('display', 'block');
+            var form = $('form')[0];
+            var formData = new FormData();
+            formData.append('PackageId', $('#PackageId').val());
+            formData.append('OtherPersonAmountValue', $('#OtherPersonAmountValue').val());
+            formData.append('PersonAmountValue', $("#dllPersonAmount option:selected").text());
+            formData.append('Image', document.getElementById('Image').files[0]);
+
+            $.ajax({
+                url: "/Customer/RedeemPackage",
+                contentType: false,
+                processData: false,
+                traditional: true,
+                dataType: 'json',
+                data: formData,
+                type: "POST",
+                success: function (data) {     
+                    if (data.success == true) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Successfully Submit this redeemtion.",
+                            type: "success"
+                        },
+                        function () {
+                            window.location.href = '/Customer/Package';
+                        });
+                    } else {
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        $("#errormsg").html("");
+                        var errormsg = "";
+                        for (var i = 0; i < data.errors.length; i++) {
+                            errormsg = errormsg  + "<li>" + data.errors[i] + "</li>"
+                        }
+                        var wholediv = "<p><strong>An error occured whilst trying to save this issue.</strong></p> " + "<ul data-bind='foreach: saveErrors()'>" + errormsg + "</ul>";
+                        $("#errormsg").append(wholediv);
+                    }                  
+                },
+                error: function (data) {
+                    $('.loading').css('display', 'none');
+                    //swal("Oops", "We couldn't connect to the server!", "error")
+                }                
+            });
+        });
+    });
+</script>

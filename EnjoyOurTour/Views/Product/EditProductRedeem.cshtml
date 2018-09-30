@@ -1,0 +1,120 @@
+﻿
+@model EnjoyOurTour.Models.ViewModel.Product.ProductRedeemViewModel
+@{
+    ViewBag.Title = "EditProductRedeem";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Update Product Redeem</h1>
+    </div>
+</div>
+
+<form id="EditNewBannerForm" style="color:#001a33;" name="EditNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="ProductRedeemId" name="ProductRedeemId" value="@Model.ProductRedeemId" />
+            <div class="form-group">
+                <label for="ProductRedeemName" id="CategoryName">Product Redeem Name:</label><br />
+                <input type="text" id="inputProductRedeemName" class="form-control" name="CategoryName" value="@Model.ProductRedeemName" />
+                @Html.ValidationMessageFor(e => e.ProductRedeemName)
+            </div>
+            <div class="form-group">
+                <label for="RedeemPoint" id="RedeemPoint">Redeem Point:</label><br />
+                <input type="number" id="inputRedeemPoint" class="form-control" name="RedeemPoint" value="@Model.RedeemPoint" />
+                @Html.ValidationMessageFor(e => e.RedeemPoint)
+            </div>
+            <div class="form-group">
+                <label for="Stock" id="RedeemPoint">Stock:</label><br />
+                <input type="number" id="inputStock" class="form-control" name="RedeemPoint" value="@Model.Stock" />
+                @Html.ValidationMessageFor(e => e.Stock)
+            </div>
+            <div class="form-group">
+                <label for="Stock" id="UpdatedBy">Updated By:</label><br />
+                <input type="text" id="inputUpdatedBy" class="form-control" name="UpdatedBy" value="@Model.UpdatedBy" readonly />
+                @Html.ValidationMessageFor(e => e.UpdatedBy)
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editProductRedeem" class="btn btn-primary pull-right">Update Product Redeem</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#editProductRedeem').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if ($('#inputProductRedeemName').val() == '') {
+                $('#ProductRedeemName').html('<span class="asterisk" style="color:red">*Please enter Product Redeem Name.</span>');
+            } else {
+                $("#ProductRedeemName .asterisk").remove();
+                $('#ProductRedeemName').html('Product Redeem Name:');
+            }
+
+            if ($('#inputRedeemPoint').val() == '') {
+                $('#RedeemPoint').html('<span class="asterisk" style="color:red">*Please enter Redeem Point.</span>');
+            } else {
+                $("#RedeemPoint .asterisk").remove();
+                $('#RedeemPoint').html('Redeem Point:');
+            }
+
+            if ($('#inputStock').val() == '') {
+                $('#Stock').html('<span class="asterisk" style="color:red">*Please enter Stock Amount.</span>');
+            } else {
+                $("#Stock .asterisk").remove();
+                $('#Stock').html('Stock:');
+            }
+
+            if (image == undefined) {
+                $('#lblPhotoPath').html('<span class="asterisk" style="color:red">*Please upload Product Redeem Image.</span>');
+            } else {
+                $("#lblPhotoPath .asterisk").remove();
+                $('#lblPhotoPath').html('Product Redeem Image:');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('ProductRedeemId', $('#ProductRedeemId').val());
+                formData.append('ProductRedeemName', $('#inputProductRedeemName').val());
+                formData.append('RedeemPoint', $('#inputRedeemPoint').val());
+                formData.append('Stock', $('#inputStock').val());
+                formData.append('ImagePath', document.getElementById('PhotoPath').files[0]));
+
+                $.ajax({
+                    url: "/Product/EditProductRedeem",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Product Redeem updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Product/ProductRedeem';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            }
+        });
+    });
+</script>

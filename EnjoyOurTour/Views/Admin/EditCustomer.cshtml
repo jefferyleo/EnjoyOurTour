@@ -1,0 +1,167 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Admin.AddCustomerViewModel
+@{
+    ViewBag.Title = "EditCustomer";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-md-12 col-lg-6 col-lg-offset-3">
+    <h1 class="page-header">Edit Customer <button id="btnCashOut" class="btn btn-success pull-right">Cash Out</button> </h1>
+</div>
+<form id="EditCustomerForm" name="EditCustomerForm" method="post">
+    <div class="row">
+
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">
+            <input hidden id="UserId" name="UserId" value="@Model.UserId" />
+            <input hidden id="CustomerId" name="CustomerId" value="@Model.CustomerId" />
+            <div class="form-group">
+                <label for="Username">Username</label>
+                <input type="text" id="Username" name="Username" class="form-control" placeholder="Enter Username" value="@Model.Username" />
+                @Html.ValidationMessageFor(e => e.Username)
+            </div>
+            <div class="form-group">
+                <label for="EmailAddress">EmailAddress</label>
+                <input type="text" id="EmailAddress" name="EmailAddress" class="form-control" placeholder="Enter Email Address" value="@Model.EmailAddress" />
+                @Html.ValidationMessageFor(e => e.EmailAddress)
+            </div>
+            <div class="form-group">
+                <label for="CustomerName">CustomerName</label>
+                <input type="text" id="CustomerName" name="CustomerName" class="form-control" placeholder="Enter Customer Name" value="@Model.CustomerName" />
+                @Html.ValidationMessageFor(e => e.CustomerName)
+            </div>
+            <div class="form-group">
+                <label for="NRIC">NRIC</label>
+                <input type="text" id="NRIC" name="NRIC" class="form-control" placeholder="Enter NRIC" value="@Model.NRIC" />
+                @Html.ValidationMessageFor(e => e.NRIC)
+            </div>
+            <div class="form-group">
+                <label for="BankName">Bank Name</label>
+                <input type="text" id="BankName" name="BankName" class="form-control" placeholder="Enter Bank Name" value="@Model.BankName" />
+                @Html.ValidationMessageFor(e => e.BankName)
+            </div>
+            <div class="form-group">
+                <label for="BankAccountNumber">Bank Account Number</label>
+                <input type="text" id="BankAccountNumber" name="BankAccountNumber" class="form-control" placeholder="Enter Bank Account Number" value="@Model.BankAccountNumber" />
+                @Html.ValidationMessageFor(e => e.BankAccountNumber)
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber">Phone Number</label>
+                <input type="text" id="PhoneNumber" name="PhoneNumber" class="form-control" placeholder="Enter Phone Number" value="@Model.PhoneNumber" />
+                @Html.ValidationMessageFor(e => e.PhoneNumber)
+            </div>
+            <div class="form-group">
+                <label for="Address">Address</label>
+                <input type="text" id="Address" name="Address" class="form-control" placeholder="Enter Address" value="@Model.Address" />
+                @Html.ValidationMessageFor(e => e.Address)
+            </div>
+            <div class="form-group">
+                <label for="DateOfBirth">Date Of Birth</label>
+                <input type="text" id="DateOfBirth" name="DateOfBirth" class="form-control" placeholder="Enter Date Of Birth" value="@Model.DOBString" />
+                @Html.ValidationMessageFor(e => e.DateOfBirth)
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="form-group">
+                <label for="AvailableTVR">Available TVR</label>
+                <input type="text" id="AvailableTVR" name="AvailableTVR" class="form-control" placeholder="Enter Available TVR" value="@Model.AvailableTVR" />
+                @Html.ValidationMessageFor(e => e.AvailableTVR)
+            </div>
+            <div class="form-group">
+                <label for="AvailableAmount">Available Amount (RM)</label>
+                <input type="text" id="AvailableAmount" name="AvailableAmount" class="form-control" placeholder="Enter Available Amount" value="@Model.AvailableAmount" />
+                @Html.ValidationMessageFor(e => e.AvailableAmount)
+            </div>
+            <div class="form-group">
+                <label for="AvailablePoint">Available Reward Point</label>
+                <input type="text" id="AvailablePoint" name="AvailablePoint" class="form-control" placeholder="Enter Available Reward Point" value="@Model.AvailablePoint" />
+                @Html.ValidationMessageFor(e => e.AvailablePoint)
+            </div>
+            <div class="form-group">
+                <label for="AgentCode">Agent Code</label>
+                <input type="number" id="AgentCode" name="AgentCode" class="form-control" placeholder="Enter Agent Code" value="@Model.AgentCode" />
+                @Html.ValidationMessageFor(e => e.AgentCode)
+            </div>
+            <div class="form-group">
+                <label for="AgentName">Agent Name</label>
+                <label id="AgentName" name="AgentName" class="form-control">@Model.AgentName</label>
+            </div>
+            <div class="form-group">
+                <label for="IntroducerCode">Introducer Code</label>
+                <input type="text" id="IntroducerCode" name="IntroducerCode" class="form-control" placeholder="Enter Introducer Code" value="@Model.IntroducerCode" />
+                @Html.ValidationMessageFor(e => e.IntroducerCode)
+            </div>
+            <div class="form-group">
+                <label for="IntroducerName">Introducer Name</label>
+                <label id="IntroducerName" name="IntroducerName" class="form-control">@Model.IntroducerName</label>
+                @Html.ValidationMessageFor(e => e.IntroducerName)
+            </div>
+            <div class="form-group">
+                <label for="JoinDate">JoinDate</label>
+                <input type="text" id="JoinDate" name="JoinDate" class="form-control" placeholder="Enter Join Date" value="@Model.JoinDateString" />
+                @Html.ValidationMessageFor(e => e.JoinDate)
+            </div>
+        </div>
+      </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" class="btn btn-primary pull-right">Update Customer</button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <button type="button" class="btn btn-block pull-right" onclick="history.go(-1);">Back</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+    $('#JoinDate').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm'
+    });
+
+    $('#DateOfBirth').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm'
+    });
+
+
+    $(document).ready(function () {
+        $('#btnCashOut').click(function (e) {
+      
+            $('.loading').css('display', 'block');
+            var id = $('#CustomerId').val();
+            $.ajax({
+                url: "/Admin/MemberCashOut?customerId=" + id,
+                contentType: 'application/json',
+                processData: false,
+                traditional: true,
+                dataType: 'json',
+                type: "POST",
+                success: function (data) {
+                    if (data.success == true) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Successfully Cash Out for this Member. ",
+                            type: "success"
+                        },
+                        function () {
+                            window.location.href = '/Admin/Customers';
+                        });
+                    } else {
+                        $("#errormsg").html("");
+                        var errormsg = data.errors;                     
+                        var wholediv = "<p><strong>An error occured whilst trying to save this issue.</strong></p> " + "<ul data-bind='foreach: saveErrors()'>" + errormsg + "</ul>";
+                        $("#errormsg").append(wholediv);
+                    }
+                },
+                error: function (data) {
+                    $('.loading').css('display', 'none');
+                    //swal("Oops", "We couldn't connect to the server!", "error")
+                }
+            });
+        });
+    });
+</script>

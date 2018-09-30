@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Enjoy Our Tour</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    <link href="~/Content/jquery.bootgrid.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.bootgrid.js"></script>
+    <script src="~/Scripts/custom.js"></script>
+    <script src="~/Scripts/ckeditor.js"></script>
+    <script src="~/Scripts/config.js"></script>
+    <script src="~/Scripts/styles.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <script type="text/javascript" src="/scripts/moment.min.js"></script>
+    <script type="text/javascript" src="/scripts/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="/Content/bootstrap-datetimepicker.css" />
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Enjoy Our Tour", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })             
+
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] == null)
+                {
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    </ul>
+                }
+                else
+                {
+                    var formsAuthentication = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] != null ? FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value) : null;
+                    if (formsAuthentication?.UserData == "Superadmin")
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Admin")</li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Data <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("About Us & YouTube Link", "AboutUs", "Admin")</li>
+                                    <li>@Html.ActionLink("Contact Us & Map", "ContactUs", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Authentication <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Customers", "Customers", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Account Settings", "UpdateProfile", "Admin", new { id = Convert.ToInt64(formsAuthentication.Name) }, null)</li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                        </ul>
+                    }
+                    else if (formsAuthentication?.UserData == "Admin")
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Data <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Customers", "Customers", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Agent", "Agent", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Transaction", "Transaction", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Redeem Coupon Transaction", "RedeemCouponTransaction", "Admin")</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">CMS <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Banner", "Banners", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Travel Promotion", "TravelPromotion", "TravelPromotion")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Package", "Package", "Package")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Customer Testimony", "CustomersTestimony", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("About Us & YouTube Link", "AboutUs", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>@Html.ActionLink("Contact Us & Map", "ContactUs", "Admin")</li>
+                                    <li role="separator" class="divider"></li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("System Setting", "SystemSetting", "Admin")</li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Authentication <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Update Profile", "UpdateAdminProfile", "Admin", new { id = Convert.ToInt64(formsAuthentication.Name) }, null)</li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                        </ul>
+                    }
+                    else if (formsAuthentication?.UserData == "Agent")
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Agent Transaction", "AgentTransaction", "Agent")</li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">                       
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile Setting <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Update Profile", "UpdateAgentProfile", "Agent", new { id = Convert.ToInt64(formsAuthentication.Name) }, null)</li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                        </ul>
+                    }
+                    else if (formsAuthentication?.UserData == "Customer")
+                    {
+                        <ul class="nav navbar-nav">
+                            <li>@Html.ActionLink("Travel Promotion", "TravelPromotion", "Customer")</li>
+                            <li>@Html.ActionLink("Package", "Package", "Customer")</li>
+                            <li>@Html.ActionLink("Good News", "GoodNews", "Customer")</li>
+                            <li>@Html.ActionLink("Customer Testimony", "CustomerTestimony", "Customer")</li>
+                            <li>@Html.ActionLink("Rewards Point", "PointRedemption", "Customer")</li>
+                        </ul>
+                       <ul class="nav navbar-nav navbar-right">
+                            
+                                @{if (EnjoyOurTour.Helpers.Services.MetadataServices.GetCurrentUser() != null)
+                                    {
+                                        <li><div style="padding:10px 15px ;padding-top:15px"> <label>  Hi @EnjoyOurTour.Helpers.Services.MetadataServices.GetCurrentUser().Username, Welcome back.</label></div>                              
+                                             </li>
+                                      } }                                  
+                           <li class="dropdown">
+                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Point Manage <span class="caret"></span></a>
+
+                               <ul class="dropdown-menu">
+                                   <li>@Html.ActionLink("Coupn Redeem", "RedeemCoupon", "Customer")</li>
+                                   <li>@Html.ActionLink("Top Up", "TopUpCustomer", "Customer")</li>
+                                   <li>@Html.ActionLink("Transaction", "IntroducerTransaction", "Customer", new { userId = Convert.ToInt64(formsAuthentication.Name) }, null)</li>
+                               </ul>
+                           </li>
+                           <li class="dropdown">
+                               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile Setting <span class="caret"></span></a>
+                              
+                                    <ul class="dropdown-menu">
+                                        <li>@Html.ActionLink("Update Profile", "UpdateCustomerProfile", "Customer", new { userId = Convert.ToInt64(formsAuthentication.Name) }, null)</li>
+                                        <li>@Html.ActionLink("Change Password", "UpdatePassword", "Account")</li>
+                                    </ul>
+                                </li>
+                                <li>@Html.ActionLink("Logout", "Logout", "Account")</li>
+                            </ul>
+                            }
+                            else
+                            {
+                            <ul class="nav navbar-nav">
+                                <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                            </ul>
+                            }
+                            }
+</div>
+        </div>
+    </div>
+
+    <div id="divRenderBody" class="container-fluid body-content" style="padding-top: 25px;">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year Enjoy Our Tour</p>
+        </footer>
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

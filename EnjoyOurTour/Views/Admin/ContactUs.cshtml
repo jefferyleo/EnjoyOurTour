@@ -1,0 +1,226 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Home.ContactUsViewModel
+
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Contact Us</h1>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    <form id="ContactUsForm" name="ContactUsForm" method="post">
+        <div class="row">
+            <div class="col-md-12 col-lg-6 col-lg-offset-3">
+                <div class="form-group">
+                    <div id="divContactTitle" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblContactUsTitle" for="ContactUsTitle"></label>
+                    </div>
+                    <label for="ContactUsTitle">Contact Us Title</label>
+                    <input id="ContactUsTitleInput" hidden value="@Model.ContactUsTitle" />
+                    <textarea id="ContactUsTitle" name="ContactUsTitle"></textarea>
+                    @Html.ValidationMessageFor(e => e.ContactUsTitle)
+                </div>
+                <div class="form-group">
+                    <div id="divCompanyName" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblCompanyName" for="CompanyName"></label>
+                    </div>
+                    <label for="CompanyName">Company Name</label>
+                    <input id="ContactNameInput" hidden value="@Model.CompanyName" />
+                    <textarea id="CompanyName" name="CompanyName"></textarea>
+                    @Html.ValidationMessageFor(e => e.CompanyName)
+                </div>
+                <div class="form-group">
+                    <div id="divCompanyAddress" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblCompanyAddress" for="CompanyAddress"></label>
+                    </div>
+                    <label for="CompanyAddress">Company Address</label>
+                    <input id="CompanyAddressInput" hidden value="@Model.CompanyAddress" />
+                    <textarea id="CompanyAddress" name="CompanyAddress"></textarea>
+                    @Html.ValidationMessageFor(e => e.CompanyAddress)
+                </div>
+                <div class="form-group">
+                    <div id="divCompanyPhoneNumber" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblCompanyPhoneNumber" for="CompanyPhoneNumber"></label>
+                    </div>
+                    <label for="CompanyPhoneNumber">Company Phone Number</label>
+                    <input id="CompanyPhoneNumberInput" hidden value="@Model.CompanyPhoneNumber" />
+                    <textarea id="CompanyPhoneNumber" name="CompanyPhoneNumber"></textarea>
+                    @Html.ValidationMessageFor(e => e.CompanyPhoneNumber)
+                </div>
+                <p style="color: grey">
+                    <small>*Company Name and Address will show on map.</small>
+                </p>
+                <div class="form-group">
+                    <label for="CompanyLatitude">Company Latitude</label>
+                    <input type="text" id="CompanyLatitude" name="CompanyLatitude" class="form-control" placeholder="Enter Company Latitude" value="@Model.CompanyLatitude">
+                </div>
+                <div class="form-group">
+                    <label for="CompanyLongitude">Company Longitude</label>
+                    <input type="text" id="CompanyLongitude" name="CompanyLongitude" class="form-control" placeholder="Enter Company Longitude" value="@Model.CompanyLongitude">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-9">
+                <button id="btnSave" type="submit" class="btn btn-primary pull-right">Save</button>
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form id="ContactUsForm" name="ContactUsForm" method="post">
+        <div class="row">
+            <div class="col-md-12 col-lg-6 col-lg-offset-3">
+                <div class="form-group">
+                    <div id="divContactTitle" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblContactUsTitle" for="ContactUsTitle"></label>
+                    </div>
+                    <label for="ContactUsTitle">Contact Us Title</label>
+                    <input id="ContactUsTitleInput" hidden value="" />
+                    <textarea id="ContactUsTitle" name="ContactUsTitle"></textarea>
+                    @Html.ValidationMessageFor(e => e.ContactUsTitle)
+                </div>
+                <div class="form-group">
+                    <div id="divCompanyName" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblCompanyName" for="CompanyName"></label>
+                    </div>
+                    <label for="CompanyName">Company Name</label>
+                    <input id="ContactNameInput" hidden value="" />
+                    <textarea id="CompanyName" name="CompanyName"></textarea>
+                    @Html.ValidationMessageFor(e => e.CompanyName)
+                </div>
+                <div class="form-group">
+                    <div id="divCompanyAddress" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblCompanyAddress" for="CompanyAddress"></label>
+                    </div>
+                    <label for="CompanyAddress">Company Address</label>
+                    <input id="CompanyAddressInput" hidden value="" />
+                    <textarea id="CompanyAddress" name="CompanyAddress"></textarea>
+                    @Html.ValidationMessageFor(e => e.CompanyAddress)
+                </div>
+                <div class="form-group">
+                    <div id="divCompanyPhoneNumber" class="alert alert-danger alert-dismissible" hidden role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <strong>Error! </strong><label id="lblCompanyPhoneNumber" for="CompanyPhoneNumber"></label>
+                    </div>
+                    <label for="CompanyPhoneNumber">Company Phone Number</label>
+                    <input id="CompanyPhoneNumberInput" hidden value="" />
+                    <textarea id="CompanyPhoneNumber" name="CompanyPhoneNumber"></textarea>
+                    @Html.ValidationMessageFor(e => e.CompanyPhoneNumber)
+                </div>
+                <p style="color: grey">
+                    <small>*Company Name and Address will show on map.</small>
+                </p>
+                <div class="form-group">
+                    <label for="CompanyLatitude">Company Latitude</label>
+                    <input type="text" id="CompanyLatitude" name="CompanyLatitude" class="form-control" placeholder="Enter Company Latitude" value="">
+                </div>
+                <div class="form-group">
+                    <label for="CompanyLongitude">Company Longitude</label>
+                    <input type="text" id="CompanyLongitude" name="CompanyLongitude" class="form-control" placeholder="Enter Company Longitude" value="">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-lg-9">
+                <button type="submit" class="btn btn-primary pull-right">Save</button>
+            </div>
+        </div>
+    </form>
+}
+
+    <script>
+        CKEDITOR.replace('ContactUsTitle',
+        {
+            startupFocus: false
+        });
+        CKEDITOR.replace('CompanyName',
+        {
+            startupFocus: false
+            });
+        CKEDITOR.replace('CompanyAddress',
+            {
+                startupFocus: false
+            });
+        CKEDITOR.replace('CompanyPhoneNumber',
+            {
+                startupFocus: false
+            });
+
+    @if (Model != null)
+    {
+        <text>
+        var contactUsTitle = $('#ContactUsTitleInput').val();
+        var companyName = $('#ContactNameInput').val();
+        var companyAddress = $('#CompanyAddressInput').val();
+        var companyPhoneNumber = $('#CompanyPhoneNumberInput').val();
+            CKEDITOR.on('instanceReady', function (evt) {
+                if (evt.editor.name === "ContactUsTitle") {
+                    CKEDITOR.instances['ContactUsTitle'].insertHtml(unescapeHtml(contactUsTitle));
+                }
+                else if (evt.editor.name === "CompanyName") {
+                    CKEDITOR.instances['CompanyName'].insertHtml(unescapeHtml(companyName));
+                }
+                else if (evt.editor.name === "CompanyAddress") {
+                    CKEDITOR.instances['CompanyAddress'].insertHtml(unescapeHtml(companyAddress));
+                }
+                else if (evt.editor.name === "CompanyPhoneNumber") {
+                    CKEDITOR.instances['CompanyPhoneNumber'].insertHtml(unescapeHtml(companyPhoneNumber));
+                }
+            });
+        </text>
+    }
+
+    $('#btnSave').click(function(e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        formData.append("ContactUsTitle", CKEDITOR.instances['ContactUsTitle'].getData());
+        formData.append("CompanyName", CKEDITOR.instances['CompanyName'].getData());
+        formData.append("CompanyAddress", CKEDITOR.instances['CompanyAddress'].getData());
+        formData.append("CompanyPhoneNumber", CKEDITOR.instances['CompanyPhoneNumber'].getData());
+        formData.append("CompanyLatitude", $('#CompanyLatitude').val());
+        formData.append("CompanyLongitude", $('#CompanyLongitude').val());
+
+        $.ajax({
+            type: "POST",
+            url: '/Admin/ContactUs',
+            data: formData,
+            dataType: 'json',
+            traditional: true,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.result === "success") {
+                    window.location.reload();
+                } else {
+                    DisplayErrors(response.Errors);
+                }
+            },
+            error: function (error) {
+                alert(error);
+            }
+        });
+    });
+
+    function DisplayErrors(errors) {
+        for (var i = 0; i < errors.length; i++) {
+            $('#div' + errors[i].Key + '').show();
+            $('#lbl' + errors[i].Key + '')
+                .html(errors[i].Value[0]).appendTo($("input#" + errors[i].Key).parent());
+        }
+    }
+    </script>

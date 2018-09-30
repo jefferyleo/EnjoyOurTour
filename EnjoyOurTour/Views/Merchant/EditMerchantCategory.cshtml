@@ -1,0 +1,80 @@
+﻿
+@model EnjoyOurTour.Models.ViewModel.Merchant.AddMerchantCategoryViewModel
+@{
+    ViewBag.Title = "EditMerchantCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Update Merchant Category</h1>
+    </div>
+</div>
+
+<form id="EditNewBannerForm" style="color:#001a33;" name="EditNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-12 col-lg-6 col-lg-offset-3">
+            <input hidden id="MerchantCategoryId" name="MerchantCategoryId" value="@Model.MerchantCategoryId" />
+            <div class="form-group">
+                <label for="CategoryName" id="CategoryName">Category Name:</label><br/>
+                <input type="text" id="inputCategoryName"  class="form-control"  name="CategoryName" value="@Model.CategoryName"/>
+                @Html.ValidationMessageFor(e => e.CategoryName)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="editMerchantCategory" class="btn btn-primary pull-right">Update Merchant Category</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('#editMerchantCategory').click(function (e) {
+            e.preventDefault();
+            $('.loading').css('display', 'block');
+
+            if ($('#inputCategoryName').val() == '') {
+                $('#CategoryName').html('<span class="asterisk" style="color:red">*Please enter Merchant Category Name.</span>');
+            } else {
+                $("#CategoryName .asterisk").remove();
+                $('#CategoryName').html('Merchant Category Name');
+            }
+
+            if ($('.asterisk').val() == undefined) {
+                var formData = new FormData();
+                formData.append('MerchantCategoryId', $('#MerchantCategoryId').val());
+                formData.append('CategoryName', $('#inputCategoryName').val());
+
+                $.ajax({
+                    url: "/Merchant/EditMerchantCategory",
+                    contentType: false,
+                    processData: false,
+                    traditional: true,
+                    dataType: 'json',
+                    data: formData,
+                    type: "POST",
+                    success: function (data) {
+                        $('.loading').css('display', 'none');
+                        swal({
+                            title: "Done",
+                            text: "Merchant Category updated!",
+                            type: "success"
+                        },
+                            function () {
+                                window.location.href = '/Merchant/MerchantCategory';
+                            });
+                    },
+                    error: function (data) {
+                        $('.loading').css('display', 'none');
+                    }
+                });
+            }
+        });
+    });
+</script>

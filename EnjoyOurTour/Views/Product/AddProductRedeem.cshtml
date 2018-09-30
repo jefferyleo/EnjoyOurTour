@@ -1,0 +1,121 @@
+﻿@model EnjoyOurTour.Models.ViewModel.Product.AddProductRedeemViewModel
+@{
+    ViewBag.Title = "AddProductRedeem";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12 col-lg-6 col-lg-offset-3">
+        <h1 class="page-header">Add Product Redeem</h1>
+    </div>
+</div>
+
+<form id="AddNewBannerForm" style="color:#001a33;" name="AddNewBannerForm" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-md-6 col-lg-3 col-lg-offset-3">
+            <div class="form-group">
+                <label for="ProductRedeemName" id="ProductRedeemName">Product Redeem Name:</label><br />
+                <input type="text" id="inputProductRedeemName" class="form-control" name="ProductRedeemName" />
+                @Html.ValidationMessageFor(e => e.ProductRedeemName)
+            </div>
+
+            <div class="form-group">
+                <label for="RedeemPoint" id="RedeemPoint">Redeem Point:</label><br />
+                <input type="number" id="inputRedeemPoint" class="form-control" name="RedeemPoint" />
+                @Html.ValidationMessageFor(e => e.RedeemPoint)
+            </div>
+            <div class="form-group">
+                <label for="Stock" id="Stock">Stock:</label><br />
+                <input type="number" id="inputStock" class="form-control" name="Stock" />
+                @Html.ValidationMessageFor(e => e.Stock)
+            </div>
+            <div class="form-group">
+                <label for="PhotoPath" id="lblPhotoPath">Product Redeem Image:</label>
+                <input type="file" id="PhotoPath" name="PhotoPath" accept="image/png, image/jpeg, image/jpg" oninput="setCustomValidity('')" required onchange="document.getElementById('showProductRedeem').style.display = 'block'; if (this.files && this.files[0]) { var reader = new FileReader(); reader.onload = function (e) { $('#showProductRedeem').attr('src', e.target.result); }; reader.readAsDataURL(this.files[0]); }" />
+                <i style="color:crimson;">** Recommended Image Resolution 2048px*1152px</i>
+                <br />
+                <img id="showProductRedeem" style="width:50%; display:none;" />
+            </div>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px">
+        <div class="col-md-12 col-lg-9">
+            <button type="submit" id="addProductRedeem" class="btn btn-primary pull-right">Add Product Redeem</button>
+        </div>
+    </div>
+</form>
+<div class="loading" style="display:none;z-index:100000">
+    <div id="loader"></div>
+</div>
+
+<script>
+
+        $(document).ready(function () {
+            $('#addProductRedeem').click(function (e) {
+                e.preventDefault();
+                var image = document.getElementById('PhotoPath').files[0];
+
+                $('.loading').css('display', 'block');
+
+                if ($('#inputProductRedeemName').val() == '') {
+                    $('#ProductRedeemName').html('<span class="asterisk" style="color:red">*Please enter Product Redeem Name.</span>');
+                } else {
+                    $("#ProductRedeemName .asterisk").remove();
+                    $('#ProductRedeemName').html('Product Redeem Name:');
+                }
+
+                if ($('#inputRedeemPoint').val() == '') {
+                    $('#RedeemPoint').html('<span class="asterisk" style="color:red">*Please enter Redeem Point.</span>');
+                } else {
+                    $("#RedeemPoint .asterisk").remove();
+                    $('#RedeemPoint').html('Redeem Point:');
+                }
+
+                if ($('#inputStock').val() == '') {
+                    $('#Stock').html('<span class="asterisk" style="color:red">*Please enter Stock Amount.</span>');
+                } else {
+                    $("#Stock .asterisk").remove();
+                    $('#Stock').html('Stock:');
+                }
+
+                if (image == undefined) {
+                    $('#lblPhotoPath').html('<span class="asterisk" style="color:red">*Please upload Product Redeem Image.</span>');
+                } else {
+                    $("#lblPhotoPath .asterisk").remove();
+                    $('#lblPhotoPath').html('Product Redeem Image:');
+                }
+
+                if ($('.asterisk').val() == undefined) {
+                    var formData = new FormData();
+                    formData.append('ProductRedeemName', $("#inputProductRedeemName").val());
+                    formData.append('RedeemPoint', $("#inputRedeemPoint").val());
+                    formData.append('Stock', $("#inputStock").val());
+                    formData.append('ImagePath', document.getElementById('PhotoPath').files[0]);
+
+                    $.ajax({
+                        url: "/Product/AddProductRedeem",
+                        contentType: false,
+                        processData: false,
+                        traditional: true,
+                        data: formData,
+                        dataType: 'json',
+                        type: "POST",
+                        success: function (data) {
+                            $('.loading').css('display', 'none');
+                            swal({
+                                title: "Done",
+                                text: "Product Redeem was successfully added!",
+                                type: "success"
+                            },
+                                function () {
+                                    window.location.href = '/Product/ProductRedeem';
+                                });
+                        },
+                        error: function (data) {
+                            $('.loading').css('display', 'none');
+                        }
+                    });
+                }
+            });
+        });
+</script>

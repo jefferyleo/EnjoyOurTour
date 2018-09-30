@@ -1,0 +1,49 @@
+﻿@*@model X.PagedList.IPagedList<EnjoyOurTour.Models.ViewModel.TravelPromotion.TravelPromotionViewModel>*@
+@{
+    ViewBag.Title = "TravelPromotion";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using X.PagedList
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 5px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                Travel Promotions
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var item in ViewBag.OnePageOfProducts)
+        {
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                <div class="card">
+                    <img class="card-img-top" src="~/Image/TravelPromotionImage/@item.PhotoPath" alt="Card image cap" style="max-width: 100%">
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.Raw(item.TravelPromotionTitle)</h4>
+                        <p class="card-text">@Html.Raw(item.Description)</p>
+                    </div>
+                </div>
+            </div>
+        }
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                Page @(ViewBag.OnePageOfProducts.PageCount < ViewBag.OnePageOfProducts.PageNumber ? 0 : ViewBag.OnePageOfProducts.PageNumber)
+                of @ViewBag.OnePageOfProducts.PageCount
+                @Html.PagedListPager((IPagedList)ViewBag.OnePageOfProducts, page => Url.Action("TravelPromotion", new { page }))
+            </div>
+
+        </div>
+
+    </div>
+</div>

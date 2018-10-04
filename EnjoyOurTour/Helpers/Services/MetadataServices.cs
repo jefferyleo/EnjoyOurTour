@@ -72,7 +72,7 @@ namespace EnjoyOurTour.Helpers.Services
 
         public static async Task SendEmail(string toEmailAddress, string subject, string body)
         {
-            Environment.SetEnvironmentVariable("SENDGRID_APIKEY", "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");
+            Environment.SetEnvironmentVariable("SENDGRID_APIKEY", "");
             var apiKey = System.Environment.GetEnvironmentVariable("SENDGRID_APIKEY");
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("jefferyleo@gmail.com", "jefferyleo");
